@@ -1,0 +1,29 @@
+#    Algorun turns command-line algorithms into ready-to-use web enabled 
+#    containers - Copyright (C) 2015 Thibauld Favre <tfavre@gmail.com>
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+FROM phusion/baseimage:0.9.16
+MAINTAINER Abdelrahman H. Ibrahim <abdelrahman.hosny@hotmail.com>
+RUN apt-get update && \
+apt-get install -y ruby2.0 wget && \
+apt-get clean && \
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+ADD start.rb /home/algorithm/
+ADD ./web/index.html /home/algorithm/web/
+ADD ./web/js /home/algorithm/web/js/
+ADD ./web/css /home/algorithm/web/css/
+ADD ./lib/*.rb /home/algorithm/lib/
+ENV CODE_HOME /home/algorithm/
+EXPOSE 8765
+ENTRYPOINT ["/usr/bin/ruby","/home/algorithm/start.rb"]
