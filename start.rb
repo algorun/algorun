@@ -22,7 +22,7 @@ require_relative './lib/Algo.rb'
 require_relative './lib/Server.rb'
 
 if ENV["CODE_HOME"].nil? then
-	ENV["CODE_HOME"]=ENV["PWD"]
+	ENV["CODE_HOME"]=ENV["PWD"] + '/'
 end
 
 server = WEBrick::HTTPServer.new(:Port => 8765, "RequestTimeout" => 300, :DocumentRoot => ENV["CODE_HOME"]+"web/")

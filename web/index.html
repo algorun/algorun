@@ -34,6 +34,66 @@ body {
 }
 </style>
 </head>
+<script>
+var client1 = new XMLHttpRequest();
+algo_name_file = '/algorun_info/algo_name.txt'
+client1.open('GET', algo_name_file);
+client1.onreadystatechange = function() {
+	document.getElementById('algo_name').innerHTML = client1.responseText
+	document.getElementById('about_algo_name').innerHTML = 'About ' + client1.responseText
+	document.getElementById('more_info').innerHTML = 'More info about ' + client1.responseText
+}
+client1.send();
+
+var client2 = new XMLHttpRequest();
+short_description_file = '/algorun_info/short_description.txt'
+client2.open('GET', short_description_file);
+client2.onreadystatechange = function() {
+	document.getElementById('short_description').innerHTML = client2.responseText
+}
+client2.send();
+
+var client3 = new XMLHttpRequest();
+input_example_file = '/algorun_info/input_example.txt'
+client3.open('GET', input_example_file);
+client3.onreadystatechange = function() {
+	document.getElementById('input_example').innerHTML = client3.responseText
+}
+client3.send();
+
+var client4 = new XMLHttpRequest();
+output_example_file = '/algorun_info/output_example.txt'
+client4.open('GET', output_example_file);
+client4.onreadystatechange = function() {
+	document.getElementById('output_example').innerHTML = client4.responseText
+}
+client4.send();
+
+var client5 = new XMLHttpRequest();
+authors_file = '/algorun_info/authors.txt'
+client5.open('GET', authors_file);
+client5.onreadystatechange = function() {
+	document.getElementById('authors').innerHTML = client5.responseText
+}
+client5.send();
+
+var client6 = new XMLHttpRequest();
+long_description_file = '/algorun_info/long_description.txt'
+client6.open('GET', long_description_file);
+client6.onreadystatechange = function() {
+	document.getElementById('long_description').innerHTML = client6.responseText
+}
+client6.send();
+
+var client7 = new XMLHttpRequest();
+web_link_file = '/algorun_info/web_link.txt'
+client7.open('GET', web_link_file);
+client7.onreadystatechange = function() {
+	var el = document.getElementById('algo_ref')
+	el.setAttribute('href', client7.responseText)
+}
+client7.send();
+</script>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
@@ -50,7 +110,7 @@ body {
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="#">Home</a></li>
 				<li><a href="#run">Run</a></li>
-				<li><a href="#config">Configuration</a></li>
+				<!--li><a href="#config">Configuration</a></li-->
 				<li><a href="#doc">Documentation</a></li>
 				<li><a href="#about">About</a></li>
 			</ul>
@@ -60,11 +120,12 @@ body {
 
 <div class="container">
 	<div class="starter-template">
-		<h1>Cyclone<br/>Calculate Dynamics of a discrete dynamical system using exhaustive search</h1>
+		<h1 id='algo_name'>Algorithm Name</h1>
+		<h1 id='short_description'>Short Description</h1>
 			<h2><a name="run">Run</a></h2>
-			<p>Enter input JSON below and hit the RUN button</p>
+			<p>Enter input data below and hit the RUN button</p>
 			<form id="run_form" action="/do/run">
-				<p align="right"><button id="reset_computation" style="height:20px;width:100px;padding:0px;font-size:80%;" type="button" class="btn btn-default">reset computation</button>&nbsp;&nbsp;<button id="populate_input" style="height:20px;width:150px;padding:0px;font-size:80%;" type="button" class="btn btn-info">fill form with JSON example</button></p>
+				<p align="right"><button id="reset_computation" style="height:20px;width:100px;padding:0px;font-size:80%;" type="button" class="btn btn-default">reset computation</button>&nbsp;&nbsp;<button id="populate_input" style="height:20px;width:150px;padding:0px;font-size:80%;" type="button" class="btn btn-info">fill form with data example</button></p>
 			<textarea name="input" id="input_data" class="form-control" rows="8" style="font-size:80%;"></textarea>
 				<br/><p align="center"><button style="width:200px;align:right;" id="run_button" type="submit" class="btn btn-success">RUN</button></p>
 			</form>
@@ -72,380 +133,29 @@ body {
 					<p>Computation result</p>
 					<textarea id="output_data" class="form-control" rows=8 style="font-size:80%;"></textarea>
 				</div>
-			<h2><a name="config">Configuration</a></h2>
-			<p>No specific configuration available.</p>
+			<!--h2><a name="config">Configuration</a></h2-->
+			<!--p>No specific configuration available.</p-->
 			<h2><a name="doc">Documentation</a></h2>
 				<h3>HTTP POST /do/run</h3>
 					<h4>parameters</h4>
 					<ul>
-						<li><b>input</b> the input for BNReduction in standardized JSON format (see example below).</li>
+						<li><b>input</b> the input for the algorithm in its accepted format (see example below).</li>
 					</ul>
-					<h4>example JSON input</h4>
-					<pre><code id="code_example_1" class="language-javascript" data-lang="javascript">{
-    "task": {
-        "method": {
-            "type": "simulation using transition tables",
-            "id": "Cyclone",
-            "description": "Iterates over the state space of a graph input and produces all limit cycles in the state space and outputs these, along with the percentage of the state space",
-            "generate": "edges"
-	},
-        "input": [
-            {
-                "type": "model",
-                "description": "my-first-model",
-                "simulationName": "Unmodified",
-                "updateRules": [
-                    {
-                        "target": "CAP",
-                        "functions": [
-                            {
-				"inputVariables": ["CAP","CAP"],
-                                "transitionTable": [
-                                        [0,0],
-                                        [0,1]
-                                    ]                         
-                            }
-                        ]
-                    },
-                    {
-                        "target": "mRNA",
-                        "functions": [
-                            {
-                                "inputVariables": ["CAP","LacI","mRNA","mRNA"],
-                                "transitionTable": [
-                                        [[0,0,0],0],
-                                        [[0,0,1],1],
-                                        [[0,1,0],0],
-                                        [[0,1,1],0],
-                                        [[0,2,0],0],
-                                        [[0,2,1],0],
-                                        [[1,0,0],1],
-                                        [[1,0,1],0],
-                                        [[1,1,0],0],
-                                        [[1,1,1],0],
-                                        [[1,2,0],0],
-                                        [[1,2,1],0]      
-                                  ]
-                            }
-                         ]   
-                    },
-                    {
-                        "target": "LacY",
-                        "functions": [
-                            {
-                                "inputVariables": ["mRNA","LacY","LacY"],
-                                "transitionTable": [
-                                        [[0,0],0],
-                                        [[0,1],1],
-                                        [[1,0],1],
-                                        [[1,1],1]
-                                   ]
-                             }
-                        ]
-                    },
-                    {
-                        "target": "LacZ",
-                        "functions": [
-                            {
-                                "inputVariables": ["mRNA","LacZ","LacZ"],
-                                "transitionTable": [
-                                        [[0,0],0],
-                                        [[0,1],1],
-                                        [[1,0],1],
-                                        [[1,1],1]
-                                    ]
-                            }
-                        ]
-                    },
-                    {
-                        "target": "LacI",
-                        "functions": [
-                            {
-                                "inputVariables": ["LacI","LacI"],
-                                "transitionTable": [
-                                        [0,0],
-                                        [0,1],
-                                        [0,2]
-                                 ]
-                            }
-                        ]
-                    }
-                ],
-
-            "variables": [
-                    {
-                        "id": "CAP",
-			"states": [0,1],
-                        "speed": 1
-                    },
-                    {
-                        "id": "mRNA",
-			"states": [0,1],
-                        "speed": 1
-                    },
-                    {
-                        "id": "LacY",
-			"states": [0,1],
-                        "speed": 1
-                    },
-                    {
-                        "id": "LacZ",
-			"states": [0,1],
-                        "speed": 1
-                    },
-                    {
-                        "id": "LacI",
-			"states": [0,2],
-                        "speed": 1
-                    }  
-                ]
-            }
-        ]
-    }
-}</code>
+					<h4>example input</h4>
+					<pre><code id="input_example" class="language-javascript" data-lang="javascript">Unfortunately, no input example available :(</code>
 					</pre>	
-					<h4>example JSON output</h4>
+					<h4>example output</h4>
 					<pre>
-<code class="language-javascript" data-lang="javascript">{
-    "output": [
-            {
-                "modelName": "my-first-model",
-                "simulationName": "Unmodified",
-		"sizeOfStateSpace": 48,
-                "numberOfCycles": 22,
-
-                "component": [
-                    {
-                        "id": 1,
-                        "size": 8,
-                        "percent": 16.6667,
-                        "dynamics": "Limit Cycle",
-                        "length": 2,
-                        "states": [
-                                     [1,0,1,1,0],
-                                     [1,1,1,1,0]
-                                  ]
-                    },
-		    {
-                        "id": 2,
-                        "size": 5,
-                        "percent": 10.4167,
-                        "dynamics": "STEADY STATE",
-                        "length": 1,
-                        "states": [
-                                     [0,0,1,1,0]
-                                  ]
-                    },
-                    {
-                        "id": 3,
-                        "size": 5,
-                        "percent": 10.4167,
-                        "dynamics": "STEADY STATE",
-                        "length": 1,
-                        "states": [
-                                     [0,0,1,1,2]
-                                  ]
-                    },
- 		    {
-                        "id": 4,
-                        "size": 5,
-                        "percent": 10.4167,
-                        "dynamics": "STEADY STATE",
-                        "length": 1,
-                        "states": [
-                                     [1,0,1,1,1]
-                                  ]
-                    },
- 		    {
-                        "id": 5,
-                        "size": 5,
-                        "percent": 10.4167,
-                        "dynamics": "STEADY STATE",
-                        "length": 1,
-                        "states": [
-                                     [1,0,1,1,2]
-                                  ]
-                    },
- 		    {
-                        "id": 6,
-                        "size": 4,
-                        "percent": 8.3333,
-                        "dynamics": "STEADY STATE",
-                        "length": 1,
-                        "states": [
-                                     [0,1,1,1,0]
-                                  ]
-                    },
-		    {
-                        "id": 7,
-                        "size": 1,
-                        "percent": 2.08333,
-                        "dynamics": "STEADY STATE",
-                        "length": 1,
-                        "states": [
-                                     [0,0,0,1,0]
-                                  ]
-                    },
-		    {
-                        "id": 8,
-                        "size": 1,
-                        "percent": 2.08333,
-                        "dynamics": "STEADY STATE",
-                        "length": 1,
-                        "states": [
-                                     [0,0,0,0,1]
-                                  ]
-                    },
-		    {
-                        "id": 9,
-                        "size": 1,
-                        "percent": 2.08333,
-                        "dynamics": "STEADY STATE",
-                        "length": 1,
-                        "states": [
-                                     [0,0,0,0,2]
-                                  ]
-                    },
-		    {
-                        "id": 10,
-                        "size": 1,
-                        "percent": 2.08333,
-                        "dynamics": "STEADY STATE",
-                        "length": 1,
-                        "states": [
-                                     [0,0,0,1,0]
-                                  ]
-                    },
-		    {
-                        "id": 11,
-                        "size": 1,
-                        "percent": 2.08333,
-                        "dynamics": "STEADY STATE",
-                        "length": 1,
-                        "states": [
-                                     [0,0,0,1,1]
-                                  ]
-                    },
-		    {
-                        "id": 12, 
-                        "size": 1,
-                        "percent": 2.08333,
-                        "dynamics": "STEADY STATE",
-                        "length": 1,
-                        "states": [
-                                     [0,0,0,1,2]
-                                  ]
-                    },
-		    {
-                        "id": 13,
-                        "size": 1,
-                        "percent": 2.08333,
-                        "dynamics": "STEADY STATE",
-                        "length": 1,
-                        "states": [
-                                     [0,0,1,0,0]
-                                  ]
-                    },
-		    {
-                        "id": 14,
-                        "size": 1,
-                        "percent": 2.08333,
-                        "dynamics": "STEADY STATE",
-                        "length": 1,
-                        "states": [
-                                     [0,0,1,0,1]
-                                  ]
-                    },
-		    {
-                        "id": 15,
-                        "size": 1,
-                        "percent": 2.08333,
-                        "dynamics": "STEADY STATE",
-                        "length": 1,
-                        "states": [
-                                     [0,0,1,0,2]
-                                  ]
-                    },
-		    {
-                        "id": 16,
-                        "size": 1,
-                        "percent": 2.08333,
-                        "dynamics": "STEADY STATE",
-                        "length": 1,
-                        "states": [
-                                     [0,0,1,1,0]
-                                  ]
-                    },
-		    {
-                        "id": 17,
-                        "size": 1,
-                        "percent": 2.08333,
-                        "dynamics": "STEADY STATE",
-                        "length": 1,
-                        "states": [
-                                     [1,0,0,0,1]
-                                  ]
-                    },
-		    {
-                        "id": 18,
-                        "size": 1,
-                        "percent": 2.08333,
-                        "dynamics": "STEADY STATE",
-                        "length": 1,
-                        "states": [
-                                     [1,0,0,0,2]
-                                  ]
-                    },
-		    {
-                        "id": 19,
-                        "size": 1,
-                        "percent": 2.08333,
-                        "dynamics": "STEADY STATE",
-                        "length": 1,
-                        "states": [
-                                     [1,0,0,1,1]
-                                  ]
-                    },
-		    {
-                        "id": 20,
-                        "size": 1,
-                        "percent": 2.08333,
-                        "dynamics": "STEADY STATE",
-                        "length": 1,
-                        "states": [
-                                     [1,0,0,1,2]
-                                  ]
-                    },
-		    {
-                        "id": 21,
-                        "size": 1,
-                        "percent": 2.08333,
-                        "dynamics": "STEADY STATE",
-                        "length": 1,
-                        "states": [
-                                     [1,0,1,0,1]
-                                  ]
-                    },
-		    {
-                        "id": 22,
-                        "size": 1,
-                        "percent": 2.08333,
-                        "dynamics": "STEADY STATE",
-                        "length": 1,
-                        "states": [
-                                     [1,0,1,0,2]
-                                  ]
-                    }		   
-		]
-            }
-        ]
-    }</code>
+<code id="output_example" class="language-javascript" data-lang="javascript">Unfortunately, no output example available :(</code>
 					</pre>
 			<h2><a name="about">About</a></h2>
-				<h3>About Cyclone</h3>
-					<h4>Investigators</h4>
-					<p>Reinhard Laubenbacher (PI), Brett Tyler (Co-PI), John McDowell (Co-PI), Stefan Hoops (Co-PI)
-					<p>More info about Cyclone<a href = "https://github.com/PlantSimLab/cyclone">On Github</a></p>
+				<h3 id='about_algo_name'>About Algorithm</h3>
+					<h4>Description</h4>
+					<p id='long_description'>Long description</p>
+					<h4>Authors</h4>
+					<p id='authors'>Authors list</p>
+					<h4 id='more_info'>More info about algorithm</h4>
+					<a id='algo_ref' href="https://github.com/UConnCQM/dockerized-superAdam" target="_blank">Website</a>
 				<h3>About Algorun</h3>
 					<h4>Author</h4>
 					<p>Thibauld Favre</p>

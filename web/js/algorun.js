@@ -23,7 +23,7 @@ $("#run_form").submit(function(event) {
 	.fail(function() {$("#output_data").val("An error occurred")});
 });
 $("#populate_input").click(function() {
-	$("#input_data").val($("#code_example_1").text());
+	$("#input_data").val($("#input_example").text());
 });
 $("#reset_computation").click(function() {
 	$("#input_data").val("");
