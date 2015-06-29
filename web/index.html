@@ -23,7 +23,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bootstrap 101 Template</title>
+<title id='algo_title'>Algorithm Sample</title>
 <style type="text/css"> 
 body {
 	padding-top: 50px;
@@ -34,66 +34,6 @@ body {
 }
 </style>
 </head>
-<script>
-var client1 = new XMLHttpRequest();
-algo_name_file = '/algorun_info/algo_name.txt'
-client1.open('GET', algo_name_file);
-client1.onreadystatechange = function() {
-	document.getElementById('algo_name').innerHTML = client1.responseText
-	document.getElementById('about_algo_name').innerHTML = 'About ' + client1.responseText
-	document.getElementById('more_info').innerHTML = 'More info about ' + client1.responseText
-}
-client1.send();
-
-var client2 = new XMLHttpRequest();
-short_description_file = '/algorun_info/short_description.txt'
-client2.open('GET', short_description_file);
-client2.onreadystatechange = function() {
-	document.getElementById('short_description').innerHTML = client2.responseText
-}
-client2.send();
-
-var client3 = new XMLHttpRequest();
-input_example_file = '/algorun_info/input_example.txt'
-client3.open('GET', input_example_file);
-client3.onreadystatechange = function() {
-	document.getElementById('input_example').innerHTML = client3.responseText
-}
-client3.send();
-
-var client4 = new XMLHttpRequest();
-output_example_file = '/algorun_info/output_example.txt'
-client4.open('GET', output_example_file);
-client4.onreadystatechange = function() {
-	document.getElementById('output_example').innerHTML = client4.responseText
-}
-client4.send();
-
-var client5 = new XMLHttpRequest();
-authors_file = '/algorun_info/authors.txt'
-client5.open('GET', authors_file);
-client5.onreadystatechange = function() {
-	document.getElementById('authors').innerHTML = client5.responseText
-}
-client5.send();
-
-var client6 = new XMLHttpRequest();
-long_description_file = '/algorun_info/long_description.txt'
-client6.open('GET', long_description_file);
-client6.onreadystatechange = function() {
-	document.getElementById('long_description').innerHTML = client6.responseText
-}
-client6.send();
-
-var client7 = new XMLHttpRequest();
-web_link_file = '/algorun_info/web_link.txt'
-client7.open('GET', web_link_file);
-client7.onreadystatechange = function() {
-	var el = document.getElementById('algo_ref')
-	el.setAttribute('href', client7.responseText)
-}
-client7.send();
-</script>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
@@ -168,6 +108,67 @@ client7.send();
 <script src="/js/algorun.js"></script>
 <script type="application/javascript">
 //run();
+</script>
+<script>
+var client1 = new XMLHttpRequest();
+algo_name_file = '/algorun_info/algo_name.txt'
+client1.open('GET', algo_name_file);
+client1.onreadystatechange = function() {
+	document.getElementById('algo_name').innerHTML = client1.responseText
+	document.getElementById('about_algo_name').innerHTML = 'About ' + client1.responseText
+	document.getElementById('more_info').innerHTML = 'More info about ' + client1.responseText
+	document.getElementById('algo_title').innerHTML = client1.responseText
+}
+client1.send();
+
+var client2 = new XMLHttpRequest();
+short_description_file = '/algorun_info/short_description.txt'
+client2.open('GET', short_description_file);
+client2.onreadystatechange = function() {
+	document.getElementById('short_description').innerHTML = client2.responseText
+}
+client2.send();
+
+var client3 = new XMLHttpRequest();
+input_example_file = '/algorun_info/input_example.txt'
+client3.open('GET', input_example_file);
+client3.onreadystatechange = function() {
+	document.getElementById('input_example').innerHTML = client3.responseText
+}
+client3.send();
+
+var client4 = new XMLHttpRequest();
+output_example_file = '/algorun_info/output_example.txt'
+client4.open('GET', output_example_file);
+client4.onreadystatechange = function() {
+	document.getElementById('output_example').innerHTML = client4.responseText
+}
+client4.send();
+
+var client5 = new XMLHttpRequest();
+authors_file = '/algorun_info/authors.txt'
+client5.open('GET', authors_file);
+client5.onreadystatechange = function() {
+	document.getElementById('authors').innerHTML = client5.responseText
+}
+client5.send();
+
+var client6 = new XMLHttpRequest();
+long_description_file = '/algorun_info/long_description.txt'
+client6.open('GET', long_description_file);
+client6.onreadystatechange = function() {
+	document.getElementById('long_description').innerHTML = client6.responseText
+}
+client6.send();
+
+var client7 = new XMLHttpRequest();
+web_link_file = '/algorun_info/web_link.txt'
+client7.open('GET', web_link_file);
+client7.onreadystatechange = function() {
+	var el = document.getElementById('algo_ref')
+	el.setAttribute('href', client7.responseText)
+}
+client7.send();
 </script>
 </body>
 </html>
