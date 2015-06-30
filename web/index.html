@@ -50,7 +50,7 @@ body {
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="#">Home</a></li>
 				<li><a href="#run">Run</a></li>
-				<!--li><a href="#config">Configuration</a></li-->
+				<li><a href="#config">Configuration</a></li>
 				<li><a href="#doc">Documentation</a></li>
 				<li><a href="#about">About</a></li>
 			</ul>
@@ -73,8 +73,8 @@ body {
 					<p>Computation result</p>
 					<textarea id="output_data" class="form-control" rows=8 style="font-size:80%;"></textarea>
 				</div>
-			<!--h2><a name="config">Configuration</a></h2-->
-			<!--p>No specific configuration available.</p-->
+			<h2><a name="config">Parameters Configuration</a></h2>
+			<p id='param_conf'>No specific configuration available.</p>
 			<h2><a name="doc">Documentation</a></h2>
 				<h3>HTTP POST /do/run</h3>
 					<h4>parameters</h4>
@@ -169,6 +169,14 @@ client7.onreadystatechange = function() {
 	el.setAttribute('href', client7.responseText)
 }
 client7.send();
+
+var client8 = new XMLHttpRequest();
+params_file = '/algorun_info/params.txt'
+client8.open('GET', params_file);
+client8.onreadystatechange = function() {
+	document.getElementById('param_conf').innerHTML = client8.responseText	
+}
+client8.send();
 </script>
 </body>
 </html>
