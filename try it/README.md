@@ -5,15 +5,14 @@ You wrap all your algorithm dependencies and code in only three steps.
 
 ## Try it!
 
-This illustration assumes you have a minimal knowledge with [docker](https://www.docker.com/).
+This illustration assumes you have a minimal knowledge with [Docker](https://www.docker.com/).
 
 ### Step 1: Prepare your algorithm
 
 - Your algorithm should accept the input as a file and produce the output to another file.
 
 - Your algorithm should run as following:
-`command input_file [FLAGS] [-f output_file]`
-Where:
+`command input_file [FLAGS] [-f output_file]` where:
   * `command` (mandatory): is the command you use through terminal to run your algorithm
   * `input_file` (mandatory): is the input_file your algorithm read and process
   * `FLAGS` (optional): If you have different modes for running the algorithm, you specify them as flags
@@ -23,7 +22,7 @@ Where:
 
 - Edit the files under algorun_info directory to give information about your algorithm. These information will appear in the web page that is created for you after building your algorithm container.
 
-### Step 2: Edit Dockerfile
+### Step 2: Edit the Dockerfile
 
 In the Dockerfile, follow the steps to wrap your algorithm in a container. If you got stuck, you may refer to the full documentation at http://algorun.org/
 
@@ -32,7 +31,7 @@ In the Dockerfile, follow the steps to wrap your algorithm in a container. If yo
 - In you working directory, use the following command to build your container:
 `docker build -t <username>/<algorithm> .`
 
-- You should see a message `"Succesfulle built <container_id>"`.
+- You should see a message `"Succesfully built <container_id>"`.
 
 - Use the following commmand to run your container:
 `docker run -d -p 31331:8765 <username>/<algorithm>`
@@ -41,4 +40,4 @@ In the Dockerfile, follow the steps to wrap your algorithm in a container. If yo
 
 ## Need further help?
 
-[Visit Algorun!](https://algorun.org) for further assistance.
+[Visit Algorun!](http://algorun.org) for further assistance.
