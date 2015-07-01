@@ -5,19 +5,19 @@ You wrap all your algorithm dependencies and code in only three steps.
 
 ## Try it!
 
-This illustration assumes you have a minimal knowledge with docker (https://www.docker.com/).
+This illustration assumes you have a minimal knowledge with [docker](https://www.docker.com/).
 
 ### Step 1: Prepare your algorithm
 
 - Your algorithm should accept the input as a file and produce the output to another file.
 
 - Your algorithm should run as following:
-command input_file [FLAGS] [-f output_file]
+`command input_file [FLAGS] [-f output_file]`
 Where:
--> command (mandatory): is the command you use through terminal to run your algorithm
--> input_file (mandatory): is the input_file your algorithm read and process
--> FLAGS (optional): If you have different modes for running the algorithm, you specify them as flags
--> -f output_file (optional): If your command allow to specify a specific output file as a parameter, it should be in this format. If not, your algorithm should still write the output to a file (you will specify its name in the next step)
+  * `command` (mandatory): is the command you use through terminal to run your algorithm
+  * `input_file` (mandatory): is the input_file your algorithm read and process
+  * `FLAGS` (optional): If you have different modes for running the algorithm, you specify them as flags
+  * `-f output_file` (optional): If your command allow to specify a specific output file as a parameter, it should be in this format. If not, your algorithm should still write the output to a file (you will specify its name in the next step)
 
 - Collect your algorithm source code in src folder. Even if your algorithm source files are in a hierarchy, gather them after all under src directory.
 
@@ -30,15 +30,15 @@ In the Dockerfile, follow the steps to wrap your algorithm in a container. If yo
 ### Step 3: Build, run and test your container
 
 - In you working directory, use the following command to build your container:
-docker build -t <username>/<algorithm> .
+`docker build -t <username>/<algorithm> .`
 
-- You should see a message "Succesfulle built <container_id>".
+- You should see a message `"Succesfulle built <container_id>"`.
 
 - Use the following commmand to run your container:
-docker run -d -p 31331:8765 <username>/<algorithm>
+`docker run -d -p 31331:8765 <username>/<algorithm>`
 
 - Open your web browser and navigate to: http://localhost:31331 to test your algorithm
 
 ## Need further help?
 
-Jump to http://www.algorun.org to read a full documentation.
+[Visit Algorun!](https://algorun.org) for further assistance.
