@@ -1,0 +1,8 @@
+{
+"algo_name": "My Algorithm",
+"short_description": "My Short Description",
+"authors": ["Author1", "Author2"],
+"long_description": "My Long Description",
+"web_link": "http://algorun.org",
+"params": { "PARAM_1": "value1", "PARAM_2": "value2" }
+}

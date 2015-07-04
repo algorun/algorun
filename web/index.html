@@ -74,6 +74,10 @@ body {
 					<textarea id="output_data" class="form-control" rows=8 style="font-size:80%;"></textarea>
 				</div>
 			<h2><a name="config">Parameters Configuration</a></h2>
+            <div id='change_params'></div>
+            <form id="change_form" action="/do/config">
+                
+			</form>
 			<p id='param_conf'>No specific configuration available.</p>
 			<h2><a name="doc">Documentation</a></h2>
 				<h3>HTTP POST /do/run</h3>
@@ -95,7 +99,7 @@ body {
 					<h4>Authors</h4>
 					<p id='authors'>Authors list</p>
 					<h4 id='more_info'>More info about algorithm</h4>
-					<a id='algo_ref' href="https://github.com/UConnCQM/dockerized-superAdam" target="_blank">Website</a>
+					<a id='algo_ref' href="http://algorun.org" target="_blank">Visit Website!</a>
 				<h3>About Algorun</h3>
 					<h4>Author</h4>
 					<p>Thibauld Favre</p>
@@ -110,73 +114,64 @@ body {
 //run();
 </script>
 <script>
-var client1 = new XMLHttpRequest();
-algo_name_file = '/algorun_info/algo_name.txt'
-client1.open('GET', algo_name_file);
-client1.onreadystatechange = function() {
-	document.getElementById('algo_name').innerHTML = client1.responseText
-	document.getElementById('about_algo_name').innerHTML = 'About ' + client1.responseText
-	document.getElementById('more_info').innerHTML = 'More info about ' + client1.responseText
-	document.getElementById('algo_title').innerHTML = client1.responseText
-}
-client1.send();
+    function parse(str) {
+    var args = [].slice.call(arguments, 1),
+        i = 0;
 
-var client2 = new XMLHttpRequest();
-short_description_file = '/algorun_info/short_description.txt'
-client2.open('GET', short_description_file);
-client2.onreadystatechange = function() {
-	document.getElementById('short_description').innerHTML = client2.responseText
+    return str.replace(/%s/g, function() {
+        return args[i++];
+    });
 }
-client2.send();
+$.getJSON( "/algorun_info/manifest.json", function( data ) {
+	$( "#algo_name" ).html( data["algo_name"] );
+	$( "#about_algo_name" ).html( data["algo_name"] );
+	$( "#more_info" ).html( "More about " + data["algo_name"] );
+	$( "#algo_title" ).html( data["algo_name"] );
 
-var client3 = new XMLHttpRequest();
-input_example_file = '/algorun_info/input_example.txt'
-client3.open('GET', input_example_file);
-client3.onreadystatechange = function() {
-	document.getElementById('input_example').innerHTML = client3.responseText
-}
-client3.send();
+	$( "#short_description" ).html( data["short_description"] );
 
-var client4 = new XMLHttpRequest();
-output_example_file = '/algorun_info/output_example.txt'
-client4.open('GET', output_example_file);
-client4.onreadystatechange = function() {
-	document.getElementById('output_example').innerHTML = client4.responseText
-}
-client4.send();
+	var authors = "";
+	for (var i = 0; i < data["authors"].length; i++) {
+     	   authors += '- ' + data["authors"][i] + '<br>'
+	}
+	$( "#authors" ).html( authors );		
 
-var client5 = new XMLHttpRequest();
-authors_file = '/algorun_info/authors.txt'
-client5.open('GET', authors_file);
-client5.onreadystatechange = function() {
-	document.getElementById('authors').innerHTML = client5.responseText
-}
-client5.send();
+	$( "#long_description" ).html( data["long_description"] );
 
-var client6 = new XMLHttpRequest();
-long_description_file = '/algorun_info/long_description.txt'
-client6.open('GET', long_description_file);
-client6.onreadystatechange = function() {
-	document.getElementById('long_description').innerHTML = client6.responseText
-}
-client6.send();
+	$( "#algo_ref" ).attr( 'href', data["web_link"] );
 
-var client7 = new XMLHttpRequest();
-web_link_file = '/algorun_info/web_link.txt'
-client7.open('GET', web_link_file);
-client7.onreadystatechange = function() {
-	var el = document.getElementById('algo_ref')
-	el.setAttribute('href', client7.responseText)
-}
-client7.send();
+	$.each( data["params"], function( key, value ) {
+        $( "#param_conf" ).html("")
+        var button_id = "#" + key + value
+        $( "#change_form" ).append( parse("<table><tr><td style='padding:10px'>%s</td><td style='padding:10px'>%s</td><td style='padding:10px'><input id= '%s' type='text' style='width:50px;height:32px'></td><td><button style='width:150px;align:right;' id='%s' type='submit' class='btn btn-warning'>Change Value</button></td></tr></table>", key, value, "new" + key+value ,key+value));
+        $( button_id ).on( "click", {}, function(){
+            var param_input_id = "#new" + key + value;
+            var param_name = key
+            var new_param_value = $(param_input_id).val();
+            if (new_param_value === ""){
+                alert("Please provide a parameter value!");
+            }else{
+                //alert("I will change " + param_name + " from " + value + " to " + new_param_value);
+                var req_body = {};
+                req_body[param_name] = new_param_value;
+                var jqxhr = $.post( "/do/config", req_body)
+	                         .done(function(data,textStatus,jqXHR) {alert(data)})
+	                         .fail(function() {alert("An error occured!")});
+            }
+        });
+	});
+});
 
-var client8 = new XMLHttpRequest();
-params_file = '/algorun_info/params.txt'
-client8.open('GET', params_file);
-client8.onreadystatechange = function() {
-	document.getElementById('param_conf').innerHTML = client8.responseText	
-}
-client8.send();
+
+input_example_file = '/algorun_info/input_example.txt';
+$('#input_example').load(input_example_file);
+
+output_example_file = '/algorun_info/output_example.txt';
+$('#output_example').load(output_example_file);
+
+$('#change_form').click(function(event) {
+    $(this).data('clicked',$(event.target))
+});
 </script>
 </body>
 </html>

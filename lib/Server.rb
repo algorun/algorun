@@ -63,6 +63,15 @@ class Algorun < WEBrick::HTTPServlet::AbstractServlet
 			else
 				output = "PASS: invalid input"
 			end
+		when "/do/config"
+			request.query.each do |param_name, param_value|
+				if not ENV[param_name].nil? then
+					ENV[param_name] = param_value
+					output = "Parameter " + param_name + " changed to " + param_value
+				else
+					output = "Cannot find this parameter in environment variables"
+				end
+			end
 		else
 			output += "failure"
 			response.status = 404
