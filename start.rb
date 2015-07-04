@@ -17,7 +17,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-require_relative './lib/Task.rb'
 require_relative './lib/Algo.rb'
 require_relative './lib/Server.rb'
 
