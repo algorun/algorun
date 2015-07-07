@@ -58,4 +58,15 @@ class Algo
 		
 		return @result
 	end
+    
+    def mytest()
+        return @input_data + ' added for test'
+    end
+end
+
+
+if $0 == __FILE__ then
+	input = ARGV[0].dup
+    task = Algo.new(input)
+    puts task.run()
 end
