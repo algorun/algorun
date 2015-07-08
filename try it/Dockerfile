@@ -20,4 +20,4 @@ ADD ./src /home/algorithm/src/
 # EXAMPLE: ENV OUTPUT_FILE_NAME "output.txt"
 
 # If your algorithm uses some default configuration, pass them as environment variables
-# EXAMPLE: ENV PARAM_* value
+# EXAMPLE: ENV PARAM_1 value1

@@ -1,8 +1,8 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var multer = require('multer'); 
+var algo_run = require("/home/algorithm/lib/Algo");
 var app = express();
-var exec = require("child_process").exec;
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -12,16 +12,10 @@ app.post('/do/run', function (req, res) {
     res.status = 500;
     var input = req.body.input;
     if (input){
-        var ruby_command = "ruby " + process.env.CODE_HOME + "lib/Algo.rb \'" + input + "\'";
-        exec(ruby_command, function (err, stdout, stderr) {
+        algo_run.run(input, function (result){
             res.status = 200;
-            if (err){
-                res.send(stderr);
-            } else {
-                res.send(stdout);
-            }
-        });
-        
+            res.send(result);
+        });        
     } else {
         res.status = 200;
         res.send('No input provided!');
@@ -35,9 +29,9 @@ app.post('/do/config', function (req, res) {
             if (env_var.hasOwnProperty(key)) {
                 if (process.env[key]) {
                     process.env[key] = env_var[key];
-                    output += "Parameter " + key + " changed to " + env_var[key] + '<br>';
+                    output += "Parameter " + key + " changed to " + env_var[key];
                 } else {
-                    output += "Cannot find " + key + " in environment variables<br>";
+                    output += "Cannot find " + key + " in environment variables";
                 }
             }
         }

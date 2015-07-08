@@ -30,7 +30,7 @@ ADD ./web/index.html /home/algorithm/web/
 ADD ./web/js /home/algorithm/web/js/
 ADD ./web/css /home/algorithm/web/css/
 ADD ./web/algorun_info /home/algorithm/web/algorun_info/
-ADD ./lib/*.rb /home/algorithm/lib/
+ADD ./lib/*.js /home/algorithm/lib/
 ENV CODE_HOME /home/algorithm/
 EXPOSE 8765
 ENTRYPOINT ["/usr/bin/nodejs","/home/algorithm/AsyncServer.js"]
