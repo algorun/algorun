@@ -13,15 +13,14 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-FROM phusion/baseimage:0.9.16
+FROM ubuntu:14.04
 MAINTAINER Abdelrahman H. Ibrahim <abdelrahman.hosny@hotmail.com>
 RUN apt-get update && \
-apt-get install -y ruby2.0 wget && \
+apt-get install -y nodejs && \
 apt-get clean && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN apt-get update && \
-apt-get install -y nodejs
-RUN apt-get install -y npm
+apt-get install -y npm
 RUN npm install express &&\
 npm install body-parser &&\
 npm install multer
