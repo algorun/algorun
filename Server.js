@@ -50,6 +50,6 @@ var server = app.listen(8765, function () {
   var host = server.address().address;
   var port = server.address().port;
 
-  console.log('Algorun server listening at http://%s:%s', host, port);
+  console.log('Algorun server listening at http://%s:%s locally. Check port mapping for the visible port number ..', host, port);
 
 });
