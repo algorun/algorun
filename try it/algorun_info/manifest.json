@@ -1,8 +1,8 @@
 {
-"algo_name": "No algorithm name provided!",
-"short_description": "No short description provided!",
-"authors": ["No author", "No author"],
-"long_description": "No long description provided!",
+"algo_name": "My algorithm",
+"short_description": "My short description",
+"authors": ["My author 1", "My author 2"],
+"long_description": "My long description",
 "web_link": "http://algorun.org",
-"params": {}
+"params": {"PARAM1": "value1", "PARAM2": "value2"}
 }

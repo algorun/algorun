@@ -21,3 +21,4 @@ ENV OUTPUT_FILE_NAME "output.txt"
 
 # If your algorithm uses some default configuration, pass them as environment variables
 ENV PARAM_1 value1
+ENV PARAM_2 value2
