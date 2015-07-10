@@ -19,7 +19,7 @@ $("#run_form").submit(function(event) {
 	event.preventDefault();
 	var input_data=$("#input_data").val();
 	var jqxhr = $.post( "/do/run", { input: input_data })
-	.done(function(data,textStatus,jqXHR) {$("#output_data").html(data);})
+	.done(function(data,textStatus,jqXHR) {$("#output_data").val(data);})
 	.fail(function() {$("#output_data").val("An error occurred")});
 });
 $("#change_form").submit(function(event) {
