@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var multer = require('multer'); 
-var algo_run = require("/home/algorithm/lib/Algo");
+var algo_run = require(process.env.CODE_HOME + "/lib/Algo");
 var app = express();
 
 app.use(bodyParser.json()); // for parsing application/json
