@@ -142,10 +142,10 @@ $.getJSON( "/algorun_info/manifest.json", function( data ) {
 
 	$.each( data["params"], function( key, value ) {
         $( "#param_conf" ).html("")
-        var button_id = "#" + key + value
-        $( "#change_form" ).append( parse("<table><tr><td style='padding:10px'>%s</td><td style='padding:10px'>%s</td><td style='padding:10px'><input id= '%s' type='text' style='width:50px;height:32px'></td><td><button style='width:150px;align:right;' id='%s' type='submit' class='btn btn-warning'>Change Value</button></td></tr></table>", key, value, "new" + key+value ,key+value));
+        var button_id = "#button" + key
+        $( "#change_form" ).append( parse("<table><tr><td style='padding:10px'>%s</td><td style='padding:10px'>%s</td><td style='padding:10px'><input id= '%s' type='text' style='width:50px;height:32px'></td><td><button style='width:150px;align:right;' id='%s' type='submit' class='btn btn-warning'>Change Value</button></td></tr></table>", key, value, "new" + key ,"button"+key));
         $( button_id ).on( "click", {}, function(){
-            var param_input_id = "#new" + key + value;
+            var param_input_id = "#new" + key;
             var param_name = key
             var new_param_value = $(param_input_id).val();
             if (new_param_value === ""){
