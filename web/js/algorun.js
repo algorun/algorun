@@ -22,9 +22,6 @@ $("#run_form").submit(function(event) {
 	.done(function(data,textStatus,jqXHR) {$("#output_data").val(data);})
 	.fail(function() {$("#output_data").val("An error occurred")});
 });
-$("#change_form").submit(function(event) {
-	event.preventDefault();
-});
 $("#populate_input").click(function() {
 	$("#input_data").val($("#input_example").text());
 });

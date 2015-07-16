@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var multer = require('multer'); 
+var multer = require('multer');
+process.env.CODE_HOME = '/home/abdelrahman/uchc/algorun';
 var algo_run = require(process.env.CODE_HOME + "/lib/Algo");
 var app = express();
 

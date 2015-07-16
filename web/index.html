@@ -44,15 +44,15 @@ body {
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">Algorun</a>
 		</div>
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">Home</a></li>
+				<li class="active"><a href="#algo_name" id='algo_tab'>Sample Algorithm</a></li>
 				<li><a href="#run">Run</a></li>
-				<li><a href="#config">Configuration</a></li>
-				<li><a href="#doc">Documentation</a></li>
-				<li><a href="#about">About</a></li>
+                <li><a href="#web_api">Web API</a></li>
+				<li><a href="#authors_label">Authors</a></li>
+				<li><a href="#about_label">About</a></li>
+                <li><a href="#download">Download</a></li>
 			</ul>
 		</div><!--/.nav-collapse -->
 	</div>
@@ -60,9 +60,10 @@ body {
 
 <div class="container">
 	<div class="starter-template">
-		<h1 id='algo_name'>Algorithm Name</h1>
-		<h1 id='short_description'>Short Description</h1>
-			<h2><a name="run">Run</a></h2>
+		<h1 id='algo_name' style="color:#58ACFA;">Algorithm Name</h1>
+		<p id='short_description'>Short Description</p>
+        <p>More Information:&nbsp;<a id='algo_ref' href="http://algorun.org" target="_blank">http://algorun.org</a></p>
+        <h1 id="run" style="color:#58ACFA;">Run</h1>
 			<p>Enter input data below and hit the RUN button</p>
 			<form id="run_form" action="/do/run">
 				<p align="right"><button id="reset_computation" style="height:20px;width:100px;padding:0px;font-size:80%;" type="button" class="btn btn-default">reset computation</button>&nbsp;&nbsp;<button id="populate_input" style="height:20px;width:150px;padding:0px;font-size:80%;" type="button" class="btn btn-info">fill form with data example</button></p>
@@ -73,38 +74,35 @@ body {
 					<p>Computation result</p>
 					<textarea id="output_data" class="form-control" rows=8 style="font-size:80%;"></textarea>
 				</div>
-			<h2><a name="config">Parameters Configuration</a></h2>
-            <div id='change_params'></div>
-            <form id="change_form" action="/do/config">
-                
-			</form>
-			<p id='param_conf'>No specific configuration available.</p>
-			<h2><a name="doc">Documentation</a></h2>
-				<h3>HTTP POST /do/run</h3>
-					<h4>parameters</h4>
-					<ul>
-						<li><b>input</b> the input for the algorithm in its accepted format (see example below).</li>
-					</ul>
-					<h4>example input</h4>
-					<pre><code id="input_example" class="language-javascript" data-lang="javascript">Unfortunately, no input example available :(</code>
-					</pre>	
-					<h4>example output</h4>
-					<pre>
-<code id="output_example" class="language-javascript" data-lang="javascript">Unfortunately, no output example available :(</code>
-					</pre>
-			<h2><a name="about">About</a></h2>
-				<h3 id='about_algo_name'>About Algorithm</h3>
-					<h4>Description</h4>
-					<p id='long_description'>Long description</p>
-					<h4>Authors</h4>
-					<p id='authors'>Authors list</p>
-					<h4 id='more_info'>More info about algorithm</h4>
-					<a id='algo_ref' href="http://algorun.org" target="_blank">Visit Website!</a>
-				<h3>About Algorun</h3>
-					<h4>Author</h4>
-					<p>Thibauld Favre</p>
-					<p>Algorun is a platform where you can find already implemented and running algorithm, ready to use.</p>
-					<p>More info about Algorun: <a target="_blank" href="mailto:thibauld@fastmail.com">thibauld@fastmail.com</a></p>
+        <h1 id="web_api" style="color:#58ACFA;">Web API</h1>
+        <p>This algorithm can be run via the web interface above or via the following web API</p>
+        <h2>HTTP POST /do/run</h2>
+        <h3>&nbsp;&nbsp;&nbsp;&nbsp;Parameters</h3>
+        <ul>
+            <li><b>input:</b> the input for the algorithm in its accepted format. See: <a href="/algorun_info/input_example.txt" target="_blank">sample-input-format</a></li>
+        </ul>
+        <h3>&nbsp;&nbsp;&nbsp;&nbsp;Results</h3>
+        <ul>
+            <li><b>output:</b> the result of the computation in the following format. See: <a href="/algorun_info/output_example.txt" target="_blank">sample-output-format</a></li>
+        </ul>
+        <h1 id="authors_label" style="color:#58ACFA;">Authors</h1>
+        <p id='authors'>Authors list</p>
+        <h1 id="about_label" style="color:#58ACFA;">About</h1>
+        <p>This interface is provided to you by AlgoRun. AlgoRun aims at providing computational scientists with an
+easy way to use and publish their algorithms.</p>
+        <p>More Information:&nbsp;<a href="http://algorun.org" target="_blank">http://algorun.org</a></p>
+        
+        <h1 id="download" style="color:#58ACFA;">Download</h1>
+        <p>To download and run this algorithm on your PC, you need to have Docker installed. Then, just run the
+following command:</p>
+        <code id="offline_command"></code>
+        <br/>
+        <br/>
+        <p>The algorithm can now be used locally from your computer :</p>
+        <ul>
+            <li>via the web interface : <a>http://localhost:8765</a></li>
+            <li>via the web api: <a>http://localhost/do/run</a> (see <a href="#web_api">Web API</a> above)</li>
+        </ul>
 	</div>
 </div>
 <script src="/js/jquery-1.11.2.min.js"></script>
@@ -113,6 +111,27 @@ body {
 <script type="application/javascript">
 //run();
 </script>
+<script>
+    $(function() {
+        $('a[href*=#]:not([href=#])').click(function(e) {
+            $('.navbar ul li.active').removeClass('active');
+            var $this = $(this);
+            if (!$this.parent().hasClass('active')) {
+                $this.parent().addClass('active');
+            }
+            if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+                if (target.length) {
+                    $('html,body').animate({
+                        scrollTop: target.offset().top - 60
+                    }, 1000);
+                    return false;
+                }
+            }
+        });
+    });
+</script>    
 <script>
     function parse(str) {
     var args = [].slice.call(arguments, 1),
@@ -124,23 +143,30 @@ body {
 }
 $.getJSON( "/algorun_info/manifest.json", function( data ) {
 	$( "#algo_name" ).html( data["algo_name"] );
+    $( "#algo_tab" ).html( data["algo_name"] );
 	$( "#about_algo_name" ).html( data["algo_name"] );
-	$( "#more_info" ).html( "More about " + data["algo_name"] );
 	$( "#algo_title" ).html( data["algo_name"] );
 
 	$( "#short_description" ).html( data["short_description"] );
 
 	var authors = "";
 	for (var i = 0; i < data["authors"].length; i++) {
-     	   authors += '- ' + data["authors"][i] + '<br>'
+        if(i == 0){
+     	   authors += data["authors"][i];
+        } else {
+            authors += ', ' + data["authors"][i];
+        }
 	}
 	$( "#authors" ).html( authors );		
 
 	$( "#long_description" ).html( data["long_description"] );
 
 	$( "#algo_ref" ).attr( 'href', data["web_link"] );
+    $( "#algo_ref" ).html( data["web_link"] );
+    
+    $( "#offline_command" ).html( data["offline_command"] );
 
-	$.each( data["params"], function( key, value ) {
+	/*$.each( data["params"], function( key, value ) {
         $( "#param_conf" ).html("")
         var button_id = "#button" + key
         $( "#change_form" ).append( parse("<table><tr><td style='padding:10px'>%s</td><td style='padding:10px'>%s</td><td style='padding:10px'><input id= '%s' type='text' style='width:50px;height:32px'></td><td><button style='width:150px;align:right;' id='%s' type='submit' class='btn btn-warning'>Change Value</button></td></tr></table>", key, value, "new" + key ,"button"+key));
@@ -159,18 +185,7 @@ $.getJSON( "/algorun_info/manifest.json", function( data ) {
 	                         .fail(function() {alert("An error occured!")});
             }
         });
-	});
-});
-
-
-input_example_file = '/algorun_info/input_example.txt';
-$('#input_example').load(input_example_file);
-
-output_example_file = '/algorun_info/output_example.txt';
-$('#output_example').load(output_example_file);
-
-$('#change_form').click(function(event) {
-    $(this).data('clicked',$(event.target))
+	});*/
 });
 </script>
 </body>
