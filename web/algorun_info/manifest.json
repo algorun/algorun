@@ -5,5 +5,5 @@
 "long_description": "No long description provided!",
 "web_link": "http://algorun.org",
 "offline_command": "$ docker run -d algorun/test --name test",
-"params": {}
+"params": {"param1": "value1", "param2": "value2"}
 }

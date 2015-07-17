@@ -28,6 +28,7 @@ ADD Server.js /home/algorithm/
 ADD ./web/index.html /home/algorithm/web/
 ADD ./web/js /home/algorithm/web/js/
 ADD ./web/css /home/algorithm/web/css/
+ADD ./web/images /home/algorithm/web/images/
 ADD ./web/algorun_info /home/algorithm/web/algorun_info/
 ADD ./lib/*.js /home/algorithm/lib/
 ENV CODE_HOME /home/algorithm

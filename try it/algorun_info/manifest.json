@@ -4,5 +4,6 @@
 "authors": ["My author 1", "My author 2"],
 "long_description": "My long description",
 "web_link": "http://algorun.org",
+"offline_command": "$ docker run -d algorun/test --name test",
 "params": {"PARAM_1": "value1", "PARAM_2": "value2"}
 }

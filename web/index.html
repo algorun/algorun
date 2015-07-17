@@ -20,6 +20,7 @@
 <head>
 <link rel="stylesheet" href="/css/bootstrap.min.css">
 <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css" href="/css/sweetalert.css">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,9 +33,17 @@ body {
 	padding: 40px 15px;
 	text-align: justify;
 }
+#param_settings {
+    opacity: 0.6;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+    }
+#param_settings:hover {
+    opacity: 1.0;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+}
 </style>
 </head>
-<body>
+<body background="images/back.png">
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
@@ -64,16 +73,60 @@ body {
 		<p id='short_description'>Short Description</p>
         <p>More Information:&nbsp;<a id='algo_ref' href="http://algorun.org" target="_blank">http://algorun.org</a></p>
         <h1 id="run" style="color:#58ACFA;">Run</h1>
-			<p>Enter input data below and hit the RUN button</p>
-			<form id="run_form" action="/do/run">
-				<p align="right"><button id="reset_computation" style="height:20px;width:100px;padding:0px;font-size:80%;" type="button" class="btn btn-default">reset computation</button>&nbsp;&nbsp;<button id="populate_input" style="height:20px;width:150px;padding:0px;font-size:80%;" type="button" class="btn btn-info">fill form with data example</button></p>
-			<textarea name="input" id="input_data" class="form-control" rows="8" style="font-size:80%;"></textarea>
-				<br/><p align="center"><button style="width:200px;align:right;" id="run_button" type="submit" class="btn btn-success">RUN</button></p>
-			</form>
-				<div>
-					<p>Computation result</p>
-					<textarea id="output_data" class="form-control" rows=8 style="font-size:80%;"></textarea>
+			<p>Enter input data below and hit the RUN button to launch computation.</p>
+        <table class="table table-condensed">
+            <tr>
+                <td align="center" style="vertical-align: middle;"><h4>INPUT DATA</h4></td>
+                <td align="right" style="vertical-align: middle;"><input id="param_settings"type="image" src="images/param_icon.gif" style="width: 40px; height: 40px;"  data-toggle="modal" data-target="#paramsModal"/>
+                    <!-- Modal for changing parameters -->
+                <div align="left" class="modal fade" id="paramsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;    </span></button>
+                                <h4 class="modal-title" id="myModalLabel">Change Parameters</h4>
+                            </div>
+                            <div class="modal-body">
+                                <table id="param_table"class="table">
+                                    <tr>
+                                        <td align="left" style="vertical-align: middle;">
+                                            <div class="dropdown">
+                                                <button id="param_menu_header" class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown">Select Parameter&nbsp;<span class="caret"></span></button>
+                                                <ul id="params" class="dropdown-menu">
+                                                </ul>
+                                            </div>
+                                        </td>
+                                        <td id="def_val" align="left" style="vertical-align: middle;">no parameter selected</td>
+                                        <td align="left" style="vertical-align: middle;"><input id="new_val" type="text" style="width: 100px; text-align: center;"></td>
+                                    </tr>
+                                </table>
+                                
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Done</button>
+                                <button id="change_param" type="button" class="btn btn-warning">Save Parameters</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </td>
+                <td align="center" style="vertical-align: middle;"><button style="width:170px;align:right;" id="run_button" class="btn btn-success">RUN COMPUTATION</button></td>
+            </tr>
+            <tr>
+                <td colspan="2" width="50%">
+			         <pre id="input_editor" style="position: relative; top: 0; right: 0; bottom: 0; left: 100; height: 400px; align: left;">                               </pre>
+                </td>
+                <td colspan="2" width="50%">
+                    <div>
+					<pre id="output_editor" style="position: relative; top: 0; right: 0; bottom: 0; left: 100; height: 400px; align: left;">                               </pre>
 				</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><button id="populate_input" style="height:20px;width:150px;padding:0px;font-size:80%;" type="button" class="btn btn-info">fill form with data example</button></td>
+                <td colspan="2" align="center"><button id="reset_computation" style="height:20px;width:100px;padding:0px;font-size:80%;" type="button" class="btn btn-default">reset computation</button></td>
+            </tr>
+        </table>
         <h1 id="web_api" style="color:#58ACFA;">Web API</h1>
         <p>This algorithm can be run via the web interface above or via the following web API</p>
         <h2>HTTP POST /do/run</h2>
@@ -108,8 +161,22 @@ following command:</p>
 <script src="/js/jquery-1.11.2.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/algorun.js"></script>
-<script type="application/javascript">
-//run();
+<script src="/js/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/sweetalert.min.js"></script>
+<script>
+    var i_editor = ace.edit("input_editor");
+    i_editor.setTheme("ace/theme/xcode");
+    i_editor.getSession().setTabSize(4);
+    i_editor.getSession().setUseSoftTabs(true);
+    document.getElementById('input_editor').style.fontSize='15px';
+    //i_editor.getSession().setMode("ace/mode/json");
+    
+    var o_editor = ace.edit("output_editor");
+    o_editor.setTheme("ace/theme/twilight");
+    o_editor.getSession().setTabSize(4);
+    o_editor.getSession().setUseSoftTabs(true);
+    document.getElementById('output_editor').style.fontSize='15px';
+    //o_editor.getSession().setMode("ace/mode/json");
 </script>
 <script>
     $(function() {
@@ -165,28 +232,21 @@ $.getJSON( "/algorun_info/manifest.json", function( data ) {
     $( "#algo_ref" ).html( data["web_link"] );
     
     $( "#offline_command" ).html( data["offline_command"] );
-
-	/*$.each( data["params"], function( key, value ) {
-        $( "#param_conf" ).html("")
-        var button_id = "#button" + key
-        $( "#change_form" ).append( parse("<table><tr><td style='padding:10px'>%s</td><td style='padding:10px'>%s</td><td style='padding:10px'><input id= '%s' type='text' style='width:50px;height:32px'></td><td><button style='width:150px;align:right;' id='%s' type='submit' class='btn btn-warning'>Change Value</button></td></tr></table>", key, value, "new" + key ,"button"+key));
-        $( button_id ).on( "click", {}, function(){
-            var param_input_id = "#new" + key;
-            var param_name = key
-            var new_param_value = $(param_input_id).val();
-            if (new_param_value === ""){
-                alert("Please provide a parameter value!");
-            }else{
-                //alert("I will change " + param_name + " from " + value + " to " + new_param_value);
-                var req_body = {};
-                req_body[param_name] = new_param_value;
-                var jqxhr = $.post( "/do/config", req_body)
-	                         .done(function(data,textStatus,jqXHR) {alert(data)})
-	                         .fail(function() {alert("An error occured!")});
-            }
-        });
-	});*/
+    
+    if (jQuery.isEmptyObject(data["params"])){
+        $("#myModalLabel").html("No parameters to change!");
+        $("#param_table").remove();
+    } else {
+        $.each( data["params"], function( key, value ) {
+            $("#params").append(parse("<li><a id='%s'>%s</a></li>", key, key));
+            $("#"+key).click(function(){
+                $("#param_menu_header").html( $(this).text());
+                $("#def_val").html("default value: " + value);
+            });
+	   });   
+    }
 });
+</script>
 </script>
 </body>
 </html>

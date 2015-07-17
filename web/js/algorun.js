@@ -15,17 +15,46 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-$("#run_form").submit(function(event) {
-	event.preventDefault();
-	var input_data=$("#input_data").val();
+$("#run_button").click(function() {
+	var input_data = i_editor.getValue();
 	var jqxhr = $.post( "/do/run", { input: input_data })
-	.done(function(data,textStatus,jqXHR) {$("#output_data").val(data);})
-	.fail(function() {$("#output_data").val("An error occurred")});
+	.done(function(data,textStatus,jqXHR) {o_editor.setValue(data);})
+	.fail(function() {o_editor.setValue('An error occured!');});
 });
 $("#populate_input").click(function() {
-	$("#input_data").val($("#input_example").text());
+    $.get("/algorun_info/input_example.txt", function(data){
+        i_editor.setValue(data);
+    });
 });
 $("#reset_computation").click(function() {
-	$("#input_data").val("");
-	$("#output_data").val("");
+	i_editor.setValue('');
+    o_editor.setValue('');
+});
+$("#change_param").click(function(){
+    var def_val = $("#def_val").html();
+    if(def_val == "no parameter selected"){
+        sweetAlert("Oops...", "Have you selected a parameter?", "error");
+    } else {
+        var new_val = $("#new_val").val();
+        if(new_val == ""){
+            sweetAlert("Oops...", "Did you forget to enter the new value?", "error");
+        } else {
+            var param = $("#param_menu_header").html();
+            var req_body = {};
+            req_body[param] = new_val;
+            var jqxhr = $.post( "/do/config", req_body)
+	                      .done(function(data,textStatus,jqXHR) {
+                             if(data.substring(0, 6) == "Cannot"){
+                                sweetAlert("I'm sorry...", "There is no such parameter!", "error");
+                             } else {
+                                 swal({
+                                     title: "Parameter Changed!",
+                                     type: "success",
+                                     text: data,
+                                     showConfirmButton: true });
+                             }
+                          })
+	                      .fail(function() {sweetAlert("Oops...", "Unexpected error occured!", "error");})   
+                    }
+    }
 });
