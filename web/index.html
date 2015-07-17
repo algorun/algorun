@@ -171,12 +171,15 @@ following command:</p>
     document.getElementById('input_editor').style.fontSize='15px';
     //i_editor.getSession().setMode("ace/mode/json");
     
+    
     var o_editor = ace.edit("output_editor");
     o_editor.setTheme("ace/theme/twilight");
     o_editor.getSession().setTabSize(4);
     o_editor.getSession().setUseSoftTabs(true);
     document.getElementById('output_editor').style.fontSize='15px';
     //o_editor.getSession().setMode("ace/mode/json");
+    o_editor.setReadOnly(true);
+    
 </script>
 <script>
     $(function() {
@@ -238,7 +241,7 @@ $.getJSON( "/algorun_info/manifest.json", function( data ) {
         $("#param_table").remove();
     } else {
         $.each( data["params"], function( key, value ) {
-            $("#params").append(parse("<li><a id='%s'>%s</a></li>", key, key));
+            $("#params").append(parse("<li style='cursor: pointer; cursor: hand;'><a id='%s'>%s</a></li>", key, key));
             $("#"+key).click(function(){
                 $("#param_menu_header").html( $(this).text());
                 $("#def_val").html("default value: " + value);

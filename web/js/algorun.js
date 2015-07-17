@@ -17,13 +17,18 @@
 */
 $("#run_button").click(function() {
 	var input_data = i_editor.getValue();
-	var jqxhr = $.post( "/do/run", { input: input_data })
-	.done(function(data,textStatus,jqXHR) {o_editor.setValue(data);})
-	.fail(function() {o_editor.setValue('An error occured!');});
+    if (input_data.trim() == ""){
+        sweetAlert("Oops...", "Should you pass input to the computation?", "error");
+    } else {
+	   var jqxhr = $.post( "/do/run", { input: input_data })
+	   .done(function(data,textStatus,jqXHR) {o_editor.setValue(data);o_editor.gotoLine(1);})
+	   .fail(function() {o_editor.setValue('An error occured!');});
+    }
 });
 $("#populate_input").click(function() {
     $.get("/algorun_info/input_example.txt", function(data){
         i_editor.setValue(data);
+        i_editor.gotoLine(1);
     });
 });
 $("#reset_computation").click(function() {
