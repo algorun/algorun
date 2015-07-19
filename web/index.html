@@ -21,6 +21,10 @@
 <link rel="stylesheet" href="/css/bootstrap.min.css">
 <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
 <link rel="stylesheet" type="text/css" href="/css/sweetalert.css">
+<link rel="stylesheet" type="text/css" href="/css/bootstrap-editable.css">
+<link rel="icon" 
+      type="image/png" 
+      href="/images/favicon.png" />
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,6 +42,14 @@ body {
     filter: alpha(opacity=40); /* For IE8 and earlier */
     }
 #param_settings:hover {
+    opacity: 1.0;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+#reset_params {
+    opacity: 0.6;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+    }
+#reset_params:hover {
     opacity: 1.0;
     filter: alpha(opacity=40); /* For IE8 and earlier */
 }
@@ -77,38 +89,22 @@ body {
         <table class="table table-condensed">
             <tr>
                 <td align="center" style="vertical-align: middle;"><h4>INPUT DATA</h4></td>
-                <td align="right" style="vertical-align: middle;"><input id="param_settings"type="image" src="images/param_icon.gif" style="width: 40px; height: 40px;"  data-toggle="modal" data-target="#paramsModal"/>
-                    <!-- Modal for changing parameters -->
-                <div align="left" class="modal fade" id="paramsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;    </span></button>
-                                <h4 class="modal-title" id="myModalLabel">Change Parameters</h4>
-                            </div>
-                            <div class="modal-body">
-                                <table id="param_table"class="table">
-                                    <tr>
-                                        <td align="left" style="vertical-align: middle;">
-                                            <div class="dropdown">
-                                                <button id="param_menu_header" class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown">Select Parameter&nbsp;<span class="caret"></span></button>
-                                                <ul id="params" class="dropdown-menu">
-                                                </ul>
-                                            </div>
-                                        </td>
-                                        <td id="def_val" align="left" style="vertical-align: middle;">no parameter selected</td>
-                                        <td align="left" style="vertical-align: middle;"><input id="new_val" type="text" style="width: 100px; text-align: center;"></td>
-                                    </tr>
-                                </table>
+                <td align="right" style="vertical-align: middle;">
+                    <div class="dropdown">
+                        <input id="param_settings" type="image" src="images/param_icon.gif" style="width: 40px; height: 40px;" data-toggle="dropdown" data-toggle="tooltip" title="parameters configuration"></input>
+                        <div id="params_window" class="dropdown-menu dropdown-menu-right" style="width: 300px; padding: 15px 15px 10px 15px;">
+                            <h4 align="center" style="color:orange;">Parameters Configuration</h4>
+                            <table class="table" id="params_table">
+                                <!--To be filled from manifest.json-->
                                 
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Done</button>
-                                <button id="change_param" type="button" class="btn btn-warning">Save Parameters</button>
-                            </div>
+                            </table>
+                            <div align="center">
+                                <input id="reset_params" type="image" src="images/reset-params.gif" style="width: 40px; height: 40px;" data-toggle="tooltip" title="reset to defaults"></input>
+                            </div>  
                         </div>
                     </div>
-                </div>
+                    
+                
                 </td>
                 <td align="center" style="vertical-align: middle;"><button style="width:170px;align:right;" id="run_button" class="btn btn-success">RUN COMPUTATION</button></td>
             </tr>
@@ -141,7 +137,7 @@ body {
         <h1 id="authors_label" style="color:#58ACFA;">Authors</h1>
         <p id='authors'>Authors list</p>
         <h1 id="about_label" style="color:#58ACFA;">About</h1>
-        <p>This interface is provided to you by AlgoRun. AlgoRun aims at providing computational scientists with an
+        <p>This interface was automatically generated by AlgoRun. AlgoRun aims at providing computational scientists with an
 easy way to use and publish their algorithms.</p>
         <p>More Information:&nbsp;<a href="http://algorun.org" target="_blank">http://algorun.org</a></p>
         
@@ -160,16 +156,18 @@ following command:</p>
 </div>
 <script src="/js/jquery-1.11.2.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
-<script src="/js/algorun.js"></script>
 <script src="/js/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="/js/sweetalert.min.js"></script>
+<script src="/js/bootstrap-editable.min.js"></script>
+<script src="/js/algorun.js"></script>
+<script src="/js/params.js"></script>
 <script>
     var i_editor = ace.edit("input_editor");
     i_editor.setTheme("ace/theme/xcode");
     i_editor.getSession().setTabSize(4);
     i_editor.getSession().setUseSoftTabs(true);
     document.getElementById('input_editor').style.fontSize='15px';
-    //i_editor.getSession().setMode("ace/mode/json");
+    i_editor.getSession().setMode("ace/mode/json");
     
     
     var o_editor = ace.edit("output_editor");
@@ -177,7 +175,7 @@ following command:</p>
     o_editor.getSession().setTabSize(4);
     o_editor.getSession().setUseSoftTabs(true);
     document.getElementById('output_editor').style.fontSize='15px';
-    //o_editor.getSession().setMode("ace/mode/json");
+    o_editor.getSession().setMode("ace/mode/json");
     o_editor.setReadOnly(true);
     
 </script>
@@ -202,54 +200,6 @@ following command:</p>
         });
     });
 </script>    
-<script>
-    function parse(str) {
-    var args = [].slice.call(arguments, 1),
-        i = 0;
-
-    return str.replace(/%s/g, function() {
-        return args[i++];
-    });
-}
-$.getJSON( "/algorun_info/manifest.json", function( data ) {
-	$( "#algo_name" ).html( data["algo_name"] );
-    $( "#algo_tab" ).html( data["algo_name"] );
-	$( "#about_algo_name" ).html( data["algo_name"] );
-	$( "#algo_title" ).html( data["algo_name"] );
-
-	$( "#short_description" ).html( data["short_description"] );
-
-	var authors = "";
-	for (var i = 0; i < data["authors"].length; i++) {
-        if(i == 0){
-     	   authors += data["authors"][i];
-        } else {
-            authors += ', ' + data["authors"][i];
-        }
-	}
-	$( "#authors" ).html( authors );		
-
-	$( "#long_description" ).html( data["long_description"] );
-
-	$( "#algo_ref" ).attr( 'href', data["web_link"] );
-    $( "#algo_ref" ).html( data["web_link"] );
-    
-    $( "#offline_command" ).html( data["offline_command"] );
-    
-    if (jQuery.isEmptyObject(data["params"])){
-        $("#myModalLabel").html("No parameters to change!");
-        $("#param_table").remove();
-    } else {
-        $.each( data["params"], function( key, value ) {
-            $("#params").append(parse("<li style='cursor: pointer; cursor: hand;'><a id='%s'>%s</a></li>", key, key));
-            $("#"+key).click(function(){
-                $("#param_menu_header").html( $(this).text());
-                $("#def_val").html("default value: " + value);
-            });
-	   });   
-    }
-});
-</script>
 </script>
 </body>
 </html>

@@ -35,31 +35,3 @@ $("#reset_computation").click(function() {
 	i_editor.setValue('');
     o_editor.setValue('');
 });
-$("#change_param").click(function(){
-    var def_val = $("#def_val").html();
-    if(def_val == "no parameter selected"){
-        sweetAlert("Oops...", "Have you selected a parameter?", "error");
-    } else {
-        var new_val = $("#new_val").val();
-        if(new_val == ""){
-            sweetAlert("Oops...", "Did you forget to enter the new value?", "error");
-        } else {
-            var param = $("#param_menu_header").html();
-            var req_body = {};
-            req_body[param] = new_val;
-            var jqxhr = $.post( "/do/config", req_body)
-	                      .done(function(data,textStatus,jqXHR) {
-                             if(data.substring(0, 6) == "Cannot"){
-                                sweetAlert("I'm sorry...", "There is no such parameter!", "error");
-                             } else {
-                                 swal({
-                                     title: "Parameter Changed!",
-                                     type: "success",
-                                     text: data,
-                                     showConfirmButton: true });
-                             }
-                          })
-	                      .fail(function() {sweetAlert("Oops...", "Unexpected error occured!", "error");})   
-                    }
-    }
-});
