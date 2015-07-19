@@ -5,45 +5,64 @@ function configure_params(params) {
         $("#params_window").html('<h5 align="center" style="color:orange;">No Specific Parameters Configuration</h5>');
     } else {
         $("#params_table").empty();
+        var i = 1;
+        var tabIndex = 0;
+        var tabArray = new Array();
         $.each( params, function( key, value ) {    
-        $("#params_table").append(parse("<tr><td align='center' style='vertical-align: middle;'>%s</td><td align='center' style='vertical-align: middle;'><a id='%s'></a></td></tr>", key, key));
-        $('.param-input').click(function(e) {
-            e.stopPropagation();
-        });
-        $('#'+key).click(function(e) {
-            e.stopPropagation();
-        });
-        $.fn.editable.defaults.mode = 'inline';
-        $('#'+key).editable({
-            type: 'text',
-            pk: 1,
-            title: 'Enter username',
-            highlight: '#00FF00',
-            showbuttons: false,
-            value: value,
-            emptytext: value,
-            defaultValue: value,
-            tpl: "<input type='text' style='width: 75px; text-align:center;'>",
-            success: function(response, newValue) {
-                var req_body = {};
-                req_body[key] = newValue;
-                var jqxhr = $.post( "/do/config", req_body)
-                   .done(function(data,textStatus,jqXHR) {
-                         if(data.substring(0, 6) == "Cannot"){
+            $("#params_table").append(parse("<tr><td align='center' style='vertical-align: middle;'>%s.</td><td align='center' style='vertical-align: middle;'>%s</td><td align='center' style='vertical-align: middle;'><a id='%s''></a></td></tr>", i, key, key));
+            $('.param-input').click(function(e) {
+                e.stopPropagation();
+            });
+            $('#'+key).click(function(e) {
+                e.stopPropagation();
+                tabIndex = tabArray.indexOf(key);
+            });
+            shortcut.add("Alt+"+i,function() {
+	           $("#"+key).click();
+            });
+            tabArray[i] = key;
+            i += 1;
+            $.fn.editable.defaults.mode = 'inline';
+            $('#'+key).editable({
+                type: 'text',
+                pk: 1,
+                title: 'Enter username',
+                highlight: '#00FF00',
+                showbuttons: false,
+                value: value,
+                emptytext: value,
+                defaultValue: value,
+                tpl: "<input type='text' style='width: 75px; text-align:center;'>",
+                success: function(response, newValue) {
+                    var req_body = {};
+                    req_body[key] = newValue;
+                    var jqxhr = $.post( "/do/config", req_body)
+                    .done(function(data,textStatus,jqXHR) {
+                        if(data.substring(0, 6) == "Cannot"){
                             sweetAlert("I'm sorry...", "There is no such parameter!", "error");
                             $("#"+key).html(value); 
-                        } else {
-                        }
-                      })
-                   .fail(function() {
-                          sweetAlert("Oops...", "Unexpected error occured!", "error");
-                          $("#"+key).html(value);
-                      });   
+                            } else {
+                            }
+                        })
+                    .fail(function() {
+                        sweetAlert("Oops...", "Unexpected error occured!", "error");
+                        $("#"+key).html(value);
+                        });   
+                    }
                 }
+            );
+        });   
+        shortcut.add("Tab",function() {
+            $("#"+tabArray[(++tabIndex)%(tabArray.length)]).click();
+        });
+        shortcut.add("Shift+Tab",function() {
+            if(tabIndex == 0 || tabIndex == 1){
+                tabIndex = 2;
             }
-        );
-    });   
-}}
+            $("#"+tabArray[(--tabIndex)%(tabArray.length)]).click();
+        });
+    }
+}
 function parse(str) {
     var args = [].slice.call(arguments, 1),
         i = 0;
