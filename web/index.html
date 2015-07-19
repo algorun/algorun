@@ -53,6 +53,22 @@ body {
     opacity: 1.0;
     filter: alpha(opacity=40); /* For IE8 and earlier */
 }
+#upload_file {
+    opacity: 0.6;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+    }
+#upload_file:hover {
+    opacity: 1.0;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+#download_file {
+    opacity: 0.6;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+#download_file:hover {
+    opacity: 1.0;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+}
 </style>
 </head>
 <body background="images/back.png">
@@ -106,21 +122,28 @@ body {
                     
                 
                 </td>
-                <td align="center" style="vertical-align: middle;"><button style="width:170px;align:right;" id="run_button" class="btn btn-success">RUN COMPUTATION</button></td>
+                <td align="center" style="vertical-align: middle;" colspan="2"><button style="width:170px;align:right;" id="run_button" class="btn btn-success">RUN COMPUTATION</button></td>
             </tr>
             <tr>
                 <td colspan="2" width="50%">
-			         <pre id="input_editor" style="position: relative; top: 0; right: 0; bottom: 0; left: 100; height: 400px; align: left;">                               </pre>
+			         <pre id="input_editor" style="position: relative; top: 0; right: 0; bottom: 0; left: 100; height: 385px; align: left;">                               </pre>
                 </td>
                 <td colspan="2" width="50%">
-                    <div id="asd">
-					<pre id="output_editor" style="position: relative; top: 0; right: 0; bottom: 0; left: 100; height: 400px; align: left;">                               </pre>
-				</div>
+					<pre id="output_editor" style="position: relative; top: 0; right: 0; bottom: 0; left: 100; height: 385px; align: left;">                               </pre>
                 </td>
             </tr>
             <tr>
-                <td colspan="2" align="center"><button id="populate_input" style="height:20px;width:150px;padding:0px;font-size:80%;" type="button" class="btn btn-info">fill form with data example</button></td>
-                <td colspan="2" align="center"><button id="reset_computation" style="height:20px;width:100px;padding:0px;font-size:80%;" type="button" class="btn btn-default">reset computation</button></td>
+                <td align="center" style="vertical-align: middle; width:40%;"><button id="populate_input" style="height:20px;width:150px;padding:0px;font-size:80%;" type="button" class="btn btn-info">fill form with data example</button></td>
+                <td align="right" style="vertical-align: middle; width:10%;"> 
+                    <div class="image-upload">
+                    <label for="file-input" data-toggle="tooltip" title="fill from a local file">
+                        <img id="upload_file" src="images/file-upload.png" style="width: 40px; height: 40px; cursor: hand; cursor: pointer;"/>
+                    </label>
+                    <input id="file-input" type="file" style="display: none;"/>
+                    </div>
+                </td>
+                <td align="left" style="width:10%;"><input id="download_file" type="image" src="images/file-download.png" style="width: 40px; height: 40px;" data-toggle="tooltip" title="save results to local disk"></input></td>
+                <td align="center" style="vertical-align: middle; width:40%;"><button id="reset_computation" style="height:20px;width:100px;padding:0px;font-size:80%;" type="button" class="btn btn-default">reset computation</button></td>
             </tr>
         </table>
         <h1 id="web_api" style="color:#58ACFA;">Web API</h1>
@@ -172,6 +195,12 @@ easy way to use and publish their algorithms.</p>
                 <td style="color:#006699">Alt + d</td>
                 <td>Reset parameters <u>d</u>efault configuration</td>
             </tr>
+            <tr>
+                <td style="color:#006699">Alt + u</td>
+                <td><u>U</u>pload input data from disk</td>
+                <td style="color:#006699">Alt + w</td>
+                <td>Do<u>w</u>nload computation result to disk</td>
+            </tr>
         </table>
         <p>More Information:&nbsp;<a href="http://algorun.org" target="_blank">http://algorun.org</a></p>
         
@@ -199,6 +228,57 @@ following command:</p>
 <script src="/js/algorun-shortcuts.js"></script>
 <script src="/js/algorun-editors.js"></script>
 <script src="/js/tab-animation.js"></script>
+<output id="list"></output>
+<script>
+if (window.File && window.FileReader && window.FileList && window.Blob) {
+  function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+    var r = new FileReader();
+    f = files[0];
+        r.onload = function(e) { 
+	    var contents = e.target.result;
+        i_editor.setValue(contents);
+      }
+      r.readAsText(f);
+  }
+  document.getElementById('file-input').addEventListener('change', handleFileSelect, false);
+}
+</script>
+<script>
+$("#download_file").click(function() {
+	saveTextAsFile();
+});
+function saveTextAsFile()
+{
+	var textToWrite = o_editor.getValue();
+    if(textToWrite.trim() == ""){
+        sweetAlert("Oops...", "It seems like you have not run the computation", "error");
+        return;
+    }
+	var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
+	var fileNameToSaveAs = "computation result";
+
+	var downloadLink = document.createElement("a");
+	downloadLink.download = fileNameToSaveAs;
+	downloadLink.innerHTML = "Download File";
+	if (window.webkitURL != null)
+	{
+		// Chrome allows the link to be clicked
+		// without actually adding it to the DOM.
+		downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+	}
+	else
+	{
+		// Firefox requires the link to be added to the DOM
+		// before it can be clicked.
+		downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+		downloadLink.onclick = destroyClickedElement;
+		downloadLink.style.display = "none";
+		document.body.appendChild(downloadLink);
+	}
+
+	downloadLink.click();
+}
 </script>
 </body>
 </html>

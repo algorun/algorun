@@ -19,3 +19,9 @@ shortcut.add("Alt+e",function() {
 shortcut.add("Alt+d",function() {
 	    $("#reset_params").click();
 });
+shortcut.add("Alt+u",function() {
+	    $("#upload_file").click();
+});
+shortcut.add("Alt+w",function() {
+	    $("#download_file").click();
+});
