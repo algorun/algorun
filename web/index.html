@@ -90,6 +90,7 @@ body {
 				<li><a href="#authors_label">Authors</a></li>
 				<li><a href="#about_label">About</a></li>
                 <li><a href="#download">Download</a></li>
+                <li><a href="#help">Help</a></li>
 			</ul>
 		</div><!--/.nav-collapse -->
 	</div>
@@ -101,51 +102,51 @@ body {
 		<p id='short_description'>Short Description</p>
         <p>More Information:&nbsp;<a id='algo_ref' href="http://algorun.org" target="_blank">http://algorun.org</a></p>
         <h1 id="run" style="color:#58ACFA;">Run</h1>
-			<p>Enter input data below and hit the RUN button to launch computation.</p>
-        <table class="table table-condensed">
-            <tr>
-                <td align="center" style="vertical-align: middle;"><h4>INPUT DATA</h4></td>
-                <td align="right" style="vertical-align: middle;">
-                    <div class="dropdown">
-                        <input id="param_settings" type="image" src="images/param_icon.gif" style="width: 40px; height: 40px;" data-toggle="dropdown" data-toggle="tooltip" title="parameters configuration"></input>
-                        <div id="params_window" class="dropdown-menu dropdown-menu-right" style="width: 300px; padding: 15px 15px 10px 15px;">
-                            <h4 align="center" style="color:orange;">Parameters Configuration</h4>
-                            <table class="table" id="params_table">
-                                <!--To be filled from manifest.json-->
-                                
-                            </table>
-                            <div align="center">
-                                <input id="reset_params" type="image" src="images/reset-params.gif" style="width: 40px; height: 40px;" data-toggle="tooltip" title="reset to defaults"></input>
-                            </div>  
-                        </div>
-                    </div>
-                    
-                
-                </td>
-                <td align="center" style="vertical-align: middle;" colspan="2"><button style="width:170px;align:right;" id="run_button" class="btn btn-success">RUN COMPUTATION</button></td>
-            </tr>
-            <tr>
-                <td colspan="2" width="50%">
-			         <pre id="input_editor" style="position: relative; top: 0; right: 0; bottom: 0; left: 100; height: 385px; align: left;">                               </pre>
-                </td>
-                <td colspan="2" width="50%">
-					<pre id="output_editor" style="position: relative; top: 0; right: 0; bottom: 0; left: 100; height: 385px; align: left;">                               </pre>
-                </td>
-            </tr>
-            <tr>
-                <td align="center" style="vertical-align: middle; width:40%;"><button id="populate_input" style="height:20px;width:150px;padding:0px;font-size:80%;" type="button" class="btn btn-info">fill form with data example</button></td>
-                <td align="right" style="vertical-align: middle; width:10%;"> 
-                    <div class="image-upload">
+			<p>Enter input data below and hit the RUN button to launch the computation.</p>
+        <div class="row" align="center">
+            <div class="col-md-5" ><h3>INPUT</h3></div>
+            <div class="col-md-1" style="margin-top:15px">
+                <div class="image-upload">
                     <label for="file-input" data-toggle="tooltip" title="fill from a local file">
                         <img id="upload_file" src="images/file-upload.png" style="width: 40px; height: 40px; cursor: hand; cursor: pointer;"/>
                     </label>
                     <input id="file-input" type="file" style="display: none;"/>
-                    </div>
-                </td>
-                <td align="left" style="width:10%;"><input id="download_file" type="image" src="images/file-download.png" style="width: 40px; height: 40px;" data-toggle="tooltip" title="save results to local disk"></input></td>
-                <td align="center" style="vertical-align: middle; width:40%;"><button id="reset_computation" style="height:20px;width:100px;padding:0px;font-size:80%;" type="button" class="btn btn-default">reset computation</button></td>
-            </tr>
-        </table>
+                </div>
+            </div>
+            <div class="col-md-5"><h3>OUTPUT</h3></div>
+            <div class="col-md-1" style="margin-top:15px">
+                <input id="download_file" type="image" src="images/file-download.png" style="width: 40px; height: 40px;" data-toggle="tooltip" title="save results to local disk"></input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <pre id="input_editor" style="position: relative; top: 0; right: 0; bottom: 0; left: 100; height: 400px; align: left;">                               </pre>
+            </div>
+            <div class="col-md-6">
+                <pre id="output_editor" style="position: relative; top: 0; right: 0; bottom: 0; left: 100; height: 400px; align: left;">                               </pre>
+            </div>
+        </div>
+        <div class="row" align="center">
+            <div class="col-md-3"><button id="populate_input" class="btn btn-primary" style="width: 100%;">Load sample data</button></div>
+            <div class="col-md-3"><button id="reset_computation" class="btn btn-danger" style="width: 100%;">Reset computation</button></div>
+            <div class="col-md-3">
+            <div class="dropup">
+                <button id="param_settings" type="button" class="btn btn-warning" style="width: 100%;" data-toggle="dropdown" data-toggle="tooltip" title="parameters configuration">Change parameters</button>
+                        <div id="params_window" class="dropdown-menu" style="width: 300px; padding: 15px 15px 10px 15px; margin-left: -100%;">
+                            <h4 align="center" style="color:orange;">Parameters Configuration</h4>
+                            <div class="container" id="params_table" style="width: 100%; height: 50%;">
+                                <!--To be filled from manifest.json-->
+                                
+                            </div>
+                            <div align="center" style="padding-top: 10px;">
+                                <button id="reset_params" class="btn btn-warning btn-xs" data-toggle="tooltip" title="reset to defaults">reset to defaults</button>
+                            </div>  
+                        </div>
+            </div>
+            </div>
+            <div class="col-md-3"><button id="run_button" class="btn btn-success" style="width: 100%;">RUN COMPUTATION</button></div>
+        </div>
+        
         <h1 id="web_api" style="color:#58ACFA;">Web API</h1>
         <p>This algorithm can be run via the web interface above or via the following web API</p>
         <h2>HTTP POST /do/run</h2>
@@ -162,46 +163,6 @@ body {
         <h1 id="about_label" style="color:#58ACFA;">About</h1>
         <p>This interface was automatically generated by AlgoRun. AlgoRun aims at providing computational scientists with an
 easy way to use and publish their algorithms.</p>
-        <h3>Do you use this computation frequently?</h3>
-        <h4>Use keyboard shortcuts:</h4>
-        <table class="table" >
-            <tr>
-                <td style="color:#006699">Alt + i</td>
-                <td>Edit the input data</td>
-                <td style="color:#006699">Alt + 1</td>
-                <td>Edit the <u>first</u> parameter</td>
-            </tr>
-            <tr>
-                <td style="color:#006699">Alt + Enter OR Ctrl + Enter</td>
-                <td>Run the computation</td>
-                <td style="color:#006699">Alt + N</td>
-                <td>Edit the <u>nth</u> parameter</td>
-            </tr>
-            <tr>
-                <td style="color:#006699">Alt + r</td>
-                <td><u>R</u>eset the computation</td>
-                <td style="color:#006699">Tab</td>
-                <td>Edit the <u>next</u> parameter</td>
-            </tr>
-            <tr>
-                <td style="color:#006699">Alt + e</td>
-                <td>Fill form with <u>e</u>xample</td>
-                <td style="color:#006699">Shift + Tab</td>
-                <td>Edit the <u>previous</u> parameter</td>
-            </tr>
-            <tr>
-                <td style="color:#006699">Alt + p</td>
-                <td>Open <u>p</u>arameters configuration tab</td>
-                <td style="color:#006699">Alt + d</td>
-                <td>Reset parameters <u>d</u>efault configuration</td>
-            </tr>
-            <tr>
-                <td style="color:#006699">Alt + u</td>
-                <td><u>U</u>pload input data from disk</td>
-                <td style="color:#006699">Alt + w</td>
-                <td>Do<u>w</u>nload computation result to disk</td>
-            </tr>
-        </table>
         <p>More Information:&nbsp;<a href="http://algorun.org" target="_blank">http://algorun.org</a></p>
         
         <h1 id="download" style="color:#58ACFA;">Download</h1>
@@ -215,6 +176,44 @@ following command:</p>
             <li>via the web interface : <a>http://localhost:8765</a></li>
             <li>via the web api: <a>http://localhost/do/run</a> (see <a href="#web_api">Web API</a> above)</li>
         </ul>
+        <h1 id="help" style="color:#58ACFA;">Help</h1>
+        <h3>Do you use this computation frequently?</h3>
+        <h4>Use keyboard shortcuts:</h4>
+        <div class="container">            
+            <div class="row" align="left">
+                <div class="col-md-2" align="center"><kbd>Alt + i</kbd></div>
+                <div class="col-md-2">Edit the <u>i</u>nput data</div>
+                <div class="col-md-2" align="center" style="border-left: 1px solid;"><kbd>Alt + p</kbd></div>
+                <div class="col-md-2">Open <u>p</u>arameters configuration tab</div>
+                <div class="col-md-2" align="center" style="border-left: 1px solid;"><kbd>Alt + 1</kbd></div>
+                <div class="col-md-2">Edit the <u>first</u> parameter</div>
+            </div>
+            <div class="row" align="left">
+                <div class="col-md-2" align="center"><kbd>Alt + Enter</kbd></div>
+                <div class="col-md-2">Run the computation</div>
+                <div class="col-md-2" align="center" style="border-left: 1px solid;"><kbd>Alt + d</kbd></div>
+                <div class="col-md-2">Reset parameters <u>d</u>efault configuration</div>
+                <div class="col-md-2" align="center" style="border-left: 1px solid;"><kbd>Alt + N</kbd></div>
+                <div class="col-md-2">Edit the <u>nth</u> parameter</div>
+            </div>
+            <div class="row" align="left">
+                <div class="col-md-2" align="center"><kbd>Alt + r</kbd></div>
+                <div class="col-md-2"><u>R</u>eset the computation</div>
+                <div class="col-md-2" align="center" style="border-left: 1px solid;"><kbd>Alt + u</kbd></div>
+                <div class="col-md-2"><u>U</u>pload input data from disk</div>
+                <div class="col-md-2" align="center" style="border-left: 1px solid;"><kbd>Tab</kbd></div>
+                <div class="col-md-2">Edit the <u>next</u> parameter</div>
+            </div>
+            <div class="row" align="left">
+                <div class="col-md-2" align="center"><kbd>Alt + e</kbd></div>
+                <div class="col-md-2">Fill form with <u>e</u>xample</div>
+                <div class="col-md-2" align="center" style="border-left: 1px solid;"><kbd>Alt + w</kbd></div>
+                <div class="col-md-2">Do<u>w</u>nload computation result to disk</div>
+                <div class="col-md-2" align="center" style="border-left: 1px solid;"><kbd>Shift + Tab</kbd></div>
+                <div class="col-md-2">Edit the <u>previous</u> parameter</div>
+            </div>
+            <hr>
+        </div>
 	</div>
 </div>
 <script src="/js/shortcut.js"></script>
@@ -228,58 +227,8 @@ following command:</p>
 <script src="/js/algorun-shortcuts.js"></script>
 <script src="/js/algorun-editors.js"></script>
 <script src="/js/tab-animation.js"></script>
-<output id="list"></output>
-<script>
-if (window.File && window.FileReader && window.FileList && window.Blob) {
-  function handleFileSelect(evt) {
-    var files = evt.target.files; // FileList object
-    var r = new FileReader();
-    f = files[0];
-        r.onload = function(e) { 
-	    var contents = e.target.result;
-        i_editor.setValue(contents);
-      }
-      r.readAsText(f);
-  }
-  document.getElementById('file-input').addEventListener('change', handleFileSelect, false);
-}
-</script>
-<script>
-$("#download_file").click(function() {
-	saveTextAsFile();
-});
-function saveTextAsFile()
-{
-	var textToWrite = o_editor.getValue();
-    if(textToWrite.trim() == ""){
-        sweetAlert("Oops...", "It seems like you have not run the computation", "error");
-        return;
-    }
-	var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
-	var fileNameToSaveAs = "computation result";
-
-	var downloadLink = document.createElement("a");
-	downloadLink.download = fileNameToSaveAs;
-	downloadLink.innerHTML = "Download File";
-	if (window.webkitURL != null)
-	{
-		// Chrome allows the link to be clicked
-		// without actually adding it to the DOM.
-		downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
-	}
-	else
-	{
-		// Firefox requires the link to be added to the DOM
-		// before it can be clicked.
-		downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-		downloadLink.onclick = destroyClickedElement;
-		downloadLink.style.display = "none";
-		document.body.appendChild(downloadLink);
-	}
-
-	downloadLink.click();
-}
-</script>
+<script src="/js/file-upload.js"></script>
+<script src="/js/file-download.js"></script>
 </body>
 </html>
 
