@@ -17,6 +17,7 @@
 */
 $("#run_button").click(function() {
 	var input_data = i_editor.getValue();
+    o_editor.setValue('');
     if (input_data.trim() == ""){
         sweetAlert("Oops...", "Should you pass input to the computation?", "error");
     } else {

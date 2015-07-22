@@ -1,6 +1,3 @@
-shortcut.add("Alt+p",function() {
-    $("#param_settings").click();
-});
 shortcut.add("Alt+i",function() {
     i_editor.focus();
 });

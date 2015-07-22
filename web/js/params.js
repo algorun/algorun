@@ -38,8 +38,7 @@ function configure_params(params) {
                 value: value,
                 emptytext: value,
                 defaultValue: value,
-                onblur: 'submit',
-                tpl: "<input type='text' style='width: 75px; text-align:center;'>",
+                tpl: "<input type='text' style='width: 70px;'>",
                 success: function(response, newValue) {
                     var req_body = {};
                     req_body[key] = newValue;
@@ -57,7 +56,15 @@ function configure_params(params) {
                     }
                 }
             );
-        });   
+        });
+        shortcut.add("Alt+p",function() {
+            if($('#params_window').data('open')) { 
+                tabArray.forEach(function(i) {
+                    $("#"+i).editable('hide');
+                });
+            }
+            $("#param_settings").click();
+        });
         shortcut.add("Tab",function() {
             if($('#params_window').data('open')) {
                 $("#"+tabArray[(tabIndex)%(tabArray.length)]).editable('hide');
@@ -68,6 +75,7 @@ function configure_params(params) {
                 $("#"+tabArray[(++tabIndex)%(tabArray.length)]).click();
             }
         });
+        
         shortcut.add("Shift+Tab",function() {
             if($('#params_window').data('open')) { 
                 if(tabIndex == 0 || tabIndex == 1){
