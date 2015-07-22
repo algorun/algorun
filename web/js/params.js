@@ -10,15 +10,20 @@ function configure_params(params) {
         var tabArray = new Array();
         $.each( params, function( key, value ) {    
             $("#params_table").append(parse("<div class='row' align='center' ><div class='col-md-2'>%s.</div><div class='col-md-5' align='left'>%s</div><div class='col-md-5' align='right'><a id='%s'></a></div></div>", i, key, key));
-            /*$('.param-input').click(function(e) {
+            $('#params_window').click(function(e) {
                 e.stopPropagation();
-            });*/
+            });
             $('#'+key).click(function(e) {
                 e.stopPropagation();
                 tabIndex = tabArray.indexOf(key);
             });
             shortcut.add("Alt+"+i,function() {
-	           $("#"+key).click();
+                if($('#params_window').data('open')) { 
+                    $("#"+key).click();
+                } else {
+                    $("#param_settings").click();
+                    $("#"+key).click();
+                }
             });
             tabArray[i] = key;
             i += 1;
@@ -32,6 +37,7 @@ function configure_params(params) {
                 value: value,
                 emptytext: value,
                 defaultValue: value,
+                blur: 'submit',
                 tpl: "<input type='text' style='width: 75px; text-align:center;'>",
                 success: function(response, newValue) {
                     var req_body = {};
@@ -53,13 +59,26 @@ function configure_params(params) {
             );
         });   
         shortcut.add("Tab",function() {
-            $("#"+tabArray[(++tabIndex)%(tabArray.length)]).click();
+            if($('#params_window').data('open')) { 
+                $("#"+tabArray[(++tabIndex)%(tabArray.length)]).click();
+            } else {
+                $("#param_settings").click();
+                $("#"+tabArray[(++tabIndex)%(tabArray.length)]).click();
+            }
         });
         shortcut.add("Shift+Tab",function() {
-            if(tabIndex == 0 || tabIndex == 1){
-                tabIndex = 2;
+            if($('#params_window').data('open')) { 
+                if(tabIndex == 0 || tabIndex == 1){
+                    tabIndex = 2;
+                }
+                $("#"+tabArray[(--tabIndex)%(tabArray.length)]).click();
+            } else {
+                $("#param_settings").click();
+                if(tabIndex == 0 || tabIndex == 1){
+                    tabIndex = 2;
+                }
+                $("#"+tabArray[(--tabIndex)%(tabArray.length)]).click();
             }
-            $("#"+tabArray[(--tabIndex)%(tabArray.length)]).click();
         });
     }
 }
@@ -128,3 +147,25 @@ $('#reset_params').click(function(e) {
         });
 });
 update_ui();
+$('.dropup.keep-open').on({
+    "shown.bs.dropdown": function() { this.closable = false; },
+    "click":             function() { this.closable = true; },
+    "hide.bs.dropdown":  function() { return this.closable; }
+});
+$(document).ready(function() {
+
+    $('#params_window').data('open', false);
+
+    $('#param_settings').click(function() {
+        if($('#params_window').data('open')) {
+            $('#params_window').data('open', false);
+        } else
+            $('#params_window').data('open', true);
+    });
+
+    $(document).click(function() {
+        if($('#params_window').data('open')) {
+            $('#params_window').data('open', false);
+        }
+    });
+});
