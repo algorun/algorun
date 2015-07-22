@@ -1,10 +1,10 @@
-FROM ahosny/algorun:0.9.2
+FROM ahosny/algorun:0.9.2	#Don't change this line
 
 MAINTAINER Your Name <your_email@domain.com>
 
 # Don't forget to fill files in algorun_info folder and put your source code in src folder
-ADD ./algorun_info /home/algorithm/web/algorun_info/
-ADD ./src /home/algorithm/src/
+ADD ./algorun_info /home/algorithm/web/algorun_info/	#Don't change this line
+ADD ./src /home/algorithm/src/				#Don't change this line
 
 # Add any algorithm dependencies here
 RUN apt-get install -y ruby2.0
