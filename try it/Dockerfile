@@ -1,8 +1,10 @@
-FROM ahosny/algorun:0.9.1
+# Don't change the following line
+FROM ahosny/algorun:0.9.2
 
 MAINTAINER Your Name <your_email@domain.com>
 
 # Don't forget to fill files in algorun_info folder and put your source code in src folder
+# Don't change the following two lines
 ADD ./algorun_info /home/algorithm/web/algorun_info/
 ADD ./src /home/algorithm/src/
 
