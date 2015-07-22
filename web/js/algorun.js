@@ -21,7 +21,14 @@ $("#run_button").click(function() {
         sweetAlert("Oops...", "Should you pass input to the computation?", "error");
     } else {
 	   var jqxhr = $.post( "/do/run", { input: input_data })
-	   .done(function(data,textStatus,jqXHR) {o_editor.setValue(data);o_editor.gotoLine(1);})
+	   .done(function(data,textStatus,jqXHR) {
+            var response = jQuery.parseJSON(data);
+            if(typeof response =='object') {
+                o_editor.getSession().setMode("ace/mode/json");
+            }
+           o_editor.setValue(data);
+           o_editor.gotoLine(1);
+       })
 	   .fail(function() {o_editor.setValue('An error occured!');});
     }
 });

@@ -18,12 +18,13 @@ function configure_params(params) {
                 tabIndex = tabArray.indexOf(key);
             });
             shortcut.add("Alt+"+i,function() {
-                if($('#params_window').data('open')) { 
-                    $("#"+key).click();
-                } else {
+                if(!$('#params_window').data('open')) { 
                     $("#param_settings").click();
-                    $("#"+key).click();
                 }
+                tabArray.forEach(function(i) {
+                    $("#"+i).editable('hide');
+                });
+                $("#"+key).click();
             });
             tabArray[i] = key;
             i += 1;
@@ -37,7 +38,7 @@ function configure_params(params) {
                 value: value,
                 emptytext: value,
                 defaultValue: value,
-                blur: 'submit',
+                onblur: 'submit',
                 tpl: "<input type='text' style='width: 75px; text-align:center;'>",
                 success: function(response, newValue) {
                     var req_body = {};
@@ -46,10 +47,9 @@ function configure_params(params) {
                     .done(function(data,textStatus,jqXHR) {
                         if(data.substring(0, 6) == "Cannot"){
                             sweetAlert("I'm sorry...", "There is no such parameter!", "error");
-                            $("#"+key).html(value); 
-                            } else {
-                            }
-                        })
+                            $("#"+key).html(value);
+                        }
+                    })
                     .fail(function() {
                         sweetAlert("Oops...", "Unexpected error occured!", "error");
                         $("#"+key).html(value);
@@ -59,10 +59,12 @@ function configure_params(params) {
             );
         });   
         shortcut.add("Tab",function() {
-            if($('#params_window').data('open')) { 
+            if($('#params_window').data('open')) {
+                $("#"+tabArray[(tabIndex)%(tabArray.length)]).editable('hide');
                 $("#"+tabArray[(++tabIndex)%(tabArray.length)]).click();
             } else {
                 $("#param_settings").click();
+                $("#"+tabArray[(tabIndex)%(tabArray.length)]).editable('hide');
                 $("#"+tabArray[(++tabIndex)%(tabArray.length)]).click();
             }
         });
@@ -71,12 +73,14 @@ function configure_params(params) {
                 if(tabIndex == 0 || tabIndex == 1){
                     tabIndex = 2;
                 }
+                $("#"+tabArray[(tabIndex)%(tabArray.length)]).editable('hide');
                 $("#"+tabArray[(--tabIndex)%(tabArray.length)]).click();
             } else {
                 $("#param_settings").click();
                 if(tabIndex == 0 || tabIndex == 1){
                     tabIndex = 2;
                 }
+                $("#"+tabArray[(tabIndex)%(tabArray.length)]).editable('hide');
                 $("#"+tabArray[(--tabIndex)%(tabArray.length)]).click();
             }
         });
