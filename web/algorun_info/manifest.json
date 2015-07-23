@@ -1,7 +1,10 @@
 {
 "algo_name": "No algorithm name provided!",
 "short_description": "No short description provided!",
-"authors": ["No author", "No author"],
+"authors": [
+{"name": "name1", "email": "email1", "personal_page": "#", "organization": "org1", "org_page": "#"},
+{"name": "name2", "email": "email2", "personal_page": "#", "organization": "org2", "org_page": "#"}
+],
 "long_description": "No long description provided!",
 "web_link": "http://algorun.org",
 "keywords": ["reverse", "engineering"],

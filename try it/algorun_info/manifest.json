@@ -1,7 +1,10 @@
 {
 "algo_name": "My algorithm",
 "short_description": "My short description",
-"authors": ["My author 1", "My author 2"],
+"authors": [
+{"name": "name1", "email": "email1", "personal_page": "#", "organization": "org1", "org_page": "#"},
+{"name": "name2", "email": "email2", "personal_page": "#", "organization": "org2", "org_page": "#"}
+],
 "long_description": "My long description",
 "web_link": "http://algorun.org",
 "keywords": ["keyword2", "keyword1"],
