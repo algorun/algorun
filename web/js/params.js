@@ -228,15 +228,28 @@ function configure_params(params) {
                 e.stopPropagation();
                 tabIndex = tabArray.indexOf(key);
             });
-            shortcut.add("Alt+"+i,function() {
-                if(!$('#params_window').data('open')) { 
-                    $("#param_settings").click();
-                }
-                tabArray.forEach(function(i) {
-                    $("#"+i).editable('hide');
+            if(i<=9){
+                shortcut.add("Alt+"+i,function() {
+                    if(!$('#params_window').data('open')) { 
+                        $("#param_settings").click();
+                    }
+                    tabArray.forEach(function(j) {
+                        $("#"+j).editable('hide');
+                    });
+                    $("#"+key).click();
                 });
-                $("#"+key).click();
-            });
+            } else {
+                index = i - 10;
+                shortcut.add("Alt+Shift+"+index,function() {
+                    if(!$('#params_window').data('open')) { 
+                        $("#param_settings").click();
+                    }
+                    tabArray.forEach(function(j) {
+                        $("#"+j).editable('hide');
+                    });
+                    $("#"+key).click();
+                });
+            }
             tabArray[i] = key;
             i += 1;
             $.fn.editable.defaults.mode = 'inline';
