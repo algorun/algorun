@@ -1,0 +1,40 @@
+body {
+	padding-top: 50px;
+    background-image: url("../images/back.png")
+}
+.starter-template {
+	padding: 40px 15px;
+	text-align: justify;
+}
+#param_settings {
+    opacity: 0.6;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+    }
+#param_settings:hover {
+    opacity: 1.0;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+#reset_params {
+    opacity: 0.6;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+    }
+#reset_params:hover {
+    opacity: 1.0;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+#upload_file {
+    opacity: 0.6;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+    }
+#upload_file:hover {
+    opacity: 1.0;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+#download_file {
+    opacity: 0.6;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+#download_file:hover {
+    opacity: 1.0;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+}

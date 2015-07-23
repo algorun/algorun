@@ -9,7 +9,7 @@ function configure_params(params) {
         var tabIndex = 0;
         var tabArray = new Array();
         $.each( params, function( key, value ) {    
-            $("#params_table").append(parse("<div class='row' align='center' ><div class='col-md-2'>%s.</div><div class='col-md-5' align='left'>%s</div><div class='col-md-5' align='right'><a id='%s'></a></div></div>", i, key, key));
+            $("#params_table").append(parse("<div class='row' align='center' ><div class='col-md-1'>%s.</div><div class='col-md-5' align='left'>%s</div><div class='col-md-5' align='right'><a id='%s'></a></div></div>", i, key, key));
             $('#params_window').click(function(e) {
                 e.stopPropagation();
             });

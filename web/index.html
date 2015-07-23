@@ -23,55 +23,15 @@
 <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
 <link rel="stylesheet" type="text/css" href="/css/sweetalert.css">
 <link rel="stylesheet" type="text/css" href="/css/bootstrap-editable.css">
+    <link rel="stylesheet" type="text/css" href="/css/home.css">
 <link rel="icon" 
       type="image/png" 
       href="/images/favicon.png" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title id='algo_title'>Algorithm Sample</title>
-<style type="text/css">
-body {
-	padding-top: 50px;
-}
-.starter-template {
-	padding: 40px 15px;
-	text-align: justify;
-}
-#param_settings {
-    opacity: 0.6;
-    filter: alpha(opacity=40); /* For IE8 and earlier */
-    }
-#param_settings:hover {
-    opacity: 1.0;
-    filter: alpha(opacity=40); /* For IE8 and earlier */
-}
-#reset_params {
-    opacity: 0.6;
-    filter: alpha(opacity=40); /* For IE8 and earlier */
-    }
-#reset_params:hover {
-    opacity: 1.0;
-    filter: alpha(opacity=40); /* For IE8 and earlier */
-}
-#upload_file {
-    opacity: 0.6;
-    filter: alpha(opacity=40); /* For IE8 and earlier */
-    }
-#upload_file:hover {
-    opacity: 1.0;
-    filter: alpha(opacity=40); /* For IE8 and earlier */
-}
-#download_file {
-    opacity: 0.6;
-    filter: alpha(opacity=40); /* For IE8 and earlier */
-}
-#download_file:hover {
-    opacity: 1.0;
-    filter: alpha(opacity=40); /* For IE8 and earlier */
-}
-</style>
 </head>
-<body background="images/back.png">
+<body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
@@ -103,19 +63,19 @@ body {
         <p>More Information:&nbsp;<a id='algo_ref' href="http://algorun.org" target="_blank">http://algorun.org</a></p>
         <h1 id="run" style="color:#58ACFA;">Run</h1>
 			<p>Enter input data below and hit the RUN button to launch the computation.</p>
-        <div class="row" align="center">
-            <div class="col-md-5" ><h3>INPUT</h3></div>
+        <div class="row" style="text-align: center;">
+            <div class="col-md-5"><h3>INPUT</h3></div>
             <div class="col-md-1" style="margin-top:15px">
                 <div class="image-upload">
                     <label for="file-input" data-toggle="tooltip" title="fill from a local file">
-                        <img id="upload_file" src="images/file-upload.png" style="width: 40px; height: 40px; cursor: hand; cursor: pointer;"/>
+                        <img id="upload_file" src="images/file-upload.png" alt="upload data" style="width: 40px; height: 40px; cursor: hand; cursor: pointer;"/>
                     </label>
                     <input id="file-input" type="file" style="display: none;"/>
                 </div>
             </div>
             <div class="col-md-5"><h3>OUTPUT</h3></div>
             <div class="col-md-1" style="margin-top:15px">
-                <input id="download_file" type="image" src="images/file-download.png" style="width: 40px; height: 40px;" data-toggle="tooltip" title="save results to local disk"></input>
+                <input id="download_file" type="image" alt="download results" src="images/file-download.png" style="width: 40px; height: 40px;" data-toggle="tooltip" title="save results to local disk"/>
             </div>
         </div>
         <div class="row">
@@ -126,19 +86,19 @@ body {
                 <pre id="output_editor" style="position: relative; top: 0; right: 0; bottom: 0; left: 100; height: 400px; align: left;">                               </pre>
             </div>
         </div>
-        <div class="row" align="center">
+        <div class="row">
             <div class="col-md-3"><button id="populate_input" class="btn btn-primary" style="width: 100%;">Load sample data</button></div>
             <div class="col-md-3"><button id="reset_computation" class="btn btn-danger" style="width: 100%;">Reset computation</button></div>
             <div class="col-md-3">
             <div class="dropup keep-open">
-                <button id="param_settings" type="button" class="btn btn-warning" style="width: 100%;" data-toggle="dropdown" data-toggle="tooltip" title="parameters configuration">Change parameters</button>
+                <button id="param_settings" type="button" class="btn btn-warning" style="width: 100%;" data-toggle="dropdown">Change parameters</button>
                         <div id="params_window" class="dropdown-menu" style="width: 350px; padding: 15px 15px 10px 15px; margin-left: -120%;">
-                            <h4 align="center" style="color:orange;">Parameters Configuration</h4>
+                            <h4 style="color:orange; text-align: center;">Parameters Configuration</h4>
                             <div class="container" id="params_table" style="width: 100%; height: 50%;">
                                 <!--To be filled from manifest.json-->
                                 
                             </div>
-                            <div align="center" style="padding-top: 10px;">
+                            <div style="padding-top: 10px;">
                                 <button id="reset_params" class="btn btn-warning btn-xs" data-toggle="tooltip" title="reset to defaults">reset to defaults</button>
                             </div>  
                         </div>
@@ -180,41 +140,43 @@ following command:</p>
         <h3>Do you use this computation frequently?</h3>
         <h4>Use keyboard shortcuts:</h4>
         <div class="container">            
-            <div class="row" align="left">
-                <div class="col-md-2" align="center"><kbd>Alt + i</kbd></div>
+            <div class="row" style="text-align: left;">
+                <div class="col-md-2" style="text-align: center;"><kbd>Alt + i</kbd></div>
                 <div class="col-md-2">Edit the <u>i</u>nput data</div>
-                <div class="col-md-2" align="center" style="border-left: 1px solid;"><kbd>Alt + p</kbd></div>
+                <div class="col-md-2" style="border-left: 1px solid; text-align: center;"><kbd>Alt + p</kbd></div>
                 <div class="col-md-2">Open <u>p</u>arameters configuration tab</div>
-                <div class="col-md-2" align="center" style="border-left: 1px solid;"><kbd>Alt + 1</kbd></div>
+                <div class="col-md-2" style="border-left: 1px solid; text-align: center;"><kbd>Alt + 1</kbd></div>
                 <div class="col-md-2">Edit the <u>first</u> parameter</div>
             </div>
-            <div class="row" align="left">
-                <div class="col-md-2" align="center"><kbd>Alt + Enter</kbd></div>
+            <div class="row" style="text-align: left;">
+                <div class="col-md-2" style="text-align: center;"><kbd>Alt + Enter</kbd></div>
                 <div class="col-md-2">Run the computation</div>
-                <div class="col-md-2" align="center" style="border-left: 1px solid;"><kbd>Alt + d</kbd></div>
+                <div class="col-md-2" style="border-left: 1px solid; text-align: center;"><kbd>Alt + d</kbd></div>
                 <div class="col-md-2">Reset parameters <u>d</u>efault configuration</div>
-                <div class="col-md-2" align="center" style="border-left: 1px solid;"><kbd>Alt + N</kbd></div>
+                <div class="col-md-2" style="border-left: 1px solid; text-align: center;"><kbd>Alt + N</kbd></div>
                 <div class="col-md-2">Edit the <u>nth</u> parameter</div>
             </div>
-            <div class="row" align="left">
-                <div class="col-md-2" align="center"><kbd>Alt + r</kbd></div>
+            <div class="row" style="text-align: left;">
+                <div class="col-md-2" style="text-align: center;"><kbd>Alt + r</kbd></div>
                 <div class="col-md-2"><u>R</u>eset the computation</div>
-                <div class="col-md-2" align="center" style="border-left: 1px solid;"><kbd>Alt + u</kbd></div>
+                <div class="col-md-2" style="border-left: 1px solid; text-align: center;"><kbd>Alt + u</kbd></div>
                 <div class="col-md-2"><u>U</u>pload input data from disk</div>
-                <div class="col-md-2" align="center" style="border-left: 1px solid;"><kbd>Tab</kbd></div>
+                <div class="col-md-2" style="border-left: 1px solid; text-align: center;"><kbd>Tab</kbd></div>
                 <div class="col-md-2">Edit the <u>next</u> parameter</div>
             </div>
-            <div class="row" align="left">
-                <div class="col-md-2" align="center"><kbd>Alt + e</kbd></div>
+            <div class="row" style="text-align: left;">
+                <div class="col-md-2" style="text-align: center;"><kbd>Alt + e</kbd></div>
                 <div class="col-md-2">Fill form with <u>e</u>xample</div>
-                <div class="col-md-2" align="center" style="border-left: 1px solid;"><kbd>Alt + w</kbd></div>
+                <div class="col-md-2" style="border-left: 1px solid; text-align: center;"><kbd>Alt + w</kbd></div>
                 <div class="col-md-2">Do<u>w</u>nload computation result to disk</div>
-                <div class="col-md-2" align="center" style="border-left: 1px solid;"><kbd>Shift + Tab</kbd></div>
+                <div class="col-md-2" style="border-left: 1px solid; text-align: center;"><kbd>Shift + Tab</kbd></div>
                 <div class="col-md-2">Edit the <u>previous</u> parameter</div>
             </div>
-            <hr>
         </div>
 	</div>
+</div>
+<div class="container">
+    <p class="text-muted credit" style="text-align: center; margin-bottom: 30px;">Powered by <a href="http://algorun.org" target="_blank">AlgoRun</a></p>
 </div>
 <script src="/js/shortcut.js"></script>
 <script src="/js/jquery-1.11.2.min.js"></script>
