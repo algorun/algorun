@@ -118,6 +118,15 @@
         <ul>
             <li><b>output:</b> the result of the computation in the following format. See: <a href="/algorun_info/output_example.txt" target="_blank">sample-output-format</a></li>
         </ul>
+        <h2>HTTP POST /do/config</h2>
+        <h3>&nbsp;&nbsp;&nbsp;&nbsp;Parameters</h3>
+        <ul>
+            <li><b>JSON Object</b><br> <i>key:</i> parameter name<br> <i>value:</i> the new value of parameter<br>You can change more than one parameter per API call</li>
+        </ul>
+        <h3>&nbsp;&nbsp;&nbsp;&nbsp;Results</h3>
+        <ul>
+            <li>Success or failure message</li>
+        </ul>
         <h1 id="authors_label" style="color:#58ACFA;">Authors</h1>
         <div id="authors">
             <div class="row">
@@ -171,16 +180,16 @@ following command:</p>
                 <div class="col-md-2"><u>R</u>eset the computation</div>
                 <div class="col-md-2" style="border-left: 1px solid; text-align: center;"><kbd>Alt + u</kbd></div>
                 <div class="col-md-2"><u>U</u>pload input data from disk</div>
-                <div class="col-md-2" style="border-left: 1px solid; text-align: center;"><kbd>Tab</kbd></div>
-                <div class="col-md-2">Edit the <u>next</u> parameter</div>
+                <div class="col-md-2" style="border-left: 1px solid; text-align: center;"><kbd>Alt + Shift + N</kbd></div>
+                <div class="col-md-2">Edit the <u>nth</u> parameter after 9</div>
             </div>
             <div class="row" style="text-align: left;">
                 <div class="col-md-2" style="text-align: center;"><kbd>Alt + e</kbd></div>
                 <div class="col-md-2">Fill form with <u>e</u>xample</div>
                 <div class="col-md-2" style="border-left: 1px solid; text-align: center;"><kbd>Alt + w</kbd></div>
                 <div class="col-md-2">Do<u>w</u>nload computation result to disk</div>
-                <div class="col-md-2" style="border-left: 1px solid; text-align: center;"><kbd>Shift + Tab</kbd></div>
-                <div class="col-md-2">Edit the <u>previous</u> parameter</div>
+                <div class="col-md-2" style="border-left: 1px solid; text-align: center;"><kbd>Tab</kbd> and <kbd>Shift + Tab</kbd></div>
+                <div class="col-md-2">Navigate among parameters</div>
             </div>
         </div>
 	</div>
