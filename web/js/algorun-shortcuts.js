@@ -22,3 +22,6 @@ shortcut.add("Alt+u",function() {
 shortcut.add("Alt+w",function() {
 	    $("#download_file").click();
 });
+shortcut.add("Alt+p",function() {
+        $("#param_settings").click();
+});

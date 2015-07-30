@@ -216,47 +216,25 @@ function configure_params(params) {
         $("#params_window").html('<h5 align="center" style="color:orange;">No Specific Parameters Configuration</h5>');
     } else {
         $("#params_table").empty();
-        var i = 1;
-        var tabIndex = 0;
-        var tabArray = new Array();
-        $.each( params, function( key, value ) {    
-            $("#params_table").append(parse("<div class='row' align='center' ><div class='col-md-1'>%s.</div><div class='col-md-5' align='left'>%s</div><div class='col-md-5' align='right'><a id='%s'></a></div></div>", i, key, key));
+        var i = 0;
+        $.each( params, function( key, value ) {
+            if(i < 9){
+                // add a new row
+                $("#params_table").append(parse("<div id='%s' class='row' style='height: 30px;'></div>", ('row'+i)));
+            }
+            $("#row"+(i%9)).append(parse("<div class='col-md-1'>%s.</div><div class='col-md-3' align='left'>%s</div><div class='col-md-2' style='text-align: left;'><a id='%s'></a></div>", ++i, key, key));
+            
             $('#params_window').click(function(e) {
                 e.stopPropagation();
             });
             $('#'+key).click(function(e) {
                 e.stopPropagation();
-                tabIndex = tabArray.indexOf(key);
             });
-            if(i<=9){
-                shortcut.add("Alt+"+i,function() {
-                    if(!$('#params_window').data('open')) { 
-                        $("#param_settings").click();
-                    }
-                    tabArray.forEach(function(j) {
-                        $("#"+j).editable('hide');
-                    });
-                    $("#"+key).click();
-                });
-            } else {
-                index = i - 10;
-                shortcut.add("Alt+Shift+"+index,function() {
-                    if(!$('#params_window').data('open')) { 
-                        $("#param_settings").click();
-                    }
-                    tabArray.forEach(function(j) {
-                        $("#"+j).editable('hide');
-                    });
-                    $("#"+key).click();
-                });
-            }
-            tabArray[i] = key;
-            i += 1;
             $.fn.editable.defaults.mode = 'inline';
             $('#'+key).editable({
                 type: 'text',
                 pk: 1,
-                title: 'Enter username',
+                title: 'Enter parameter value',
                 highlight: '#00FF00',
                 showbuttons: false,
                 value: value,
@@ -281,40 +259,36 @@ function configure_params(params) {
                 }
             );
         });
-        shortcut.add("Alt+p",function() {
-            if($('#params_window').data('open')) { 
-                tabArray.forEach(function(i) {
-                    $("#"+i).editable('hide');
-                });
-            }
+        $("#params_table").append("<div class='row' style='height: 30px; padding-top:10px;'><div style='text-align: center;'><button id='reset_params' class='btn btn-warning btn-xs' data-toggle='tooltip' title='reset to defaults'>reset to defaults</button></div></div>");
+        $('#reset_params').click(function(e) {
+            e.stopPropagation();
+            configure_params(params);
+            var req_body = {};
+            $.each( params, function( key, value ) {    
+                req_body[key] = value;
+            });
+            var jqxhr = $.post( "/do/config", req_body)
+            .done(function(data,textStatus,jqXHR) {
+                if(data.substring(0, 6) == "Cannot"){
+                    sweetAlert("I'm sorry...", "There is no such parameter!", "error");
+                    $("#"+key).html(value); 
+                } else{
+                    swal({
+                        title: "Reset to Defaults ..",
+                        type: "success",
+                        text: "Parameters successfully reset to defaults",
+                        timer: 2000,
+                        showConfirmButton: false });
+                        }
+                })
+            .fail(function() {
+                sweetAlert("Oops...", "Unexpected error occured!", "error");
+                $("#"+key).html(value)
+            });
+        });
+        $('#close_params').click(function(e) {
+            e.stopPropagation();
             $("#param_settings").click();
-        });
-        shortcut.add("Tab",function() {
-            if($('#params_window').data('open')) {
-                $("#"+tabArray[(tabIndex)%(tabArray.length)]).editable('hide');
-                $("#"+tabArray[(++tabIndex)%(tabArray.length)]).click();
-            } else {
-                $("#param_settings").click();
-                $("#"+tabArray[(tabIndex)%(tabArray.length)]).editable('hide');
-                $("#"+tabArray[(++tabIndex)%(tabArray.length)]).click();
-            }
-        });
-        
-        shortcut.add("Shift+Tab",function() {
-            if($('#params_window').data('open')) { 
-                if(tabIndex == 0 || tabIndex == 1){
-                    tabIndex = 2;
-                }
-                $("#"+tabArray[(tabIndex)%(tabArray.length)]).editable('hide');
-                $("#"+tabArray[(--tabIndex)%(tabArray.length)]).click();
-            } else {
-                $("#param_settings").click();
-                if(tabIndex == 0 || tabIndex == 1){
-                    tabIndex = 2;
-                }
-                $("#"+tabArray[(tabIndex)%(tabArray.length)]).editable('hide');
-                $("#"+tabArray[(--tabIndex)%(tabArray.length)]).click();
-            }
         });
     }
 }
@@ -359,52 +333,9 @@ function update_ui(){
         configure_params(params);
     });
 }
-$('#reset_params').click(function(e) {
-        e.stopPropagation();
-        configure_params(params);
-        var req_body = {};
-        $.each( params, function( key, value ) {    
-            req_body[key] = value;
-        });
-        var jqxhr = $.post( "/do/config", req_body)
-           .done(function(data,textStatus,jqXHR) {
-                 if(data.substring(0, 6) == "Cannot"){
-                    sweetAlert("I'm sorry...", "There is no such parameter!", "error");
-                    $("#"+key).html(value); 
-                    } else{
-                        swal({
-                            title: "Reset to Defaults ..",
-                            type: "success",
-                            text: "Parameters successfully reset to defaults",
-                            timer: 2000,
-                            showConfirmButton: false });
-                    }
-              })
-           .fail(function() {
-                  sweetAlert("Oops...", "Unexpected error occured!", "error");
-                  $("#"+key).html(value)
-        });
-});
-update_ui();
 $('.dropup.keep-open').on({
     "shown.bs.dropdown": function() { this.closable = false; },
     "click":             function() { this.closable = true; },
     "hide.bs.dropdown":  function() { return this.closable; }
 });
-$(document).ready(function() {
-
-    $('#params_window').data('open', false);
-
-    $('#param_settings').click(function() {
-        if($('#params_window').data('open')) {
-            $('#params_window').data('open', false);
-        } else
-            $('#params_window').data('open', true);
-    });
-
-    $(document).click(function() {
-        if($('#params_window').data('open')) {
-            $('#params_window').data('open', false);
-        }
-    });
-});
+update_ui();
