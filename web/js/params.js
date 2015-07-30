@@ -210,6 +210,23 @@ function md5(str) {
   var temp = wordToHex(a) + wordToHex(b) + wordToHex(c) + wordToHex(d);
   return temp.toLowerCase();
 }
+function submit_param(key, value, newValue){
+    var req_body = {};
+    req_body[key] = newValue;
+    var jqxhr = $.post( "/do/config", req_body)
+                .done(function(data,textStatus,jqXHR) {
+                    if(data.substring(0, 6) == "Cannot"){
+                        sweetAlert("I'm sorry...", "There is no such parameter!", "error");
+                        $("#"+key).editable('setValue', value);
+                    } else {
+                        $("#"+key).editable('setValue', newValue);
+                    }
+                })
+                .fail(function() {
+                    sweetAlert("Oops...", "Unexpected error occured!", "error");
+                    $("#"+key).editable('setValue', value);
+                }); 
+}
 function configure_params(params) {
     if (jQuery.isEmptyObject(params)) {
         $("#params_window").empty();
@@ -217,46 +234,51 @@ function configure_params(params) {
     } else {
         $("#params_table").empty();
         var i = 0;
+        var param_keys = [];
         $.each( params, function( key, value ) {
             if(i < 9){
                 // add a new row
                 $("#params_table").append(parse("<div id='%s' class='row' style='height: 30px;'></div>", ('row'+i)));
             }
-            $("#row"+(i%9)).append(parse("<div class='col-md-1'>%s.</div><div class='col-md-3' align='left'>%s</div><div class='col-md-2' style='text-align: left;'><a id='%s'></a></div>", ++i, key, key));
+            $("#row"+(i%9)).append(parse("<div class='col-md-1'>%s.</div><div class='col-md-3' align='left'>%s</div><div class='col-md-2' style='text-align: right;'><a id='%s' onChange='alert('I am Fired')'></a></div>", ++i, key, key));
+            param_keys.push(key);
             
             $('#params_window').click(function(e) {
                 e.stopPropagation();
             });
+            var newValue;
             $('#'+key).click(function(e) {
                 e.stopPropagation();
+                // hide all other
+                $.each(param_keys, function(k){
+                    if($('#in'+param_keys[k]).val() != undefined){
+                        newValue = $('#in'+param_keys[k]).val();
+                        submit_param(param_keys[k], value, newValue);
+                        $('#'+param_keys[k]).editable('hide');
+                    }
+                });
+            });
+            $('#'+key).change(function () {
+                var newValue = $(this).editable('getValue', true);
+                alert(newValue);
+                //submit_param(key, value, newValue);
             });
             $.fn.editable.defaults.mode = 'inline';
             $('#'+key).editable({
                 type: 'text',
                 pk: 1,
                 title: 'Enter parameter value',
-                highlight: '#00FF00',
+                highlight: false,
                 showbuttons: false,
                 value: value,
                 emptytext: value,
                 defaultValue: value,
-                tpl: "<input type='text' style='width: 70px;'>",
+                onblur: 'ignore',
+                tpl: parse("<input id='%s' type='text' style='width: 70px;'>", ('in'+key)),
                 success: function(response, newValue) {
-                    var req_body = {};
-                    req_body[key] = newValue;
-                    var jqxhr = $.post( "/do/config", req_body)
-                    .done(function(data,textStatus,jqXHR) {
-                        if(data.substring(0, 6) == "Cannot"){
-                            sweetAlert("I'm sorry...", "There is no such parameter!", "error");
-                            $("#"+key).html(value);
-                        }
-                    })
-                    .fail(function() {
-                        sweetAlert("Oops...", "Unexpected error occured!", "error");
-                        $("#"+key).html(value);
-                        });   
+                      submit_param(key, value, newValue);
                     }
-                }
+                }                    
             );
         });
         $("#params_table").append("<div class='row' style='height: 30px; padding-top:10px;'><div style='text-align: center;'><button id='reset_params' class='btn btn-warning btn-xs' data-toggle='tooltip' title='reset to defaults'>reset to defaults</button></div></div>");
@@ -289,6 +311,21 @@ function configure_params(params) {
         $('#close_params').click(function(e) {
             e.stopPropagation();
             $("#param_settings").click();
+        });
+        var paramIsOpen = false;
+        $('#param_settings').click(function (e) {
+            if (paramIsOpen){
+                $.each(param_keys, function(k){
+                    if($('#in'+param_keys[k]).val() != undefined){
+                        newValue = $('#in'+param_keys[k]).val();
+                        submit_param(param_keys[k], params[param_keys[k]], newValue);
+                        $('#'+param_keys[k]).editable('hide');
+                    }
+                });
+                paramIsOpen =false;
+            } else {
+                paramIsOpen = true;
+            }
         });
     }
 }
