@@ -216,7 +216,7 @@ function submit_param(key, value, newValue){
     var jqxhr = $.post( "/do/config", req_body)
                 .done(function(data,textStatus,jqXHR) {
                     if(data.substring(0, 6) == "Cannot"){
-                        sweetAlert("I'm sorry...", "There is no such parameter!", "error");
+                        sweetAlert("Oops...", "There is no such parameter!", "error");
                         $("#"+key).editable('setValue', value);
                     } else {
                         $("#"+key).editable('setValue', newValue);
@@ -227,6 +227,7 @@ function submit_param(key, value, newValue){
                     $("#"+key).editable('setValue', value);
                 }); 
 }
+var paramIsOpen = false;
 function configure_params(params) {
     if (jQuery.isEmptyObject(params)) {
         $("#params_window").empty();
@@ -234,6 +235,7 @@ function configure_params(params) {
     } else {
         $("#params_table").empty();
         var i = 0;
+        var tabIndex = 0;
         var param_keys = [];
         $.each( params, function( key, value ) {
             if(i < 9){
@@ -243,9 +245,22 @@ function configure_params(params) {
             $("#row"+(i%9)).append(parse("<div class='col-md-1'>%s.</div><div class='col-md-3' align='left'>%s</div><div class='col-md-2' style='text-align: right;'><a id='%s' onChange='alert('I am Fired')'></a></div>", ++i, key, key));
             param_keys.push(key);
             
-            $('#params_window').click(function(e) {
-                e.stopPropagation();
-            });
+            if(i<10){
+                shortcut.add("Alt+"+i,function() {
+                    if(!paramIsOpen) { 
+                        $("#param_settings").click();
+                    }
+                    $("#"+key).click();
+                });
+            } else {
+                var index = i-10;
+                shortcut.add("Alt+Shift+"+index,function() {
+                    if(!paramIsOpen) { 
+                        $("#param_settings").click();
+                    }
+                    $("#"+key).click();
+                });
+            }
             var newValue;
             $('#'+key).click(function(e) {
                 e.stopPropagation();
@@ -253,15 +268,10 @@ function configure_params(params) {
                 $.each(param_keys, function(k){
                     if($('#in'+param_keys[k]).val() != undefined){
                         newValue = $('#in'+param_keys[k]).val();
-                        submit_param(param_keys[k], value, newValue);
+                        submit_param(param_keys[k], params[param_keys[k]], newValue);
                         $('#'+param_keys[k]).editable('hide');
                     }
                 });
-            });
-            $('#'+key).change(function () {
-                var newValue = $(this).editable('getValue', true);
-                alert(newValue);
-                //submit_param(key, value, newValue);
             });
             $.fn.editable.defaults.mode = 'inline';
             $('#'+key).editable({
@@ -284,7 +294,6 @@ function configure_params(params) {
         $("#params_table").append("<div class='row' style='height: 30px; padding-top:10px;'><div style='text-align: center;'><button id='reset_params' class='btn btn-warning btn-xs' data-toggle='tooltip' title='reset to defaults'>reset to defaults</button></div></div>");
         $('#reset_params').click(function(e) {
             e.stopPropagation();
-            configure_params(params);
             var req_body = {};
             $.each( params, function( key, value ) {    
                 req_body[key] = value;
@@ -292,27 +301,26 @@ function configure_params(params) {
             var jqxhr = $.post( "/do/config", req_body)
             .done(function(data,textStatus,jqXHR) {
                 if(data.substring(0, 6) == "Cannot"){
-                    sweetAlert("I'm sorry...", "There is no such parameter!", "error");
-                    $("#"+key).html(value); 
+                    sweetAlert("Oops...", "Some parameter name is mis-spelled!", "error");
                 } else{
+                    configure_params(params);
                     swal({
                         title: "Reset to Defaults ..",
                         type: "success",
                         text: "Parameters successfully reset to defaults",
                         timer: 2000,
                         showConfirmButton: false });
-                        }
+                    }
                 })
             .fail(function() {
                 sweetAlert("Oops...", "Unexpected error occured!", "error");
-                $("#"+key).html(value)
+                configure_params(params);
             });
         });
         $('#close_params').click(function(e) {
             e.stopPropagation();
             $("#param_settings").click();
         });
-        var paramIsOpen = false;
         $('#param_settings').click(function (e) {
             if (paramIsOpen){
                 $.each(param_keys, function(k){
@@ -326,6 +334,26 @@ function configure_params(params) {
             } else {
                 paramIsOpen = true;
             }
+        });
+        $('#params_window').click(function(e) {
+                e.stopPropagation();
+            });
+        shortcut.add("Tab",function() {
+            if(!paramIsOpen) { 
+                $("#param_settings").click();
+            }
+            $('#'+(param_keys[tabIndex%param_keys.length])).click();
+            tabIndex++;
+        });
+        shortcut.add("Shift+Tab",function() {
+            if(!paramIsOpen) { 
+                $("#param_settings").click();
+            }
+            tabIndex--;
+            if(tabIndex<0){
+                tabIndex = param_keys.length - 1;
+            }
+            $('#'+(param_keys[tabIndex%param_keys.length])).click();
         });
     }
 }
