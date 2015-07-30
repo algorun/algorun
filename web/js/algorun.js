@@ -23,14 +23,19 @@ $("#run_button").click(function() {
     } else {
 	   var jqxhr = $.post( "/do/run", { input: input_data })
 	   .done(function(data,textStatus,jqXHR) {
-            var response = jQuery.parseJSON(data);
-            if(typeof response =='object') {
+           try {
+                json = $.parseJSON(data);
                 o_editor.getSession().setMode("ace/mode/json");
-            }
-           o_editor.setValue(data);
-           o_editor.gotoLine(1);
+                o_editor.setValue(json);
+                o_editor.gotoLine(1);
+           } catch (e) {
+                o_editor.setValue(data);
+                o_editor.gotoLine(1);
+           }
        })
-	   .fail(function() {o_editor.setValue('An error occured!');});
+	   .fail(function() {
+           o_editor.setValue('An error occured!');
+       });
     }
 });
 $("#populate_input").click(function() {
