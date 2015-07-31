@@ -1,9 +1,26 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var multer = require('multer');
+var fs = require('fs');
+var path = require('path');
 //process.env.CODE_HOME = '/home/abdelrahman/uchc/algorun';
-var algo_run = require(process.env.CODE_HOME + "/lib/Algo");
+var algo_run = require(path.join(__dirname, "/lib/Algo"));
 var app = express();
+
+// configure environment variables
+var filePath = path.join(__dirname, '/web/algorun_info/manifest.json');
+fs.readFile(filePath, {encoding: 'utf-8'}, function(err,data){
+    if (!err){
+        var manifest = JSON.parse(data);
+        for (var key in manifest["params"]) {
+            if (manifest["params"].hasOwnProperty(key)) {
+                process.env[key] = manifest["params"][key];
+            }
+        }
+    }else{
+        console.log(err);
+    }
+});
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
