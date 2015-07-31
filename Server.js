@@ -3,7 +3,6 @@ var bodyParser = require('body-parser');
 var multer = require('multer');
 var fs = require('fs');
 var path = require('path');
-//process.env.CODE_HOME = '/home/abdelrahman/uchc/algorun';
 var algo_run = require(path.join(__dirname, "/lib/Algo"));
 var app = express();
 

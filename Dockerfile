@@ -25,6 +25,7 @@ RUN npm install express &&\
 npm install body-parser &&\
 npm install multer
 ADD Server.js /home/algorithm/
+ADD algorun /bin/
 ADD ./web/index.html /home/algorithm/web/
 ADD ./web/js /home/algorithm/web/js/
 ADD ./web/css /home/algorithm/web/css/
@@ -32,6 +33,6 @@ ADD ./web/images /home/algorithm/web/images/
 ADD ./web/algorun_info /home/algorithm/web/algorun_info/
 ADD ./lib/*.js /home/algorithm/lib/
 ENV CODE_HOME /home/algorithm
-
+RUN chmod +x /bin/algorun
 EXPOSE 8765
 ENTRYPOINT ["/usr/bin/nodejs","/home/algorithm/Server.js"]
