@@ -16,25 +16,36 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 $("#run_button").click(function() {
+    var timer = $.timer(function () {
+        o_editor.setValue(o_editor.getValue() + '.');
+    });
+    timer.set({time: 1000});
 	var input_data = i_editor.getValue();
-    o_editor.setValue('');
     if (input_data.trim() == ""){
         sweetAlert("Oops...", "Should you pass input to the computation?", "error");
     } else {
+        timer.play();
+        o_editor.setValue('please wait while computation is running...');
+        $('#run_button').prop('disabled', true);
 	   var jqxhr = $.post( "/do/run", { input: input_data })
 	   .done(function(data,textStatus,jqXHR) {
            try {
                 json = $.parseJSON(data);
                 o_editor.getSession().setMode("ace/mode/json");
                 o_editor.setValue(json);
-                o_editor.gotoLine(1);
            } catch (e) {
                 o_editor.setValue(data);
+                
+           } finally {
                 o_editor.gotoLine(1);
+                $('#run_button').prop('disabled', false);
+               timer.stop();
            }
        })
 	   .fail(function() {
            o_editor.setValue('An error occured!');
+           $('#run_button').prop('disabled', false);
+           timer.stop();
        });
     }
 });
