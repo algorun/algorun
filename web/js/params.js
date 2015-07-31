@@ -242,7 +242,7 @@ function configure_params(params) {
                 // add a new row
                 $("#params_table").append(parse("<div id='%s' class='row' style='height: 30px;'></div>", ('row'+i)));
             }
-            $("#row"+(i%9)).append(parse("<div class='col-md-1'>%s.</div><div class='col-md-3' align='left'>%s</div><div class='col-md-2' style='text-align: right;'><a id='%s' onChange='alert('I am Fired')'></a></div>", ++i, key, key));
+            $("#row"+(i%9)).append(parse("<div class='col-md-1'>%s.</div><div class='col-md-3' align='left'>%s</div><div class='col-md-2' style='text-align: right;'><a id='%s'></a></div>", ++i, key, key));
             param_keys.push(key);
             
             if(i<10){
@@ -263,6 +263,7 @@ function configure_params(params) {
             }
             var newValue;
             $('#'+key).click(function(e) {
+                tabIndex = param_keys.indexOf(key);
                 e.stopPropagation();
                 // hide all other
                 $.each(param_keys, function(k){
@@ -303,7 +304,9 @@ function configure_params(params) {
                 if(data.substring(0, 6) == "Cannot"){
                     sweetAlert("Oops...", "Some parameter name is mis-spelled!", "error");
                 } else{
-                    configure_params(params);
+                    $.each( params, function( key, value ) {
+                        $('#'+key).editable('setValue', value);
+                    });
                     swal({
                         title: "Reset to Defaults ..",
                         type: "success",
@@ -314,7 +317,9 @@ function configure_params(params) {
                 })
             .fail(function() {
                 sweetAlert("Oops...", "Unexpected error occured!", "error");
-                configure_params(params);
+                $.each( params, function( key, value ) {
+                    $('#'+key).editable('setValue', value);
+                });
             });
         });
         $('#close_params').click(function(e) {
