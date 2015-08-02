@@ -9,8 +9,8 @@
 	"website": "http://algorun.org",
 	"keywords": ["keyword2", "keyword1"],
 	"dockerhub_image": "ahosny/algorun",
-	"exec_command": "",
+	"exec_command": "ruby test.rb",
 	"command_options": "",
-	"output_file_name": "",
+	"output_file_name": "output.txt",
 	"params": {"name": "value", "name": "value"}
 }
