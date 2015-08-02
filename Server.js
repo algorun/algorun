@@ -16,6 +16,15 @@ fs.readFile(filePath, {encoding: 'utf-8'}, function(err,data){
                 process.env[key] = manifest["params"][key];
             }
         }
+        if(manifest.hasOwnProperty('exec_command')){
+            process.env.exec_command = manifest['exec_command'];
+        }
+        if(manifest.hasOwnProperty('command_options')){
+            process.env.command_options = manifest['command_options'];
+        }
+        if(manifest.hasOwnProperty('output_file_name')){
+            process.env.output_file_name = manifest['output_file_name'];
+        }
     }else{
         console.log(err);
     }

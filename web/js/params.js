@@ -372,10 +372,10 @@ function parse(str) {
 }
 function update_ui(){
     $.getJSON( "/algorun_info/manifest.json", function( data ) {
-	   $( "#algo_name" ).html( data["algo_name"] );
-        $( "#algo_tab" ).html( data["algo_name"] );
-	   $( "#about_algo_name" ).html( data["algo_name"] );
-	   $( "#algo_title" ).html( data["algo_name"] );
+	   $( "#algo_name" ).html( data["algorithm_name"] );
+        $( "#algo_tab" ).html( data["algorithm_name"] );
+	   $( "#about_algo_name" ).html( data["algorithm_name"] );
+	   $( "#algo_title" ).html( data["algorithm_name"] );
 
 	   $( "#short_description" ).html( data["short_description"] );
         $( "#authors" ).html('');
@@ -384,9 +384,9 @@ function update_ui(){
             auth_id += 1;
             var name = obj["name"];
             var email = obj["email"];
-            var personal_page = obj["personal_page"];
+            var personal_page = obj["personal_website"];
             var org = obj["organization"];
-            var org_page = obj["org_page"];
+            var org_page = obj["org_website"];
             var author = parse("<div class='row'><div class='col-md-1' style='width: 100px; height: 100px;'><a href='%s' target='_blank' class='thumbnail'><img id='%s' src='/images/author.jpeg' alt='author picture'></a></div><a href='%s' target='_blank'><h4>%s</h4></a><a href='%s' target='_blank' style='color: #888888;'>%s</a></div>", personal_page, "auth"+auth_id ,personal_page, name, org_page, org);
             // get image from gravatar
             $("#authors").append( author );
@@ -394,10 +394,10 @@ function update_ui(){
         });
 	   $( "#long_description" ).html( data["long_description"] );
         
-	   $( "#algo_ref" ).attr( 'href', data["web_link"] );
-        $( "#algo_ref" ).html( data["web_link"] );
+	   $( "#algo_ref" ).attr( 'href', data["website"] );
+        $( "#algo_ref" ).html( data["website"] );
         
-        $( "#offline_command" ).html( data["offline_command"] );
+        $( "#offline_command" ).html( 'docker run -it -p 31331:8765 --name &#60;container_name&#62; ' + data["dockerhub_image"] );
         
         params = data["params"];
         configure_params(params);

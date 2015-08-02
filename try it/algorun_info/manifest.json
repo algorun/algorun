@@ -1,13 +1,16 @@
 {
-"algo_name": "My algorithm",
-"short_description": "My short description",
-"authors": [
-{"name": "name1", "email": "email1", "personal_page": "#", "organization": "org1", "org_page": "#"},
-{"name": "name2", "email": "email2", "personal_page": "#", "organization": "org2", "org_page": "#"}
-],
-"long_description": "My long description",
-"web_link": "http://algorun.org",
-"keywords": ["keyword2", "keyword1"],
-"offline_command": "$ docker run -d -p 31331:8765 algorun/test --name test",
-"params": {"PARAM_1": "value1", "PARAM_2": "value2"}
+	"algorithm_name": "My algorithm",
+	"short_description": "My short description",
+	"authors": [
+		{"name": "name1", "email": "email1", "personal_website": "#", "organization": "org1", "org_website": "#"},
+		{"name": "name2", "email": "email2", "personal_website": "#", "organization": "org2", "org_website": "#"}
+	],
+	"long_description": "My long description",
+	"website": "http://algorun.org",
+	"keywords": ["keyword2", "keyword1"],
+	"dockerhub_image": "ahosny/algorun",
+	"exec_command": "",
+	"command_options": "",
+	"output_file_name": "",
+	"params": {"name": "value", "name": "value"}
 }
