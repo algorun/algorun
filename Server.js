@@ -4,28 +4,28 @@ var multer = require('multer');
 var fs = require('fs');
 var path = require('path');
 var algo_run = require(path.join(__dirname, "/lib/Algo"));
+var strip_json = require(path.join(__dirname, "/lib/strip-json-comments"));
 var app = express();
 
 // configure environment variables
 var filePath = path.join(__dirname, '/web/algorun_info/manifest.json');
 fs.readFile(filePath, {encoding: 'utf-8'}, function(err,data){
     if (!err){
-        var manifest = JSON.parse(data);
-        for (var key in manifest["params"]) {
-            if (manifest["params"].hasOwnProperty(key)) {
-                process.env[key] = manifest["params"][key];
+        strip_json.stripJsonComments(data, function (result){
+            var manifest = JSON.parse(result);
+            for (var key in manifest["algo_parameters"]) {
+                if (manifest["algo_parameters"].hasOwnProperty(key)) {
+                    process.env[key] = manifest["algo_parameters"][key];
+                }
             }
-        }
-        if(manifest.hasOwnProperty('exec_command')){
-            process.env.exec_command = manifest['exec_command'];
-        }
-        if(manifest.hasOwnProperty('command_options')){
-            process.env.command_options = manifest['command_options'];
-        }
-        if(manifest.hasOwnProperty('output_file_name')){
-            process.env.output_file_name = manifest['output_file_name'];
-        }
-    }else{
+            if(manifest.hasOwnProperty('algo_exec')){
+                process.env.algo_exec = manifest['algo_exec'];
+            }
+            if(manifest.hasOwnProperty('algo_output_filename')){
+                process.env.algo_output_filename = manifest['algo_output_filename'];
+            }
+        }); 
+    } else{
         console.log(err);
     }
 });

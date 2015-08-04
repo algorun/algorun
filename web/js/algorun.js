@@ -38,6 +38,7 @@ $("#run_button").click(function() {
                 
            } finally {
                 o_editor.gotoLine(1);
+                o_editor.insert(" ");
                 $('#run_button').prop('disabled', false);
                timer.stop();
            }
@@ -53,6 +54,7 @@ $("#populate_input").click(function() {
     $.get("/algorun_info/input_example.txt", function(data){
         i_editor.setValue(data);
         i_editor.gotoLine(1);
+        i_editor.insert(" ");
     });
 });
 $("#reset_computation").click(function() {

@@ -1,16 +1,30 @@
 {
-	"algorithm_name": "N/A",
-	"short_description": "N/A",
-	"authors": [
-		{"name": "name1", "email": "email1", "personal_website": "#", "organization": "org1", "org_website": "#"},
-		{"name": "name2", "email": "email2", "personal_website": "#", "organization": "org2", "org_website": "#"}
+	"algo_name": "N/A", // the name of your algorithm
+	"algo_summary": "N/A", // a 1-line summary of your algorithm
+	"algo_description": "N/A", // a few lines description of your algorithm (basic html accepted)
+	"algo_website": "http://algorun.org", // url where users can find more information about your algorithm
+	"algo_keywords": [], // a list of keywords describing your algorithm
+	"algo_authors": [ // a list of all the algorithm's authors
+		{
+			"name": "John Doe",
+			"email": "john@doe.com", // make sure you have a gravatar (http://gravatar.com)
+			"personal_website": "http://johndoe.info", // leave "" if not available
+			"organization": "John Doe University", // leave "" if not available
+			"org_website": "http://johndoe.edu" // leave "" if not available
+		},
+		{
+			"name": "Jim Doe",
+			"email": "jim@doe.com", // make sure you have a gravatar (http://gravatar.com)
+			"personal_website": "http://jimdoe.info", // leave "" if not available
+			"organization": "John Doe University", // leave "" if not available
+			"org_website": "http://johndoe.edu" // leave "" if not available
+		}
 	],
-	"long_description": "N/A",
-	"website": "http://algorun.org",
-	"keywords": [],
-	"dockerhub_image": "ahosny/algorun",
-	"exec_command": "",
-	"command_options": "",
-	"output_file_name": "",
-	"params": {"name": "value", "name": "value"}
+	"algo_exec": "ruby test.rb", // the command to start algorithm execution. AlgoRun passes the input file as the first argument
+	"algo_output_filename": "output.txt", // path of the file where your algorithm outputs its results
+	"algo_parameters": { // list all the parameters available for your algorithm. These parameters will be available for use in your algorithm as environment variables.
+		"PARAM1": "default_value",
+		"PARAM2": "default_value"
+	},
+	"algo_image": "" // Example: "ahosny/react". leave "" if you did not upload your algorithm to docker hub or if you do not know what docker hub is :).
 }
