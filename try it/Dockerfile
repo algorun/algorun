@@ -1,6 +1,6 @@
 # Fill files in algorun_info folder and put your source code in src folder
 # Don't change the following three lines
-FROM ahosny/algorun
+FROM algorun/algorun
 ADD ./algorun_info /home/algorithm/web/algorun_info/
 ADD ./src /home/algorithm/src/
 

@@ -393,7 +393,7 @@ function update_ui(){
             $("#authors").append( author );
             $("#auth" + auth_id).attr('src', 'http://www.gravatar.com/avatar/' + md5(email));
         });
-	   $( "#long_description" ).html( data["algo_description"] );
+	   $( "#long_description" ).html( data["algo_description"] + '<br>' );
         
 	   $( "#algo_ref" ).attr( 'href', data["algo_website"] );
         $( "#algo_ref" ).html( data["algo_website"] );
