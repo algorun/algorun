@@ -68,6 +68,10 @@ app.post('/config', function (req, res) {
         res.send('No input provided!');
     }
 });
+app.post('/manifest', function (req, res) {
+    res.status = 200;
+    res.sendFile(filePath);
+});
 
 app.use(express.static(__dirname + '/web'));
 
