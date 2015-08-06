@@ -8,7 +8,7 @@ process.stdin.on('readable', function() {
     input_data = process.stdin.read();
     if(input_data != null){
         request.post(
-            'http://localhost:8765/do/run',
+            'http://localhost:8765/run',
             { form: { input: input_data } },
             function (error, response, body) {
                 if (!error) {

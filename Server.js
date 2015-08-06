@@ -34,7 +34,7 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(multer()); // for parsing multipart/form-data
 
-app.post('/do/run', function (req, res) {
+app.post('/run', function (req, res) {
     res.status = 500;
     var input = req.body.input;
     if (input){
@@ -47,7 +47,7 @@ app.post('/do/run', function (req, res) {
         res.send('No input provided!');
     }
 });
-app.post('/do/config', function (req, res) {
+app.post('/config', function (req, res) {
     var env_var = req.body;
     if (env_var) {
         output = '';
