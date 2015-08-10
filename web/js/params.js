@@ -373,39 +373,54 @@ function parse(str) {
 function update_ui(){
     $.get( "/algorun_info/manifest.json", function( data ) {
         data = JSON.parse(stripJsonComments(data));
-	   $( "#algo_name" ).html( data["algo_name"] );
-        $( "#algo_tab" ).html( data["algo_name"] );
-	   $( "#about_algo_name" ).html( data["algo_name"] );
-	   $( "#algo_title" ).html( data["algo_name"] );
+        if(data["algo_name"]){
+            $( "#algo_name" ).html( data["algo_name"] );
+            $( "#algo_tab" ).html( data["algo_name"] );
+            $( "#about_algo_name" ).html( data["algo_name"] );
+            $( "#algo_title" ).html( data["algo_name"] );
+        }
 
-	   $( "#short_description" ).html( data["algo_summary"] );
+        if(data["algo_summary"]){
+            $( "#short_description" ).html( data["algo_summary"] );
+        }
+        
         $( "#authors" ).html('');
-        var auth_id = 0;
-        data["algo_authors"].forEach(function(obj) {
-            auth_id += 1;
-            var name = obj["name"];
-            var email = obj["email"];
-            var personal_page = obj["personal_website"];
-            var org = obj["organization"];
-            var org_page = obj["org_website"];
-            var author = parse("<div class='row'><div class='col-md-1' style='width: 100px; height: 100px;'><a href='%s' target='_blank' class='thumbnail'><img id='%s' src='/images/author.jpeg' alt='author picture'></a></div><a href='%s' target='_blank'><h4>%s</h4></a><a href='%s' target='_blank' style='color: #888888;'>%s</a></div>", personal_page, "auth"+auth_id ,personal_page, name, org_page, org);
-            // get image from gravatar
-            $("#authors").append( author );
-            $("#auth" + auth_id).attr('src', 'http://www.gravatar.com/avatar/' + md5(email));
-        });
-	   $( "#long_description" ).html( data["algo_description"] + '<br>' );
+        if(data["algo_authors"]){
+            var auth_id = 0;
+            data["algo_authors"].forEach(function(obj) {
+                auth_id += 1;
+                var name = obj["name"];
+                var email = obj["email"];
+                var personal_page = obj["personal_website"];
+                var org = obj["organization"];
+                var org_page = obj["org_website"];
+                var author = parse("<div class='row'><div class='col-md-1' style='width: 100px; height: 100px;'><a href='%s' target='_blank' class='thumbnail'><img id='%s' src='/images/author.jpeg' alt='author picture'></a></div><a href='%s' target='_blank'><h4>%s</h4></a><a href='%s' target='_blank' style='color: #888888;'>%s</a></div>", personal_page, "auth"+auth_id ,personal_page, name, org_page, org);
+                // get image from gravatar
+                $("#authors").append( author );
+                $("#auth" + auth_id).attr('src', 'http://www.gravatar.com/avatar/' + md5(email));
+            });
+        }
         
-	   $( "#algo_ref" ).attr( 'href', data["algo_website"] );
-        $( "#algo_ref" ).html( data["algo_website"] );
+        if(data["algo_description"]){
+            $( "#long_description" ).html( data["algo_description"] + '<br>' );
+        }
         
-        $( "#offline_command" ).html( 'docker run -it -p 31331:8765 --name &#60;container_name&#62; ' + data["algo_image"] );
-        if(data["algo_image"] === "") {
+        if(data["algo_website"]){
+            $( "#algo_ref" ).attr( 'href', data["algo_website"] );
+            $( "#algo_ref" ).html( data["algo_website"] );
+        }
+        
+        if(data["algo_image"]){
+            $( "#offline_command" ).html( 'docker run -it -p 31331:8765 --name &#60;container_name&#62; ' + data["algo_image"] );
+        }else{
             $("#download_section").empty();
             $("#download_nav").remove();
         }
         
-        params = data["algo_parameters"];
-        configure_params(params);
+        if("algo_parameters"){
+            params = data["algo_parameters"];
+            configure_params(params);
+        }
     }, "text");
 }
 $('.dropup.keep-open').on({
