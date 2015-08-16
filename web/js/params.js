@@ -213,7 +213,7 @@ function md5(str) {
 function submit_param(key, value, newValue){
     var req_body = {};
     req_body[key] = newValue;
-    var jqxhr = $.post( "/config", req_body)
+    var jqxhr = $.post( "/v1/config", req_body)
                 .done(function(data,textStatus,jqXHR) {
                     if(data.substring(0, 6) == "Cannot"){
                         sweetAlert("Oops...", "There is no such parameter!", "error");
@@ -299,7 +299,7 @@ function configure_params(params) {
             $.each( params, function( key, value ) {    
                 req_body[key] = value;
             });
-            var jqxhr = $.post( "/config", req_body)
+            var jqxhr = $.post( "/v1/config", req_body)
             .done(function(data,textStatus,jqXHR) {
                 if(data.substring(0, 6) == "Cannot"){
                     sweetAlert("Oops...", "Some parameter name is mis-spelled!", "error");
