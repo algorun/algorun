@@ -43,6 +43,8 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 app.use(multer()); // for parsing multipart/form-data
 
 app.post('/v1/run', function (req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
     res.status = 500;
     var input = req.body.input;
     if (input){
@@ -56,6 +58,8 @@ app.post('/v1/run', function (req, res) {
     }
 });
 app.post('/v1/config', function (req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
     var env_var = req.body;
     if (env_var) {
         output = '';
@@ -77,6 +81,8 @@ app.post('/v1/config', function (req, res) {
     }
 });
 app.get('/v1/manifest', function (req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
     res.status = 200;
     res.sendFile(manifestFilePath);
 });
