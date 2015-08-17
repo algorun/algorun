@@ -37,6 +37,8 @@ app.use(multer()); // for parsing multipart/form-data
 
 app.post('/run', function (req, res) {
     res.status = 500;
+    req.socket.setTimeout(0);
+    res.socket.setTimeout(0);
     var input = req.body.input;
     if (input){
         algo_run.run(input, function (result){
