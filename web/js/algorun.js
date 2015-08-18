@@ -27,7 +27,7 @@ $("#run_button").click(function() {
         timer.play();
         o_editor.setValue('please wait while computation is running...');
         $('#run_button').prop('disabled', true);
-	   var jqxhr = $.post( "/run", { input: input_data })
+	   var jqxhr = $.post( "/v1/run", { input: input_data })
 	   .done(function(data,textStatus,jqXHR) {
            try {
                 json = $.parseJSON(data);

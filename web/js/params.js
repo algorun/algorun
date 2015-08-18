@@ -213,7 +213,7 @@ function md5(str) {
 function submit_param(key, value, newValue){
     var req_body = {};
     req_body[key] = newValue;
-    var jqxhr = $.post( "/config", req_body)
+    var jqxhr = $.post( "/v1/config", req_body)
                 .done(function(data,textStatus,jqXHR) {
                     if(data.substring(0, 6) == "Cannot"){
                         sweetAlert("Oops...", "There is no such parameter!", "error");
@@ -299,7 +299,7 @@ function configure_params(params) {
             $.each( params, function( key, value ) {    
                 req_body[key] = value;
             });
-            var jqxhr = $.post( "/config", req_body)
+            var jqxhr = $.post( "/v1/config", req_body)
             .done(function(data,textStatus,jqXHR) {
                 if(data.substring(0, 6) == "Cannot"){
                     sweetAlert("Oops...", "Some parameter name is mis-spelled!", "error");
@@ -384,7 +384,7 @@ function update_ui(){
             $( "#short_description" ).html( data["algo_summary"] );
         }
         
-        $( "#authors" ).html("<h1 style='text-align: center; color:#58ACFA;'>Authors</h1>");
+        $( "#authors" ).html("<h1 style='text-align: left; color:#58ACFA;'>Authors</h1>");
         if(data["algo_authors"]){
             var auth_id = 0;
             data["algo_authors"].forEach(function(obj) {
@@ -394,7 +394,7 @@ function update_ui(){
                 var personal_page = obj["personal_website"];
                 var org = obj["organization"];
                 var org_page = obj["org_website"];
-                var author = parse("<div class='row'><div class='col-md-6' style='width: 90px; height: 90px; vertical-align: middle;'><a href='%s' target='_blank' class='thumbnail'><img id='%s' src='/images/author.jpeg' alt='author picture'></a></div><div class='col-md-6'><div class='row'><div class='row-md-12'><a href='%s' target='_blank'><h5>%s</h5></a></div></div><div class='row'><div class='row-md-12'><a href='%s' target='_blank' style='color: #888888; font-size:10px;'>%s</a></div></div></div></div>", personal_page, "auth"+auth_id ,personal_page, name, org_page, org);
+                var author = parse("<div class='col-md-1'><img id='%s' src='/images/author.jpeg' alt='author picture' style='width:40px; height:40px; vertical-align: middle;'></div><div class='col-md-5'><a href='%s' target='_blank'><h5 style='line-height: 30%;'>%s</h5></a><a href='%s' target='_blank' style='color: #888888; font-size:10px;'><p style='line-height: 100%;'>%s</p></a></div>", "auth"+auth_id ,personal_page, name, org_page, org);
                 // get image from gravatar
                 $("#authors").append( author );
                 $("#auth" + auth_id).attr('src', 'http://www.gravatar.com/avatar/' + md5(email));

@@ -7,9 +7,16 @@ var algo_run = require(path.join(__dirname, "/lib/Algo"));
 var strip_json = require(path.join(__dirname, "/lib/strip-json-comments"));
 var app = express();
 
+function haltOnTimedout(req, res, next){
+  if (!req.timedout) {
+      next();
+  }
+}
+
 // configure environment variables
-var filePath = path.join(__dirname, '/web/algorun_info/manifest.json');
-fs.readFile(filePath, {encoding: 'utf-8'}, function(err,data){
+var manifestFilePath = path.join(__dirname, '/web/algorun_info/manifest.json');
+
+fs.readFile(manifestFilePath, {encoding: 'utf-8'}, function(err,data){
     if (!err){
         strip_json.stripJsonComments(data, function (result){
             var manifest = JSON.parse(result);
@@ -35,7 +42,9 @@ app.use(bodyParser.urlencoded({limit: '100mb', extended: true}));
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(multer()); // for parsing multipart/form-data
 
-app.post('/run', function (req, res) {
+app.post('/v1/run', function (req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
     res.status = 500;
     req.socket.setTimeout(0);
     res.socket.setTimeout(0);
@@ -50,7 +59,9 @@ app.post('/run', function (req, res) {
         res.send('No input provided!');
     }
 });
-app.post('/config', function (req, res) {
+app.post('/v1/config', function (req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
     var env_var = req.body;
     if (env_var) {
         output = '';
@@ -71,9 +82,11 @@ app.post('/config', function (req, res) {
         res.send('No input provided!');
     }
 });
-app.post('/manifest', function (req, res) {
+app.get('/v1/manifest', function (req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
     res.status = 200;
-    res.sendFile(filePath);
+    res.sendFile(manifestFilePath);
 });
 
 app.use(express.static(__dirname + '/web'));
