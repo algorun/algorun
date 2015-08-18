@@ -23,24 +23,26 @@ This illustration assumes you have a minimal knowledge with [Docker](https://www
 
 ### Step 1: Prepare your algorithm
 
-- Your algorithm should accept the input as a file and produce the output to another file.
+Prepare your algorithm to work in the following scenario:
 
-- Your algorithm should run as following:
-`command input_file [FLAGS] [-f output_file]` where:
+- Accept the input as a file and produce the output to another file.
+
+- Have a single entry point. That is, it starts execution from one point. If your algorithm start executing on multiple files, you should combine them such that the `algo_exec` (details below) operates on one file only.
+
+- Read the first command line argument as the file name as following:
+`command input_file` where:
   * `command` (mandatory): is the command you use through terminal to run your algorithm
   * `input_file` (mandatory): is the input_file your algorithm read and process
-  * `FLAGS` (optional): If you have different modes for running the algorithm, you specify them as flags
-  * `-f output_file` (optional): If your command allow to specify a specific output file as a parameter, it should be in this format. If not, your algorithm should still write the output to a file (you will specify its name in the next step)
 
-- Use 'try it' directory as a template for your run.
+### Step 2: Wrap your algorithm in a container
 
-- Collect your algorithm source code in src folder. Even if your algorithm source files are in a hierarchy, gather them after all under src directory.
+To make the process easy, we have provided you with 'try it' directory that contains all what you need.
 
-- Edit the files under algorun_info directory to give information about your algorithm. These information will appear in the web page that is created for you after building your algorithm container.
+- First, you put all your algorithm source code in src folder.
 
-### Step 2: Edit the Dockerfile
+- Second, edit the Dockerfile. Open the file and follow the instructions in it. Basically, you are going only to install algorithm dependencies.
 
-In the Dockerfile, follow the steps to wrap your algorithm in a container. If you got stuck, you may refer to the full documentation at http://algorun.org/
+- Finally, edit files in the algorun_info folder.
 
 ### Step 3: Build, run and test your container
 
