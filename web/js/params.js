@@ -392,8 +392,15 @@ function update_ui(){
                 var name = obj["name"];
                 var email = obj["email"];
                 var personal_page = obj["personal_website"];
+                if(personal_page.trim() === ''){
+                    personal_page = '#';
+                }
                 var org = obj["organization"];
                 var org_page = obj["org_website"];
+                if(org.trim() === '' ||  org_page.trim() === ''){
+                    org_page = '#';
+                    org = 'Organization Not Given';
+                }
                 var author = parse("<div class='col-md-1'><img id='%s' src='/images/author.jpeg' alt='author picture' style='width:40px; height:40px; vertical-align: middle;'></div><div class='col-md-5'><a href='%s' target='_blank'><h5 style='line-height: 30%;'>%s</h5></a><a href='%s' target='_blank' style='color: #888888; font-size:10px;'><p style='line-height: 100%;'>%s</p></a></div>", "auth"+auth_id ,personal_page, name, org_page, org);
                 // get image from gravatar
                 $("#authors").append( author );
