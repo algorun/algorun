@@ -23,7 +23,7 @@ RUN apt-get update && \
 apt-get install -y npm
 RUN npm install express &&\
 npm install body-parser &&\
-npm install multer
+npm install multer@0.1.8
 ADD Server.js /home/algorithm/
 ADD algorun /bin/
 ADD ./web/index.html /home/algorithm/web/
