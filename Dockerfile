@@ -13,7 +13,7 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-FROM ubuntu:14.04
+FROM ubuntu:15.10
 MAINTAINER Abdelrahman H. Ibrahim <abdelrahman.hosny@hotmail.com>
 RUN apt-get update && \
 apt-get install -y nodejs && \
