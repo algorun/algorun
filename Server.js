@@ -45,12 +45,23 @@ app.post('/v1/run', function (req, res) {
     res.status = 500;
     req.socket.setTimeout(0);
     res.socket.setTimeout(0);
-    var input = req.body.input;
-    if (input){
-        algo_run.run(input, function (result){
+    var data_input = req.body.input;
+    var file_input = req.files.input;
+    if (data_input){
+        algo_run.run(data_input, function (result){
             res.status = 200;
             res.send(result);
         });        
+    } else if(file_input){
+        fs.readFile(req.files.input.path, function (err, data) {
+            var newPath = process.env.CODE_HOME + '/src/input.txt';
+            fs.writeFile(newPath, data, function (err) {
+                algo_run.run(false, function (result){
+                    res.status = 200;
+                    res.send(result);
+                }); 
+            });
+        });
     } else {
         res.status = 200;
         res.send('No input provided!');
