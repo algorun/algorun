@@ -7,12 +7,6 @@ var algo_run = require(path.join(__dirname, "/lib/Algo"));
 var strip_json = require(path.join(__dirname, "/lib/strip-json-comments"));
 var app = express();
 
-function haltOnTimedout(req, res, next){
-  if (!req.timedout) {
-      next();
-  }
-}
-
 // configure environment variables
 var manifestFilePath = path.join(__dirname, '/web/algorun_info/manifest.json');
 
@@ -37,23 +31,37 @@ fs.readFile(manifestFilePath, {encoding: 'utf-8'}, function(err,data){
     }
 });
 
-app.use(bodyParser.json({limit: '100mb'}));
-app.use(bodyParser.urlencoded({limit: '100mb', extended: true}));
+app.use(bodyParser.json({limit: '1000mb'}));
+app.use(bodyParser.urlencoded({limit: '1000mb', extended: true}));
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(multer()); // for parsing multipart/form-data
 
+var last_used = 'never';
+
 app.post('/v1/run', function (req, res) {
+    last_used = new Date();
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     res.status = 500;
     req.socket.setTimeout(0);
     res.socket.setTimeout(0);
-    var input = req.body.input;
-    if (input){
-        algo_run.run(input, function (result){
+    var data_input = req.body.input;
+    var file_input = req.files.input;
+    if (data_input){
+        algo_run.run(data_input, function (result_stream){
             res.status = 200;
-            res.send(result);
-        });        
+            result_stream.pipe(res);
+        });
+    } else if(file_input){
+        fs.readFile(req.files.input.path, function (err, data) {
+            var newPath = process.env.CODE_HOME + '/src/input.txt';
+            fs.writeFile(newPath, data, function (err) {
+                algo_run.run(false, function (result_stream){
+                    res.status = 200;
+                    result_stream.pipe(res);
+                });
+            });
+        });
     } else {
         res.status = 200;
         res.send('No input provided!');
@@ -87,6 +95,12 @@ app.get('/v1/manifest', function (req, res) {
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     res.status = 200;
     res.sendFile(manifestFilePath);
+});
+app.get('/v1/status', function (req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.status = 200;
+    res.send({'last_used': last_used});
 });
 
 app.use(express.static(__dirname + '/web'));
