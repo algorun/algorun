@@ -21,7 +21,7 @@
 		}
 	],
 	"algo_exec": "ruby test.rb", // the command to start algorithm execution. AlgoRun passes the input file as the first argument
-	"algo_output_filename": "output.txt", // path of the file where your algorithm outputs its results
+	"algo_output_filename": "output.txt", // path of the file where your algorithm outputs its results. Use "stdout" if your algorithm produces output to the standard output stream
 	"algo_parameters": { // list all the parameters available for your algorithm. These parameters will be available for use in your algorithm as environment variables.
 		"PARAM1": "default_value",
 		"PARAM2": "default_value"

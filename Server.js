@@ -48,17 +48,25 @@ app.post('/v1/run', function (req, res) {
     var data_input = req.body.input;
     var file_input = req.files.input;
     if (data_input){
-        algo_run.run(data_input, function (result_stream){
+        algo_run.run(data_input, function (result_type, result_stream){
             res.status = 200;
-            result_stream.pipe(res);
+            if(result_type === 'text'){
+                res.send(result_stream);
+            } else {
+                result_stream.pipe(res);   
+            }
         });
     } else if(file_input){
         fs.readFile(req.files.input.path, function (err, data) {
             var newPath = process.env.CODE_HOME + '/src/input.txt';
             fs.writeFile(newPath, data, function (err) {
-                algo_run.run(false, function (result_stream){
+                algo_run.run(false, function (result_type, result_stream){
                     res.status = 200;
-                    result_stream.pipe(res);
+                    if(result_type === 'text'){
+                        res.send(result_stream);
+                    } else {
+                        result_stream.pipe(res);   
+                    }
                 });
             });
         });
