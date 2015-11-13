@@ -38,7 +38,6 @@ $("#run_button").click(function() {
                 o_editor.setValue(data);
            } finally {
                 o_editor.gotoLine(1);
-                o_editor.insert(" ");
                 $('#run_button').prop('disabled', false);
                 var run_time = ((Date.now() | 0) - start_time) / 1000.0;
                 if(data.lastIndexOf("Are you sure", 0) != 0){
@@ -58,7 +57,6 @@ $("#populate_input").click(function() {
     $.get("/algorun_info/input_example.txt", function(data){
         i_editor.setValue(data);
         i_editor.gotoLine(1);
-        i_editor.insert(" ");
     });
 });
 $("#reset_computation").click(function() {
