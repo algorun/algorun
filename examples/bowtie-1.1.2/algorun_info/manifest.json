@@ -1,0 +1,47 @@
+{
+	"algo_name": "Bowtie 1.1.2", // the name of your algorithm
+	"algo_summary": "Bowtie is an ultrafast, memory-efficient alignment program for aligning short DNA sequence reads to large genomes.", // a 1-line summary of your algorithm
+	"algo_description": "Bowtie is an ultrafast, memory-efficient short read aligner geared toward quickly aligning large sets of short DNA sequences (reads) to large genomes. Check <a href='http://bowtie-bio.sf.net/' target='_blank'>our website</a> for detailed explanation. This interface is meant to provide a quick and easy access to the computation without having to install Bowtie packages. Command line options are exposed as parameters, which you can configure from the above window.", // a few lines description of your algorithm (basic html accepted)
+	"algo_website": "http://bowtie-bio.sf.net/", // url where users can find more information about your algorithm
+	"algo_keywords": ["bowtie", "DNA", "genome", "sequencing", "alignment", "Burrows-Wheeler", "indexing"], // a list of keywords describing your algorithm
+	"algo_authors": [ // a list of all the algorithm's authors
+		{
+			"name": "Ben Langmead",
+			"email": "langmead@cs.umd.edu", // make sure you have a gravatar (http://gravatar.com)
+			"personal_website": "http://www.cs.jhu.edu/~langmea/", // leave "" if not available
+			"organization": "John Hopkins University", // leave "" if not available
+			"org_website": "https://www.jhu.edu/" // leave "" if not available
+		},
+		{
+			"name": "Cole Trapnell",
+			"email": "coletrap@uw.edu", // make sure you have a gravatar (http://gravatar.com)
+			"personal_website": "http://cole-trapnell-lab.github.io/team/cole-trapnell/", // leave "" if not available
+			"organization": "University of Washington", // leave "" if not available
+			"org_website": "http://www.uw.edu/" // leave "" if not available
+		}
+	],
+	"algo_exec": "ruby bowtie.rb", // the command to start algorithm execution. AlgoRun passes the input file as the first argument
+	"algo_output_filename": "output.txt", // path of the file where your algorithm outputs its results. Use "stdout" if your algorithm produces output to the standard output stream
+	"algo_parameters": { // list all the parameters available for your algorithm. These parameters will be available for use in your algorithm as environment variables.
+		"Skip": "0",
+		"Only-Align": "all",
+		"Trim-Left": "0",
+		"Trim-Right": "0",
+		"Phred-Quality": "33",
+		"Solexa": "off",
+		"Align-v": "0",
+		"Align-n": "2",
+		"Align-e": "70",
+		"Align-l": "28",
+		"Align-I": "0",
+		"Align-X": "250",
+		"Report-k": "1",
+		"Report-all": "off",
+		"Report-m": "no-limit",
+		"Report-best": "off",
+		"Report-strata": "off",
+		"suppress": "0"
+	},
+	"input_type": "algorun:custom", // if your algorithm is compatible with other algorithms on AlgoRun, mention the input type it accepts here. Example: "algorun:superadam". leave the default value otherwise.
+	"algo_image": "algorun/bowtie" // Example: "ahosny/react". leave "" if you did not upload your algorithm to docker hub or if you do not know what docker hub is :).
+}
