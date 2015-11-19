@@ -8,6 +8,7 @@
 		{
 			"name": "Ben Langmead",
 			"email": "langmead@cs.umd.edu", // make sure you have a gravatar (http://gravatar.com)
+			"profile_picture": "ben.jpg", // if you don't have a gravatar, put a profile picture in algorun_info folder and refer to it here
 			"personal_website": "http://www.cs.jhu.edu/~langmea/", // leave "" if not available
 			"organization": "John Hopkins University", // leave "" if not available
 			"org_website": "https://www.jhu.edu/" // leave "" if not available
@@ -15,6 +16,7 @@
 		{
 			"name": "Cole Trapnell",
 			"email": "coletrap@uw.edu", // make sure you have a gravatar (http://gravatar.com)
+			"profile_picture": "cole.png", // if you don't have a gravatar, put a profile picture in algorun_info folder and refer to it here
 			"personal_website": "http://cole-trapnell-lab.github.io/team/cole-trapnell/", // leave "" if not available
 			"organization": "University of Washington", // leave "" if not available
 			"org_website": "http://www.uw.edu/" // leave "" if not available
@@ -42,6 +44,6 @@
 		"Report-strata": "off",
 		"suppress": "0"
 	},
-	"input_type": "algorun:custom", // if your algorithm is compatible with other algorithms on AlgoRun, mention the input type it accepts here. Example: "algorun:superadam". leave the default value otherwise.
+	"input_type": "algorun:dna-sequence", // if your algorithm is compatible with other algorithms on AlgoRun, mention the input type it accepts here. Example: "algorun:superadam". leave the default value otherwise.
 	"algo_image": "algorun/bowtie" // Example: "ahosny/react". leave "" if you did not upload your algorithm to docker hub or if you do not know what docker hub is :).
 }
