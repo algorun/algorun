@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var multer = require('multer');
 var fs = require('fs');
 var path = require('path');
+var util = require("util");
 var algo_run = require(path.join(__dirname, "/lib/Algo"));
 var strip_json = require(path.join(__dirname, "/lib/strip-json-comments"));
 var app = express();
@@ -47,12 +48,17 @@ app.post('/v1/run', function (req, res) {
     res.socket.setTimeout(0);
     var data_input = req.body.input;
     var file_input = req.files.input;
+    var hrstart = process.hrtime();
     if (data_input){
         algo_run.run(data_input, function (result_type, result_stream){
             res.status = 200;
             if(result_type === 'text'){
+                var hrend = process.hrtime(hrstart);
+                res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
                 res.send(result_stream);
             } else {
+                var hrend = process.hrtime(hrstart);
+                res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
                 result_stream.pipe(res);   
             }
         });
@@ -63,8 +69,12 @@ app.post('/v1/run', function (req, res) {
                 algo_run.run(false, function (result_type, result_stream){
                     res.status = 200;
                     if(result_type === 'text'){
+                        var hrend = process.hrtime(hrstart);
+                        res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
                         res.send(result_stream);
                     } else {
+                        var hrend = process.hrtime(hrstart);
+                        res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
                         result_stream.pipe(res);   
                     }
                 });

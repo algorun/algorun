@@ -307,14 +307,16 @@ function configure_params(params) {
                     $.each( params, function( key, value ) {
                         $('#'+key).editable('setValue', value);
                     });
-                    swal({
-                        title: "Reset to Defaults ..",
-                        type: "success",
-                        text: "Parameters successfully reset to defaults",
-                        timer: 2000,
-                        showConfirmButton: false });
-                    }
-                })
+                    $.notify({message: "<div align='center'>Parameters Successfully Reset to Defaults</div>"},
+                         {
+                            delay: 3000,
+                            placement: {
+		                      from: "bottom",
+		                      align: "center"
+                            },
+                            type: "info"
+                        });
+                }})
             .fail(function() {
                 sweetAlert("Oops...", "Unexpected error occured!", "error");
                 $.each( params, function( key, value ) {
@@ -391,6 +393,7 @@ function update_ui(){
                 auth_id += 1;
                 var name = obj["name"];
                 var email = obj["email"];
+                var pic = obj["profile_picture"];
                 var personal_page = obj["personal_website"];
                 if(personal_page.trim() === ''){
                     personal_page = '#';
@@ -404,7 +407,11 @@ function update_ui(){
                 var author = parse("<div class='col-md-1'><img id='%s' src='/images/author.jpeg' alt='author picture' style='width:40px; height:40px; vertical-align: middle;'></div><div class='col-md-5'><a href='%s' target='_blank'><h5 style='line-height: 30%;'>%s</h5></a><a href='%s' target='_blank' style='color: #888888; font-size:10px;'><p style='line-height: 100%;'>%s</p></a></div>", "auth"+auth_id ,personal_page, name, org_page, org);
                 // get image from gravatar
                 $("#authors").append( author );
-                $("#auth" + auth_id).attr('src', 'http://www.gravatar.com/avatar/' + md5(email));
+                if(pic.trim() === ''){
+                    $("#auth" + auth_id).attr('src', 'http://www.gravatar.com/avatar/' + md5(email));
+                }else{
+                    $("#auth" + auth_id).attr('src', '/algorun_info/' + pic.trim());
+                }
             });
         }
         

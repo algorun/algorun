@@ -25,7 +25,6 @@ $("#run_button").click(function() {
         sweetAlert("Oops...", "Should you pass input to the computation?", "error");
     } else {
         timer.play();
-        var start_time = Date.now() | 0;
         o_editor.setValue('please wait while computation is running...');
         $('#run_button').prop('disabled', true);
 	   var jqxhr = $.post( "/v1/run", { input: input_data })
@@ -39,15 +38,30 @@ $("#run_button").click(function() {
            } finally {
                 o_editor.gotoLine(1);
                 $('#run_button').prop('disabled', false);
-                var run_time = ((Date.now() | 0) - start_time) / 1000.0;
-                if(data.lastIndexOf("Are you sure", 0) != 0){
-                  swal({   title: "Computation Run Time",   text: run_time + " seconds",   timer: 2000,   showConfirmButton: false });  
-                } 
+                var run_time = "<div align='center'>" + jqXHR.getResponseHeader('Run-Time') + "</div>";
+                $.notify({message: run_time},
+                         {
+                            delay: 3000,
+                            placement: {
+		                      from: "bottom",
+		                      align: "center"
+                            },
+                            type: "success"
+                        });
                 timer.stop();
            }
        })
 	   .fail(function() {
            o_editor.setValue('An error occured!');
+           $.notify({message: "<div align='center'>An error occured!</div>"},
+                         {
+                            delay: 3000,
+                            placement: {
+		                      from: "bottom",
+		                      align: "center"
+                            },
+                            type: "error"
+                        });
            $('#run_button').prop('disabled', false);
            timer.stop();
        });
