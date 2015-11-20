@@ -73,7 +73,18 @@ $("#populate_input").click(function() {
         i_editor.gotoLine(1);
     });
 });
+function launchFullScreen(element) {
+  if(element.requestFullScreen) {
+    element.requestFullScreen();
+  } else if(element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if(element.webkitRequestFullScreen) {
+    element.webkitRequestFullScreen();
+  }
+}
 $("#reset_computation").click(function() {
 	i_editor.setValue('');
     o_editor.setValue('');
+    
+    //launchFullScreen(document.getElementById("fullscreen"));
 });
