@@ -8,7 +8,7 @@
 		{
 			"name": "John Doe",
 			"email": "john@doe.com", // make sure you have a gravatar (http://gravatar.com)
-            "profile_pic": "", // if you don't have a gravatar, put a profile picture in algorun_info folder and refer to it here
+            "profile_picture": "", // if you don't have a gravatar, put a profile picture in algorun_info folder and refer to it here
 			"personal_website": "http://johndoe.info", // leave "" if not available
 			"organization": "John Doe University", // leave "" if not available
 			"org_website": "http://johndoe.edu" // leave "" if not available
@@ -16,7 +16,7 @@
 		{
 			"name": "Jim Doe",
 			"email": "jim@doe.com", // make sure you have a gravatar (http://gravatar.com)
-            "profile_pic": "", // if you don't have a gravatar, put a profile picture in algorun_info folder and refer to it here
+            "profile_picture": "", // if you don't have a gravatar, put a profile picture in algorun_info folder and refer to it here
 			"personal_website": "http://jimdoe.info", // leave "" if not available
 			"organization": "John Doe University", // leave "" if not available
 			"org_website": "http://johndoe.edu" // leave "" if not available
@@ -28,5 +28,6 @@
 		"PARAM1": "default_value",
 		"PARAM2": "default_value"
 	},
+	"input_type": "algorun:custom", // if your algorithm is compatible with other algorithms on AlgoRun, mention the input type it accepts here. Example: "algorun:superadam". leave the default value otherwise.
 	"algo_image": "" // Example: "ahosny/react". leave "" if you did not upload your algorithm to docker hub or if you do not know what docker hub is :).
 }
