@@ -53,15 +53,6 @@ $("#run_button").click(function() {
        })
 	   .fail(function() {
            o_editor.setValue('An error occured!');
-           $.notify({message: "<div align='center'>An error occured!</div>"},
-                         {
-                            delay: 3000,
-                            placement: {
-		                      from: "bottom",
-		                      align: "center"
-                            },
-                            type: "error"
-                        });
            $('#run_button').prop('disabled', false);
            timer.stop();
        });
