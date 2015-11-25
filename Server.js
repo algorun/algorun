@@ -23,8 +23,11 @@ fs.readFile(manifestFilePath, {encoding: 'utf-8'}, function(err,data){
             if(manifest.hasOwnProperty('algo_exec')){
                 process.env.algo_exec = manifest['algo_exec'];
             }
-            if(manifest.hasOwnProperty('algo_output_filename')){
-                process.env.algo_output_filename = manifest['algo_output_filename'];
+            if(manifest.hasOwnProperty('algo_input_stream')){
+                process.env.algo_input_stream = manifest['algo_input_stream'];
+            }
+            if(manifest.hasOwnProperty('algo_output_stream')){
+                process.env.algo_output_stream = manifest['algo_output_stream'];
             }
         }); 
     } else{
