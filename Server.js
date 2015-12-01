@@ -9,6 +9,7 @@ var strip_json = require(path.join(__dirname, "/lib/strip-json-comments"));
 var app = express();
 
 function setVersionEnvironment(manifest){
+    process.env.manifest_version = manifest['manifest_version'];
     if(manifest.hasOwnProperty('algo_exec')){
         process.env.algo_exec = manifest['algo_exec'];
     }
@@ -64,6 +65,12 @@ app.use(multer()); // for parsing multipart/form-data
 
 var last_used = 'never';
 
+app.get('/version', function (req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.status = 200;
+    res.send({"api_version": process.env.manifest_version});
+});
 app.post('/v1/run', function (req, res) {
     last_used = new Date();
     res.header("Access-Control-Allow-Origin", "*");
