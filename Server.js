@@ -8,6 +8,41 @@ var algo_run = require(path.join(__dirname, "/lib/Algo"));
 var strip_json = require(path.join(__dirname, "/lib/strip-json-comments"));
 var app = express();
 
+function setVersionEnvironment(manifest){
+    if(manifest.hasOwnProperty('algo_exec')){
+        process.env.algo_exec = manifest['algo_exec'];
+    }
+    switch(manifest["manifest_version"]){
+        case "1.0":        
+            // version 1.0 doesn't define algo_input_stream. The default was file.
+            process.env.algo_input_stream = "file";
+            if(manifest.hasOwnProperty('algo_output_filename')){
+                process.env.algo_output_stream = manifest['algo_output_filename'];
+            }
+            break;
+        case "1.1":
+            // version 1.1 deines algo_input stream for more flexibility accepting input
+            if(manifest.hasOwnProperty('algo_input_stream')){
+                process.env.algo_input_stream = manifest['algo_input_stream'];
+            }
+            if(manifest.hasOwnProperty('algo_output_stream')){
+                process.env.algo_output_stream = manifest['algo_output_stream'];
+            }
+            break;
+        default:
+            // let the default be version 1.0
+            process.env.algo_input_stream = "file";
+            if(manifest.hasOwnProperty('algo_output_filename')){
+                process.env.algo_output_stream = manifest['algo_output_filename'];
+            }
+    }
+    for (var key in manifest["algo_parameters"]) {
+        if (manifest["algo_parameters"].hasOwnProperty(key)) {
+            process.env[key] = manifest["algo_parameters"][key];
+        }
+    }
+}
+
 // configure environment variables
 var manifestFilePath = path.join(__dirname, '/web/algorun_info/manifest.json');
 
@@ -15,20 +50,7 @@ fs.readFile(manifestFilePath, {encoding: 'utf-8'}, function(err,data){
     if (!err){
         strip_json.stripJsonComments(data, function (result){
             var manifest = JSON.parse(result);
-            for (var key in manifest["algo_parameters"]) {
-                if (manifest["algo_parameters"].hasOwnProperty(key)) {
-                    process.env[key] = manifest["algo_parameters"][key];
-                }
-            }
-            if(manifest.hasOwnProperty('algo_exec')){
-                process.env.algo_exec = manifest['algo_exec'];
-            }
-            if(manifest.hasOwnProperty('algo_input_stream')){
-                process.env.algo_input_stream = manifest['algo_input_stream'];
-            }
-            if(manifest.hasOwnProperty('algo_output_stream')){
-                process.env.algo_output_stream = manifest['algo_output_stream'];
-            }
+            setVersionEnvironment(manifest);
         }); 
     } else{
         console.log(err);
