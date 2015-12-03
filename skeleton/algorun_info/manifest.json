@@ -1,5 +1,5 @@
 {
-    "manifest_version": "1.1",
+    	"manifest_version": "1.1",
 	"algo_name": "N/A", // the name of your algorithm
 	"algo_summary": "N/A", // a 1-line summary of your algorithm
 	"algo_description": "N/A", // a few lines description of your algorithm (basic html accepted)
