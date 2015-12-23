@@ -76,6 +76,7 @@ var last_used = 'never';
 app.get('/version', function (req, res) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Content-Type", "application/json; charset=utf-8");
     res.status = 200;
     res.send({"api_version": process.env.manifest_version});
 });
@@ -151,12 +152,14 @@ app.post('/v1/config', function (req, res) {
 app.get('/v1/manifest', function (req, res) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Content-Type", "application/json; charset=utf-8");
     res.status = 200;
     res.sendFile(manifestFilePath);
 });
 app.get('/v1/status', function (req, res) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Content-Type", "application/json; charset=utf-8");
     res.status = 200;
     res.send({'last_used': last_used});
 });
