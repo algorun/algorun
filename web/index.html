@@ -34,14 +34,6 @@
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-		</div>
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="#algo_name" id='algo_tab'>Algorithm</a></li>
@@ -58,10 +50,10 @@
 <div class="container">
 	<div class="starter-template">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6" id="summary-section">
                 <h1 id='algo_name' style="color:#58ACFA;">Algorithm Name</h1>
-		          <p id='short_description'>Short Description</p>
-                    <p>More Information:&nbsp;<a id='algo_ref' href="http://algorun.org" target="_blank">http://algorun.org</a></p>
+                <p id='short_description'>Short Description</p>
+                <p>More Information:&nbsp;<a id='algo_website' href="http://algorun.org" target="_blank">http://algorun.org</a></p>
             </div>
             <div class="col-md-6">
                 <div class="row" id="authors">
@@ -197,7 +189,7 @@ following command:</p>
 	</div>
 </div>
 <div class="container">
-    <p class="text-muted credit" style="text-align: center; margin-bottom: 30px;">Powered by <a href="http://algorun.org" target="_blank">AlgoRun</a></p>
+    <p class="text-muted credit" style="text-align: center; margin-bottom: 30px; color: #2C3D50">Powered by<a href="http://algorun.org" target="_blank"><img src="images/algorun-logo.png" height="25px" style="margin-bottom: 2px;"></a></p>
 </div>
 <script src="/js/strip-json-comments.js"></script>
 <script src="/js/shortcut.js"></script>
@@ -214,7 +206,6 @@ following command:</p>
 <script src="/js/tab-animation.js"></script>
 <script src="/js/file-upload.js"></script>
 <script src="/js/file-download.js"></script>
-<script src="/js/jquery.scrollUp.js"></script>
 <script src="/js/bootstrap-notify.min.js"></script>
 <a id="scrollup">Scroll</a>    
 </body>

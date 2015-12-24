@@ -385,6 +385,24 @@ function update_ui(){
         if(data["algo_summary"]){
             $( "#short_description" ).html( data["algo_summary"] );
         }
+        if(data["algo_website"]){
+            $( "#algo_website" ).attr( 'href', data["algo_website"] );
+            $( "#algo_website" ).html( data["algo_website"] );
+        }
+        if(data["published_paper"]){
+            var title = data["published_paper"]["title"];
+            var url = data["published_paper"]["url"];
+            if(title != "" && title != undefined && url != "" && url != undefined){
+                $('#summary-section').append("<p>Published paper:&nbsp;<a href='" + url + "' target='_blank'>" + title + "</a></p>");   
+            }
+        }
+        if(data["algo_packager"]){
+            var name = data["algo_packager"]["name"];
+            var url = data["algo_packager"]["personal_website"];
+            if(name != "" && name != undefined && url != "" && url != undefined){
+                $('#summary-section').append("<p>Packaged by:&nbsp;<a href='" + url + "' target='_blank'>" + name + "</a></p>");   
+            }
+        }
         
         $( "#authors" ).html("<h1 style='text-align: left; color:#58ACFA;'>Authors</h1>");
         if(data["algo_authors"]){
@@ -424,11 +442,6 @@ function update_ui(){
         
         if(data["algo_description"]){
             $( "#long_description" ).html( data["algo_description"] + '<br>' );
-        }
-        
-        if(data["algo_website"]){
-            $( "#algo_ref" ).attr( 'href', data["algo_website"] );
-            $( "#algo_ref" ).html( data["algo_website"] );
         }
         
         if(data["algo_image"]){

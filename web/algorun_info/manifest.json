@@ -1,10 +1,14 @@
 {
-    "manifest_version": "1.2",
+    "manifest_version": "1.3",
 	"algo_name": "N/A", // the name of your algorithm
 	"algo_summary": "N/A", // a 1-line summary of your algorithm
 	"algo_description": "N/A", // a few lines description of your algorithm (basic html accepted)
 	"algo_website": "http://algorun.org", // url where users can find more information about your algorithm
 	"algo_keywords": [], // a list of keywords describing your algorithm
+    "published_paper": { // if you already published your algorithm. leave blank if not.
+            "title": "",
+            "url": ""
+    },
 	"algo_authors": [ // a list of all the algorithm's authors
 		{
 			"name": "John Doe",
@@ -23,6 +27,14 @@
 			"org_website": "http://johndoe.edu" // leave "" if not available
 		}
 	],
+    "algo_packager": { // the one who packaged the algorithm into AlgoRun container.
+            "name": "John Doe",
+            "email": "john@doe.com",
+            "personal_website": "http://johndoe.info",
+            "profile_picture": "",
+            "organization": "John Doe University", 
+            "org_website": "http://johndoe.edu" 
+    },
 	"algo_exec": "ruby test.rb", // the command to start algorithm execution. AlgoRun passes the input file as the first argument
 	"algo_input_stream": "direct", // "file" if the algorithm reads input from a file (filename is passed as the first command line argument), "direct" if the algorithm input is passed directly as a parameter in the command line, or "stdin" if input is passed through stdin using '<'. Default: direct
     "algo_output_stream": "stdout", // path of the file where your algorithm outputs its results or "stdout" if your algorithm prints the results to the standard output stream. Default: stdout
