@@ -38,6 +38,16 @@ function setVersionEnvironment(manifest){
             if(manifest.hasOwnProperty('algo_output_stream')){
                 process.env.algo_output_stream = manifest['algo_output_stream'];
             }
+            break;
+        case "1.3":
+            // version 1.2 defines output_type as a complement to input_type. For now, it is the same logic as 1.1 as AlgoRun containers doesn't use it; the website does. The case is included here for future development
+            if(manifest.hasOwnProperty('algo_input_stream')){
+                process.env.algo_input_stream = manifest['algo_input_stream'];
+            }
+            if(manifest.hasOwnProperty('algo_output_stream')){
+                process.env.algo_output_stream = manifest['algo_output_stream'];
+            }
+            break;
         default:
             // let the default be version 1.0
             process.env.algo_input_stream = "file";
