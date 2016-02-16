@@ -1,0 +1,224 @@
+[
+  {
+    "type": "PolynomialDynamicalSystemSet",
+    "description": "PLEASE FILL IN",
+    "name": "reverseEngineeringOutputModel",
+    "fieldCardinality": 2,
+    "variableScores": [
+      {
+        "target": "x1",
+        "sources": [
+          {
+            "source": "x1",
+            "score": 1.0
+          },
+          {
+            "source": "x5",
+            "score": 1.0
+          },
+          {
+            "source": "x2",
+            "score": 0.5
+          },
+          {
+            "source": "x4",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "target": "x2",
+        "sources": [
+          {
+            "source": "x2",
+            "score": 1.0
+          },
+          {
+            "source": "x5",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "target": "x3",
+        "sources": [
+          {
+            "source": "x1",
+            "score": 1.0
+          },
+          {
+            "source": "x2",
+            "score": 0.5
+          },
+          {
+            "source": "x3",
+            "score": 1.0
+          },
+          {
+            "source": "x4",
+            "score": 1.0
+          },
+          {
+            "source": "x5",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "target": "x4",
+        "sources": [
+          {
+            "source": "x2",
+            "score": 0.67
+          },
+          {
+            "source": "x5",
+            "score": 1.0
+          },
+          {
+            "source": "x3",
+            "score": 0.33
+          },
+          {
+            "source": "x4",
+            "score": 0.33
+          }
+        ]
+      },
+      {
+        "target": "x5",
+        "sources": [
+          {
+            "source": "x1",
+            "score": 1.0
+          },
+          {
+            "source": "x5",
+            "score": 1.0
+          },
+          {
+            "source": "x3",
+            "score": 1.0
+          }
+        ]
+      }
+    ],
+    "updateRules": [
+      {
+        "target": "x1",
+        "functions": [
+          {
+            "polynomialFunction": "x1*x5 + x1 + x2*x5 + x4",
+            "inputVariables": [
+              "x1",
+              "x5",
+              "x2",
+              "x4"
+            ],
+            "score": 0.275
+          },
+          {
+            "polynomialFunction": "x1*x5 + x1 + x4 + x5",
+            "inputVariables": [
+              "x1",
+              "x5",
+              "x4"
+            ],
+            "score": 0.275
+          }
+        ]
+      },
+      {
+        "target": "x2",
+        "functions": [
+          {
+            "polynomialFunction": "x2 + x5 + 1",
+            "inputVariables": [
+              "x2",
+              "x5"
+            ],
+            "score": 0.275
+          },
+          {
+            "polynomialFunction": "x2*x5 + x2 + 1",
+            "inputVariables": [
+              "x2",
+              "x5"
+            ],
+            "score": 0.275
+          }
+        ]
+      },
+      {
+        "target": "x3",
+        "functions": [
+          {
+            "polynomialFunction": "x1 + x2 + x3 + x4 + x5",
+            "inputVariables": [
+              "x1",
+              "x2",
+              "x3",
+              "x4",
+              "x5"
+            ],
+            "score": 0.275
+          },
+          {
+            "polynomialFunction": "x1*x3 + x1*x5 + x1 + x3 + x4*x5 + x4 + x5 + 0",
+            "inputVariables": [
+              "x1",
+              "x3",
+              "x5",
+              "x4"
+            ],
+            "score": 0.275
+          }
+        ]
+      },
+      {
+        "target": "x4",
+        "functions": [
+          {
+            "polynomialFunction": "x2 + x5 + 1",
+            "inputVariables": [
+              "x2",
+              "x5"
+            ],
+            "score": 0.275
+          },
+          {
+            "polynomialFunction": "x3*x4*x5 + x3*x4 + 1",
+            "inputVariables": [
+              "x3",
+              "x4",
+              "x5"
+            ],
+            "score": 0.275
+          },
+          {
+            "polynomialFunction": "x2*x5 + x2 + 1",
+            "inputVariables": [
+              "x2",
+              "x5"
+            ],
+            "score": 0.275
+          }
+        ]
+      },
+      {
+        "target": "x5",
+        "functions": [
+          {
+            "polynomialFunction": "x1*x5 + x1 + x3",
+            "inputVariables": [
+              "x1",
+              "x5",
+              "x3"
+            ],
+            "score": 0.275
+          }
+        ]
+      }
+    ]
+  }
+]

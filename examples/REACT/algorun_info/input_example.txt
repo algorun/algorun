@@ -1,0 +1,88 @@
+[
+  {
+    "type": "timeSeries",
+    "description": "boolean data",
+    "fieldCardinality": 2,
+    "numberVariables": 5,
+    "timeSeriesData": [
+	{
+	  "index": [],
+	  "matrix": [
+	      [1,0,0,0,0],
+	      [1,1,1,1,1],
+	      [0,1,1,1,1],
+	      [0,1,0,1,1],
+	      [0,1,1,1,0]
+	    ],
+	  "name": "wildtype experiment 1"
+	},
+	{
+	  "index": [],
+	  "matrix": [
+	      [1,1,0,0,1],
+	      [1,1,1,1,0],
+	      [0,0,0,0,0],
+	      [0,1,0,1,0]
+	    ],
+	  "name": "wildtype experiment 2"
+	}
+      ]
+  },
+  {
+    "type": "PolynomialDynamicalSystemSet",
+    "fieldCardinality": 2,
+    "numberVariables": 5,
+    "updateRules": [
+	{
+	  "functions": [
+	      {
+		"inputVariables": ["x1","x4","x5"],
+		"polynomialFunction": "x1*x5+x1+x4+x5",
+		"score": 1
+	      }
+	    ],
+	  "target": "x1"
+	},
+	{
+	  "functions": [
+	      {
+		"inputVariables": ["x2","x5"],
+		"polynomialFunction": "x2+x5+1",
+		"score": 1
+	      }
+	    ],
+	  "target": "x2"
+	},
+	{
+	  "functions": [
+	      {
+		"inputVariables": ["x1","x2","x3","x4","x5"],
+		"polynomialFunction": "x1+x2+x3+x4+x5",
+		"score": 1
+	      }
+	    ],
+	  "target": "x3"
+	},
+	{
+	  "functions": [
+	      {
+		"inputVariables": ["x2","x5"],
+		"polynomialFunction": "x2+x5+1",
+		"score": 1
+	      }
+	    ],
+	  "target": "x4"
+	},
+	{
+	  "functions": [
+	      {
+		"inputVariables": ["x1","x3","x5"],
+		"polynomialFunction": "x1*x5+x1+x3",
+		"score": 1
+	      }
+	    ],
+	  "target": "x5"
+	}
+      ]
+  }
+]
