@@ -1,0 +1,107 @@
+#!/usr/bin/env python
+
+# MHS algorithm runner: KS
+# Copyright Vera-Licona Research Group (C) 2015
+# Author: Andrew Gainer-Dewar, Ph.D. <andrew.gainer.dewar@gmail.com>
+
+# This file is part of MHSGenerationAlgorithms.
+
+# MHSGenerationAlgorithms is free software: you can redistribute it
+# and/or modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation, either version 3 of
+# the License, or (at your option) any later version.
+#
+# MHSGenerationAlgorithms is distributed in the hope that it will be
+# useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+# of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+
+import simplejson as json
+import argparse
+import tempfile
+import timeit
+import sys
+import os
+
+def input_file_lines(edges):
+    num_verts = max(vert for edge in edges for vert in edge)
+
+    for edge in edges:
+        # thg represents each set as a row vector where '0' means an element
+        # is included and any other character (such as '*') means it is not
+        edge_as_charlist = ['*'] * num_verts
+        for vert in edge:
+            edge_as_charlist[vert-1] = '0'
+        yield "".join(edge_as_charlist)
+
+def transversals_from_output_file(output_file):
+    output_file.seek(0)
+    # Only use lines that don't start with '#'
+    lines = (line for line in output_file if not line.startswith('#'))
+
+    # The vertices included in each edge are marked with the character '0'
+    for line in lines:
+        yield [i for (i, c) in enumerate(line, start=1) if c == '0']
+
+def main():
+    # Set up argument processing
+    parser = argparse.ArgumentParser(description='MHS runner: KS')
+
+    # Note: the help text will show input_file in the wrong place per AlgoRun, but it will still work
+    parser.add_argument("input_file", help="Input file to process")
+    parser.add_argument("-f", dest="output_file", default="out.dat", help="Output destination")
+
+    args = parser.parse_args()
+
+    # Configure path
+    script_dir = sys.path[0]
+
+    # Read the input file
+    with open(args.input_file) as input_file:
+        input_json = json.load(input_file)
+
+    # Set up temporary files for input and output
+    with tempfile.NamedTemporaryFile() as temp_input_file:
+        with tempfile.NamedTemporaryFile() as temp_output_file:
+            # Generate the input file
+            for line in input_file_lines(input_json["sets"]):
+                temp_input_file.write(line + "\n")
+            temp_input_file.flush()
+
+            # Set up the algorithm call
+            alg_call_string = "['./alg/thg', '-i', '{0}', '-o', '{1}']".format(temp_input_file.name, temp_output_file.name)
+
+            # Call the algorithm
+            time_taken = timeit.timeit(stmt="subprocess.check_call({0}, cwd='{1}')".format(alg_call_string, script_dir),
+                                       setup="import subprocess",
+                                       number=1)
+
+            # Process the results
+            transversals = (transversals_from_output_file(temp_output_file))
+
+            results = input_json
+            results["transversals"] = transversals
+            results["timeTaken"] = time_taken
+
+            # Write the results to the output file
+            with open(args.output_file, 'w') as output_file:
+                # Pretty-print the output, but only if it isn't too big
+                if temp_input_file.tell() < 1024*1024: # Check whether result data file is more than 1MB
+                    indent_level = 4
+                else:
+                    indent_level = None
+
+                json.dump(results,
+                          output_file,
+                          indent = indent_level,
+                          separators = (',', ': '),
+                          iterable_as_array = True)
+
+
+if __name__ == "__main__":
+    main()
+
+### Emacs configuration
+# Local Variables:
+# mode: python
+# End:
