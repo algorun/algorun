@@ -1,0 +1,82 @@
+BLASTN 2.3.0+
+
+
+Reference: Zheng Zhang, Scott Schwartz, Lukas Wagner, and Webb
+Miller (2000), "A greedy algorithm for aligning DNA sequences", J
+Comput Biol 2000; 7(1-2):203-14.
+
+
+
+Database: Nucleotide collection (nt)
+           35,607,085 sequences; 115,238,048,838 total letters
+
+
+
+Query= Leiocephalus_barahonensis
+
+Length=70
+
+RID: G3DKEJMK014
+                                                                      Score     E
+Sequences producing significant alignments:                          (Bits)  Value
+
+gb|EF591774.1|  Leiocephalus barahonensis voucher MEG 24 NADH deh...  130     3e-27
+gb|EF591773.1|  Leiocephalus barahonensis voucher MEG 520 NADH de...  130     3e-27
+
+
+>gb|EF591774.1| Leiocephalus barahonensis voucher MEG 24 NADH dehydrogenase subunit 
+2 (ND2) gene, complete cds; tRNA-Trp gene, complete sequence; 
+and tRNA-Ala gene, partial sequence; mitochondrial
+Length=1157
+
+ Score = 130 bits (70),  Expect = 3e-27
+ Identities = 70/70 (100%), Gaps = 0/70 (0%)
+ Strand=Plus/Plus
+
+Query  1   ATGAGCCCCCTTACAACAACAATTCTACTATCAAGCTTAGCAACCGGCACCATCATTACA  60
+           ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Sbjct  1   ATGAGCCCCCTTACAACAACAATTCTACTATCAAGCTTAGCAACCGGCACCATCATTACA  60
+
+Query  61  GCCACAAGCT  70
+           ||||||||||
+Sbjct  61  GCCACAAGCT  70
+
+
+>gb|EF591773.1| Leiocephalus barahonensis voucher MEG 520 NADH dehydrogenase 
+subunit 2 (ND2) gene, complete cds; tRNA-Trp gene, complete 
+sequence; and tRNA-Ala gene, partial sequence; mitochondrial
+Length=1157
+
+ Score = 130 bits (70),  Expect = 3e-27
+ Identities = 70/70 (100%), Gaps = 0/70 (0%)
+ Strand=Plus/Plus
+
+Query  1   ATGAGCCCCCTTACAACAACAATTCTACTATCAAGCTTAGCAACCGGCACCATCATTACA  60
+           ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Sbjct  1   ATGAGCCCCCTTACAACAACAATTCTACTATCAAGCTTAGCAACCGGCACCATCATTACA  60
+
+Query  61  GCCACAAGCT  70
+           ||||||||||
+Sbjct  61  GCCACAAGCT  70
+
+
+
+Lambda      K        H
+    1.33    0.621     1.12 
+
+Gapped
+Lambda      K        H
+    1.28    0.460    0.850 
+
+Effective search space used: 4451234938917
+
+
+  Database: Nucleotide collection (nt)
+    Posted date:  Apr 2, 2016 10:17 AM
+  Number of letters in database: 115,238,048,838
+  Number of sequences in database:  35,607,085
+
+
+
+Matrix: blastn matrix 1 -2
+Gap Penalties: Existence: 0, Extension: 2.5

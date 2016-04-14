@@ -1,0 +1,39 @@
+{
+   	"manifest_version": "1.3",
+	"algo_name": "BLASTN",
+	"algo_summary": "Compares a nucleotide query sequence against a nucleotide sequence database",
+	"algo_description": "BLAST for Basic Local Alignment Search Tool is an algorithm for comparing primary biological sequence information, such as the amino-acid sequences of different proteins or the nucleotides of DNA sequences. A BLAST search enables a researcher to compare a query sequence with a library or database of sequences, and identify library sequences that resemble the query sequence above a certain threshold.",
+	"algo_website": "http://blast.ncbi.nlm.nih.gov/Blast.cgi",
+	"algo_keywords": ["similarity", "biological", "sequences"],
+	"published_paper": {
+            "title": "Basic local alignment search tool",
+            "url": "http://www.sciencedirect.com/science/article/pii/S0022283605803602"
+    	},
+	"algo_authors": [
+		{
+			"name": "Stephen Frank",
+			"email": "",
+            "profile_picture": "stephan.jpeg",
+			"personal_website": "https://scholar.google.com/citations?user=VRccPlQAAAAJ&hl=en&oi=sra",
+			"organization": "NCBI, NLM, NIH",
+			"org_website": "http://www.nih.gov/"
+		}
+	],
+	"algo_packager": {
+            "name": "Abdelrahman Hosny",
+            "email": "abdelrahman.hosny@hotmail.com",
+            "personal_website": "http://www.abdelrahmanhosny.me",
+            "profile_picture": "",
+            "organization": "University of Connecticut", 
+            "org_website": "http://cse.uconn.edu" 
+    },
+	"algo_exec": "./run_blast.sh",
+	"algo_input_stream": "file",
+    "algo_output_stream": "stdout",
+	"algo_parameters": {
+	},
+	"input_type": "FASTA",
+    "output_type": "BLAST",
+	"algo_image": "algorun:blast"
+}
+
