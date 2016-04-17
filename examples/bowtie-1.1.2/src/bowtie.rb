@@ -7,23 +7,23 @@ input_data=ARGV[0].strip
 options = ""
 
 options += " -s " + ENV["Skip"].strip
-options += " -u " + ENV["Only-Align"].strip unless ENV["Only-Align"] == "all"
-options += " -5 " + ENV["Trim-Left"].strip
-options += " -3 " + ENV["Trim-Right"].strip
-options += " --phred64-quals" if ENV["Phred-Quality"] == "64"
+options += " -u " + ENV["OnlyAlign"].strip unless ENV["OnlyAlign"] == "all"
+options += " -5 " + ENV["TrimLeft"].strip
+options += " -3 " + ENV["TrimRight"].strip
+options += " --phred64-quals" if ENV["PhredQuality"] == "64"
 options += " --solexa-quals" if ENV["Solexa"] == "on"
-options += " -n " + ENV["Align-n"].strip
-options += " -v " + ENV["Align-v"].strip
-options += " -n " + ENV["Align-n"].strip
-options += " -e " + ENV["Align-e"].strip
-options += " -l " + ENV["Align-l"].strip
-options += " -I " + ENV["Align-I"].strip
-options += " -X " + ENV["Align-X"].strip
-options += " -k " + ENV["Report-k"].strip
-options += " --all" if ENV["Report-all"] == "on"
-options += " -m " + ENV["Report-m"].strip unless ENV["Report-m"] == "no-limit"
-options += " --best" if ENV["Report-best"] == "on"
-options += " --strata" if ENV["Report-strata"] == "on"
+options += " -n " + ENV["AlignN"].strip
+options += " -v " + ENV["AlignV"].strip
+options += " -n " + ENV["AlignN"].strip
+options += " -e " + ENV["AlignE"].strip
+options += " -l " + ENV["AlignL"].strip
+options += " -I " + ENV["AlignI"].strip
+options += " -X " + ENV["AlignX"].strip
+options += " -k " + ENV["ReportK"].strip
+options += " --all" if ENV["ReportAll"] == "on"
+options += " -m " + ENV["ReportM"].strip unless ENV["ReportM"] == "no-limit"
+options += " --best" if ENV["ReportBest"] == "on"
+options += " --strata" if ENV["ReportStrata"] == "on"
 options += " --suppress " + ENV["suppress"].delete(' ') unless ENV["suppress"] == "0"
 options.strip!
 

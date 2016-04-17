@@ -1,6 +1,6 @@
 {
    	"manifest_version": "1.3",
-	"algo_name": "BLASTN",
+	"algo_name": "BLAST",
 	"algo_summary": "Compares a nucleotide query sequence against a nucleotide sequence database",
 	"algo_description": "BLAST for Basic Local Alignment Search Tool is an algorithm for comparing primary biological sequence information, such as the amino-acid sequences of different proteins or the nucleotides of DNA sequences. A BLAST search enables a researcher to compare a query sequence with a library or database of sequences, and identify library sequences that resemble the query sequence above a certain threshold.",
 	"algo_website": "http://blast.ncbi.nlm.nih.gov/Blast.cgi",
@@ -29,7 +29,7 @@
     },
 	"algo_exec": "./run_blast.sh",
 	"algo_input_stream": "file",
-    "algo_output_stream": "stdout",
+    "algo_output_stream": "output.txt",
 	"algo_parameters": {
 	},
 	"input_type": "FASTA",

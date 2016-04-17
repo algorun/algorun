@@ -1,1 +1,1 @@
-/ncbi-blast-2.3.0+/bin/blastn -db nt -query $1 -remote
+/ncbi-blast-2.3.0+/bin/blastn -db nt -query $1 -remote -out output.txt
