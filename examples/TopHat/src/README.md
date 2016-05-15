@@ -1,0 +1,2 @@
+Use this directory to put your algorithm source code in.
+Your code can be further structured into subdirectories, but make sure to use appropriate file path in algo_exec parameter in the manifest file.
