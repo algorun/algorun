@@ -37,7 +37,7 @@
     },
 	"algo_exec": "sh bedtools.sh", // the command to start algorithm execution. AlgoRun passes the input file as the first argument
 	"algo_input_stream": "file", // "file" if the algorithm reads input from a file (filename is passed as the first command line argument), "direct" if the algorithm input is passed directly as a parameter in the command line, or "stdin" if input is passed through stdin using '<'. Default: direct
-    "algo_output_stream": "result.bed", // path of the file where your algorithm outputs its results or "stdout" if your algorithm prints the results to the standard output stream. Default: stdout
+    "algo_output_stream": "result.txt", // path of the file where your algorithm outputs its results or "stdout" if your algorithm prints the results to the standard output stream. Default: stdout
 	"algo_parameters": { // list all the parameters available for your algorithm. These parameters will be available for use in your algorithm as environment variables.
 		"COMMAND": "sort"
 	},

@@ -6,5 +6,4 @@ else
     PARAMETER='-i'
 fi
 
-bedtools sort -i $1 > result.bed
-#bedtools $COMMAND $PARAMETER $1
+bedtools $COMMAND $PARAMETER $1 > result.txt
