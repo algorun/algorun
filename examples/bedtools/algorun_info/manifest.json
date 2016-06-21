@@ -1,0 +1,48 @@
+{
+   	"manifest_version": "1.3",
+	"algo_name": "bedtools", // the name of your algorithm
+	"algo_summary": "bedtools is a swiss-army knife of various genomics analysis tasks", // a 1-line summary of your algorithm
+	"algo_description": "Collectively, the bedtools utilities are a swiss-army knife of tools for a wide-range of genomics analysis tasks. The most widely-used tools enable genome arithmetic: that is, set theory on the genome. For example, bedtools allows one to intersect, merge, count, complement, and shuffle genomic intervals from multiple files in widely-used genomic file formats such as BAM, BED, GFF/GTF, VCF.", // a few lines description of your algorithm (basic html accepted)
+	"algo_website": "http://bedtools.readthedocs.io/en/latest/", // url where users can find more information about your algorithm
+	"algo_keywords": [], // a list of keywords describing your algorithm
+	"published_paper": { // if you already have a published paper for your algorithm. leave blank if not.
+            "title": "",
+            "url": ""
+    	},
+	"algo_authors": [ // a list of all the algorithm's authors
+		{
+			"name": "Aaron R. Quinlan",
+			"email": "arq5x@virginia.edu", // make sure you have a gravatar (http://gravatar.com)
+            "profile_picture": "", // if you don't have a gravatar, put a profile picture in algorun_info folder and refer to it here
+			"personal_website": "", // leave "" if not available
+			"organization": "University of Virginia School of Medicine", // leave "" if not available
+			"org_website": "https://med.virginia.edu/" // leave "" if not available
+		},
+		{
+			"name": "Ira M. Hall",
+			"email": "imh4y@virginia.edu", // make sure you have a gravatar (http://gravatar.com)
+            "profile_picture": "", // if you don't have a gravatar, put a profile picture in algorun_info folder and refer to it here
+			"personal_website": "", // leave "" if not available
+			"organization": "University of Virginia School of Medicine", // leave "" if not available
+			"org_website": "https://med.virginia.edu/" // leave "" if not available
+		}
+	],
+	"algo_packager": { // the one who packaged the algorithm into AlgoRun container.
+            "name": "Nicholas Monteleone",
+            "email": "nicholas.monteleone@uconn.edu",
+            "personal_website": "N/A",
+            "profile_picture": "",
+            "organization": "University of Connecticut Health Center", 
+            "org_website": "http://health.uconn.edu/" 
+    },
+	"algo_exec": "sh bedtools.sh", // the command to start algorithm execution. AlgoRun passes the input file as the first argument
+	"algo_input_stream": "file", // "file" if the algorithm reads input from a file (filename is passed as the first command line argument), "direct" if the algorithm input is passed directly as a parameter in the command line, or "stdin" if input is passed through stdin using '<'. Default: direct
+    "algo_output_stream": "result.bed", // path of the file where your algorithm outputs its results or "stdout" if your algorithm prints the results to the standard output stream. Default: stdout
+	"algo_parameters": { // list all the parameters available for your algorithm. These parameters will be available for use in your algorithm as environment variables.
+		"COMMAND": "sort"
+	},
+	"input_type": "algorun:custom", // if your algorithm is compatible with other algorithms on AlgoRun, mention the input type it accepts here. Example: "algorun:superadam". leave the default value otherwise.
+    "output_type": "algorun:custom", // if your algorithm is compatible with other algorithms on AlgoRun, mention the output type it produces here. Example: "algorun:superadam". leave the default value otherwise.
+	"algo_image": "" // Example: "ahosny/react". leave "" if you did not upload your algorithm to docker hub or if you do not know what docker hub is :).
+}
+
