@@ -1,0 +1,12 @@
+dict
+faidx
+fixmate
+rmdup
+sort
+quickcheck
+fastq
+fasta
+flagstat
+idxstats
+phase
+stats
