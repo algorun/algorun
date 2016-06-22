@@ -1,0 +1,11 @@
+PASS	Basic Statistics	input_example.txt
+PASS	Per base sequence quality	input_example.txt
+PASS	Per sequence quality scores	input_example.txt
+FAIL	Per base sequence content	input_example.txt
+WARN	Per base GC content	input_example.txt
+WARN	Per sequence GC content	input_example.txt
+PASS	Per base N content	input_example.txt
+PASS	Sequence Length Distribution	input_example.txt
+PASS	Sequence Duplication Levels	input_example.txt
+PASS	Overrepresented sequences	input_example.txt
+WARN	Kmer Content	input_example.txt
