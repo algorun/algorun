@@ -7,11 +7,14 @@ var util = require("util");
 var algo_run = require(path.join(__dirname, "/lib/Algo"));
 var strip_json = require(path.join(__dirname, "/lib/strip-json-comments"));
 var app = express();
+var manifest_exec = {};
 
 function setVersionEnvironment(manifest){
     process.env.manifest_version = manifest['manifest_version'];
+    var v1_4 = false;
     if(manifest.hasOwnProperty('algo_exec')){
         process.env.algo_exec = manifest['algo_exec'];
+        manifest_exec["algo_exec"] = manifest['algo_exec'];
     }
     switch(manifest["manifest_version"]){
         case "1.0":        
@@ -48,6 +51,16 @@ function setVersionEnvironment(manifest){
                 process.env.algo_output_stream = manifest['algo_output_stream'];
             }
             break;
+        case "1.4":
+        	v1_4 = true;
+        	if(manifest.hasOwnProperty("algo_input")){
+        		manifest_exec["algo_input"] = manifest["algo_input"]
+        	}
+
+        	if(manifest.hasOwnProperty("algo_output")){
+        		manifest_exec["algo_output"] = manifest["algo_output"]
+        	}
+        	break;
         default:
             // let the default be version 1.0
             process.env.algo_input_stream = "file";
@@ -96,44 +109,90 @@ app.post('/v1/run', function (req, res) {
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     res.status = 500;
     req.socket.setTimeout(0);
-    res.socket.setTimeout(0);
-    var data_input = req.body.input;
-    var file_input = req.files.input;
-    var hrstart = process.hrtime();
-    if (data_input){
-        algo_run.run(data_input, function (result_type, result_stream){
-            res.status = 200;
-            if(result_type === 'text'){
-                var hrend = process.hrtime(hrstart);
-                res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
-                res.send(result_stream);
-            } else {
-                var hrend = process.hrtime(hrstart);
-                res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
-                result_stream.pipe(res);   
-            }
-        });
-    } else if(file_input){
-        fs.readFile(req.files.input.path, function (err, data) {
-            var newPath = process.env.CODE_HOME + '/src/input.txt';
-            fs.writeFile(newPath, data, function (err) {
-                algo_run.run(false, function (result_type, result_stream){
-                    res.status = 200;
-                    if(result_type === 'text'){
-                        var hrend = process.hrtime(hrstart);
-                        res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
-                        res.send(result_stream);
-                    } else {
-                        var hrend = process.hrtime(hrstart);
-                        res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
-                        result_stream.pipe(res);   
-                    }
-                });
-            });
-        });
-    } else {
-        res.status = 200;
-        res.send('No input provided!');
+    res.socket.setTimeout(0); 
+    if(v1_4) {
+  		var data_input = {}
+  		for(input in manifest["algo_input"]){
+  			data_input[input.name] = req.body[input.name]
+  		}
+		var file_input = req.files.input;  //just do direct input for now
+		var hrstart = process.hrtime();
+	    if (data_input){
+	        algo_run.runv1_4(data_input, manifest_exec, function (result_type, result_stream){
+	            res.status = 200;
+	            if(result_type === 'text'){
+	                var hrend = process.hrtime(hrstart);
+	                res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
+	                res.send(result_stream);
+	            } else {
+	                var hrend = process.hrtime(hrstart);
+	                res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
+	                result_stream.pipe(res);   
+	            }
+	        });
+	    } else if(file_input){
+	        fs.readFile(req.files.input.path, function (err, data) {
+	            var newPath = process.env.CODE_HOME + '/src/input.txt';
+	            fs.writeFile(newPath, data, function (err) {
+	                algo_run.run(false, manifest_exec, function (result_type, result_stream){
+	                    res.status = 200;
+	                    if(result_type === 'text'){
+	                        var hrend = process.hrtime(hrstart);
+	                        res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
+	                        res.send(result_stream);
+	                    } else {
+	                        var hrend = process.hrtime(hrstart);
+	                        res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
+	                        result_stream.pipe(res);   
+	                    }
+	                });
+	            });
+	        });
+	    } else {
+	        res.status = 200;
+	        res.send('No input provided!');
+	    }
+
+    }
+    else {
+    	var data_input = req.body.input;
+		var file_input = req.files.input;
+		var hrstart = process.hrtime();
+	    if (data_input){
+	        algo_run.run(data_input, function (result_type, result_stream){
+	            res.status = 200;
+	            if(result_type === 'text'){
+	                var hrend = process.hrtime(hrstart);
+	                res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
+	                res.send(result_stream);
+	            } else {
+	                var hrend = process.hrtime(hrstart);
+	                res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
+	                result_stream.pipe(res);   
+	            }
+	        });
+	    } else if(file_input){
+	        fs.readFile(req.files.input.path, function (err, data) {
+	            var newPath = process.env.CODE_HOME + '/src/input.txt';
+	            fs.writeFile(newPath, data, function (err) {
+	                algo_run.run(false, function (result_type, result_stream){
+	                    res.status = 200;
+	                    if(result_type === 'text'){
+	                        var hrend = process.hrtime(hrstart);
+	                        res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
+	                        res.send(result_stream);
+	                    } else {
+	                        var hrend = process.hrtime(hrstart);
+	                        res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
+	                        result_stream.pipe(res);   
+	                    }
+	                });
+	            });
+	        });
+	    } else {
+	        res.status = 200;
+	        res.send('No input provided!');
+	    }
     }
 });
 app.post('/v1/config', function (req, res) {
