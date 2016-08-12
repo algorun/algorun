@@ -1,14 +1,15 @@
 {
-    "manifest_version": "1.3",
+   	"manifest_version": "1.4",
 	"algo_name": "N/A", // the name of your algorithm
+	"algo_version": "1.0.0", // the versuib of your algorithm
 	"algo_summary": "N/A", // a 1-line summary of your algorithm
 	"algo_description": "N/A", // a few lines description of your algorithm (basic html accepted)
-	"algo_website": "http://algorun.org", // url where users can find more information about your algorithm
+	"algo_website": "http://algorun.org", // url where users can find more information about your algorithm and/or a link to a tutorial or manual to run the algorithm
 	"algo_keywords": [], // a list of keywords describing your algorithm
-    "published_paper": { // if you already published your algorithm. leave blank if not.
+	"published_paper": { // if you already have a published paper for your algorithm. leave blank if not.
             "title": "",
             "url": ""
-    },
+    	},
 	"algo_authors": [ // a list of all the algorithm's authors
 		{
 			"name": "John Doe",
@@ -27,22 +28,26 @@
 			"org_website": "http://johndoe.edu" // leave "" if not available
 		}
 	],
-    "algo_packager": { // the one who packaged the algorithm into AlgoRun container.
+	"algo_packager": { // the one who packaged the algorithm into AlgoRun container.
             "name": "John Doe",
             "email": "john@doe.com",
             "personal_website": "http://johndoe.info",
             "profile_picture": "",
             "organization": "John Doe University", 
             "org_website": "http://johndoe.edu" 
-    },
-	"algo_exec": "ruby test.rb", // the command to start algorithm execution. AlgoRun passes the input file as the first argument
-	"algo_input_stream": "direct", // "file" if the algorithm reads input from a file (filename is passed as the first command line argument), "direct" if the algorithm input is passed directly as a parameter in the command line, or "stdin" if input is passed through stdin using '<'. Default: direct
-    "algo_output_stream": "stdout", // path of the file where your algorithm outputs its results or "stdout" if your algorithm prints the results to the standard output stream. Default: stdout
-	"algo_parameters": { // list all the parameters available for your algorithm. These parameters will be available for use in your algorithm as environment variables.
-		"PARAM1": "default_value",
-		"PARAM2": "default_value"
 	},
-	"input_type": "algorun:custom", // if your algorithm is compatible with other algorithms on AlgoRun, mention the input type it accepts here. Example: "algorun:superadam". leave the default value otherwise.
-    "output_type": "algorun:custom", // if your algorithm is compatible with other algorithms on AlgoRun, mention the output type it produces here. Example: "algorun:superadam". leave the default value otherwise.
+	// all "type" keys listed below expect a value to be one of MIME types: https://www.sitepoint.com/web-foundations/mime-types-complete-list/
+	"algo_exec": "python test.py $file $stdout", // the command to start algorithm execution. Use "$" to mark an input to be passed to the command.
+	"algo_input": [ // list all input parameters and their types. Names must match the names in the command above.
+		{ "name": "file", "src": "file", "type": "text/plain", "accepted_format": "algorun/undefined" }, // text or number passed immediately in the command-line
+		{ "name": "stdout", "src": "direct", "type": "text/plain", "accepted_format": "algorun/undefined" } // if the algorithm reads input from a file. AlgoRun passes the file name here
+	],
+	"algo_output": [ // list all output produced by your algorithm. "result_format" is used on the AlgoPiper wesbsite for input/output types listing
+		{ "name": "output1", "src": "output.txt", "type": "text/plain", "format": "algorun/undefined" } // output file named "output1.txt" is text
+	],
+	"algo_parameters": [ // list all the parameters available for your algorithm. These parameters will be available for use in your algorithm as environment variables.
+		{ "name": "PARAM1", "type": "text", "default": "default_value" }, // types are "text", "integer" or "float"
+		{ "name": "PARAM2", "type": "integer", "default": "10" }
+	],
 	"algo_image": "" // Example: "ahosny/react". leave "" if you did not upload your algorithm to docker hub or if you do not know what docker hub is :).
 }

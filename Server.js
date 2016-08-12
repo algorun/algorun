@@ -8,10 +8,10 @@ var algo_run = require(path.join(__dirname, "/lib/Algo"));
 var strip_json = require(path.join(__dirname, "/lib/strip-json-comments"));
 var app = express();
 var manifest_exec = {};
+var v1_4 = false;
 
 function setVersionEnvironment(manifest){
     process.env.manifest_version = manifest['manifest_version'];
-    var v1_4 = false;
     if(manifest.hasOwnProperty('algo_exec')){
         process.env.algo_exec = manifest['algo_exec'];
         manifest_exec["algo_exec"] = manifest['algo_exec'];
@@ -112,10 +112,10 @@ app.post('/v1/run', function (req, res) {
     res.socket.setTimeout(0); 
     if(v1_4) {
   		var data_input = {}
-  		for(input in manifest["algo_input"]){
-  			data_input[input.name] = req.body[input.name]
+  		for(i in manifest_exec["algo_input"]){
+            input = manifest_exec["algo_input"][i]
+            data_input[input.name] = req.body[input.name]
   		}
-		var file_input = req.files.input;  //just do direct input for now
 		var hrstart = process.hrtime();
 	    if (data_input){
 	        algo_run.runv1_4(data_input, manifest_exec, function (result_type, result_stream){
@@ -129,25 +129,7 @@ app.post('/v1/run', function (req, res) {
 	                res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
 	                result_stream.pipe(res);   
 	            }
-	        });
-	    } else if(file_input){
-	        fs.readFile(req.files.input.path, function (err, data) {
-	            var newPath = process.env.CODE_HOME + '/src/input.txt';
-	            fs.writeFile(newPath, data, function (err) {
-	                algo_run.run(false, manifest_exec, function (result_type, result_stream){
-	                    res.status = 200;
-	                    if(result_type === 'text'){
-	                        var hrend = process.hrtime(hrstart);
-	                        res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
-	                        res.send(result_stream);
-	                    } else {
-	                        var hrend = process.hrtime(hrstart);
-	                        res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
-	                        result_stream.pipe(res);   
-	                    }
-	                });
-	            });
-	        });
+	        }); 
 	    } else {
 	        res.status = 200;
 	        res.send('No input provided!');
