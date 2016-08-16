@@ -37,12 +37,13 @@
             "org_website": "http://johndoe.edu" 
 	},
 	// all "type" keys listed below expect a value to be one of MIME types: https://www.sitepoint.com/web-foundations/mime-types-complete-list/
-	"algo_exec": "python test.py", // the command to start algorithm execution. Use "$" to mark an input to be passed to the command.
+	"algo_exec": "python test.py $input", // the command to start algorithm execution. Use "$" to mark an input to be passed to the command.
 	"algo_input": [ // list all input parameters and their types. Names must match the names in the command above.
+		{ "name": "input", "src": "file", "type": "text/plain", "accepted_format": "algorun/undefined"} // if the algorithm reads input from a file. AlgoRun passes the file name here
 	],
 	"algo_output": [ // list all output produced by your algorithm. "result_format" is used on the AlgoPiper wesbsite for input/output types listing
-		{ "name": "output1", "src": "output1.txt", "type": "text/plain", "format": "algorun/undefined" }, // output file named "output1.txt" is text
-		{ "name": "output2", "src": "output2.txt", "type": "text/plain", "format": "algorun/undefined" } // output file named "output1.txt" is text
+		{ "name": "output", "src": "stdout", "type": "text/plain", "format": "algorun/undefined"} //output file named "output1.txt" is text
+		//{ "name": "output2", "src": "output2.txt", "type": "text/plain", "format": "algorun/undefined" } output file named "output1.txt" is text
 	],
 	"algo_parameters": [ // list all the parameters available for your algorithm. These parameters will be available for use in your algorithm as environment variables.
 		{ "name": "PARAM1", "type": "text", "default": "default_value" }, // types are "text", "integer" or "float"

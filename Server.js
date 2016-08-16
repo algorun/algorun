@@ -114,7 +114,18 @@ app.post('/v1/run', function (req, res) {
   		var data_input = {}
   		for(i in manifest_exec["algo_input"]){
             input = manifest_exec["algo_input"][i]
-            data_input[input.name] = req.body[input.name]
+            if(input.src === 'direct'){
+                data_input[input.name] = req.body[input.name]
+            } else{
+                if(req.files[input.name]) {
+                    var result = fs.readFileSync(req.files[input.name].path, 'ascii')
+                    var path = process.env.CODE_HOME + '/src/input.txt';
+                    path = "/home/nickjm6/Documents/" + input.name;
+                    fs.writeFileSync(path, result);
+                } else {
+                    data_input[input.name] = req.body[input.name];
+                }
+            }
   		}
 		var hrstart = process.hrtime();
 	    if (data_input){
