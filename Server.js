@@ -117,10 +117,10 @@ app.post('/v1/run', function (req, res) {
             if(input.src === 'direct'){
                 data_input[input.name] = req.body[input.name]
             } else{
-                if(req.files[input.name]) {
+                if(req.files[input.name] !== undefined) {
                     var result = fs.readFileSync(req.files[input.name].path, 'ascii')
-                    var path = process.env.CODE_HOME + '/src/input.txt';
-                    path = "/home/nickjm6/Documents/" + input.name;
+                    var path = process.env.CODE_HOME + '/src/' + input.name;
+                    path = "/home/nickjm6/" + input.name;
                     fs.writeFileSync(path, result);
                 } else {
                     data_input[input.name] = req.body[input.name];
