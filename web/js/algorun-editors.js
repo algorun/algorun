@@ -12,3 +12,10 @@ o_editor.getSession().setUseSoftTabs(true);
 document.getElementById('output_editor').style.fontSize='15px';
 //o_editor.getSession().setMode("ace/mode/json");
 o_editor.setReadOnly(true);
+
+var i_editor = ace.edit("input_editor1");
+i_editor.setTheme("ace/theme/xcode");
+i_editor.getSession().setTabSize(4);
+i_editor.getSession().setUseSoftTabs(true);
+document.getElementById('input_editor1').style.fontSize='15px';
+//i_editor.getSession().setMode("ace/mode/json");

@@ -1,6 +1,6 @@
 {
    	"manifest_version": "1.4",
-	"algo_name": "N/A", // the name of your algorithm
+	"algo_name": "Test", // the name of your algorithm
 	"algo_version": "1.0.0", // the versuib of your algorithm
 	"algo_summary": "N/A", // a 1-line summary of your algorithm
 	"algo_description": "N/A", // a few lines description of your algorithm (basic html accepted)
