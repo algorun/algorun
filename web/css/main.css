@@ -1842,17 +1842,25 @@ span.color-red {
 /*--------------------------------------------------------------------------
 +	Custom Style for Tabs (overrides Bootstrap)
 --------------------------------------------------------------------------*/
-.nav-tabs > li > a {
+.nav-tabs > li > a,
+.nav-tabs > li > a:hover,
+.nav-tabs > li > a:focus {
   font-size: 1.1em;
   padding: 10px 15px;
   color: #535b60;
+  background-color: #eee;
+  border: 1px solid #ddd;
 }
+
+.nav-tabs > li > a:hover{
+    font-weight: 600;
+}
+
 .nav-tabs > .active > a,
 .nav-tabs > .active > a:hover,
 .nav-tabs > .active > a:focus {
   font-weight: 600;
   background-color: #ffffff;
-  border: 1px solid #ddd;
   border-top: 3px solid #2C3D50;
   border-bottom-color: transparent;
   cursor: default;
@@ -2662,4 +2670,9 @@ span.color-red {
 }
 .dropdown.open a.dropdown-toggle .caret {
   border-top: 4px solid #FFF;
+}
+
+#summary-section,
+#authors {
+  margin-top: 80px;
 }

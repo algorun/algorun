@@ -1,5 +1,5 @@
 $(function() {
-    $('a[href*=#]:not([href=#])').click(function(e) {
+    $('.navclick').click(function(e) {
         $('.navbar ul li.active').removeClass('active');
         var $this = $(this);
         if (!$this.parent().hasClass('active')) {

@@ -60,6 +60,22 @@ function setVersionEnvironment(manifest){
         	if(manifest.hasOwnProperty("algo_output")){
         		manifest_exec["algo_output"] = manifest["algo_output"]
         	}
+            input_string = ""
+            output_string = ""
+            for(i in manifest_exec["algo_input"]) {
+                input = manifest_exec['algo_input'][i]
+                input_string += input['name'] + "&"
+            }
+            for(i in manifest_exec["algo_output"]){
+                output = manifest_exec['algo_output'][i]
+                output_string += output['name'] + "&"
+            }
+            input_string = input_string.slice(0, input_string.length - 1)
+            output_string = output_string.slice(0, output_string.length - 1);
+
+            process.env.input_string = input_string;
+            process.env.output_string = output_string;
+
         	break;
         default:
             // let the default be version 1.0

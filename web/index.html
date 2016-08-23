@@ -35,25 +35,25 @@
 <body>
 
 <!-- Navigation & Logo-->
-<div class="mainmenu-wrapper navbar-fixed-top">
+<div class="navbar mainmenu-wrapper navbar-fixed-top">
     <div class="container">
         <nav id="mainmenu" class="mainmenu">
             <ul>
                 <li class="logo-wrapper"><a href="/"><img src="images/algorun-logo.png" alt="AlgoRun logo"></a></li>
                 <li class='active'>
-                    <a id='algo_name' href="#">Algorithm Name</a>
+                    <a id='algo_tab' class='navclick' href="#algo_name">Algorithm Name</a>
                 </li>
                 <li undefined>
-                    <a href="#run">Run</a>
+                    <a class='navclick' href="#run">Run</a>
                 </li>
                 <li undefined>
-                    <a href="#about_label">About</a>
+                    <a class='navclick' href="#about_label">About</a>
                 </li>
                 <li undefined>
-                    <a href="#web_api">Web API</a>
+                    <a class='navclick' href="#web_api">Web API</a>
                 </li>
                 <li undefined>
-                    <a href="#help">Help</a>
+                    <a class='navclick' href="#help">Help</a>
                 </li>
             </ul>
         </nav>
@@ -95,31 +95,26 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href='#input1'>Input 1</a></li>
-                    <li><a data-toggle='tab' href="#input2">Input 2</a></li>
+                <ul id='input_list' class="nav nav-tabs">
+                    <li class='active'><a id='input_a' data-toggle='tab' href='#input'>Input</a></li>
                 </ul>
 
-                <div class="tab-content">
-                    <div id='input1' class="tab-pane fade in active">
-                        <pre id="input_editor" style="position: relative; top: 0; right: 0; bottom: 0; left: 100; height: 400px; align: left;">
-                        </pre>
-                    </div>
-                    <div id="input2" class='tab-pane fade'>
-                        <pre id="input_editor1" style="position: relative; top: 0; right: 0; bottom: 0; left: 100; height: 400px; align: left;">
+                <div class="tab-content" id="input_tabs">
+                    <div id='input' class="tab-pane fade in active">
+                        <pre id="input_e" style="position: relative; top: 0; right: 0; bottom: 0; left: 100; height: 400px; align: left;">                               
                         </pre>
                     </div>
                 </div>
 
             </div>
             <div class="col-md-6">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href='#output1'>Output 1</a></li>
+                <ul id='output_list' class="nav nav-tabs">
+                    <li class="active"><a id='output_a' data-toggle="tab" href='#output'>Output</a></li>
                 </ul>
 
-                <div class="tab-content">
-                    <div id='output1' class="tab-pane fade in active">
-                        <pre id="output_editor" style="position: relative; top: 0; right: 0; bottom: 0; left: 100; height: 400px; align: left;">                               
+                <div class="tab-content" id='output_tabs'>
+                    <div id='output' class="tab-pane fade in active">
+                        <pre id="output_e" style="position: relative; top: 0; right: 0; bottom: 0; left: 100; height: 400px; align: left;">                               
                         </pre>
                     </div>
                 </div>
@@ -230,6 +225,7 @@ following command:</p>
 </div>
 <script src="/js/strip-json-comments.js"></script>
 <script src="/js/shortcut.js"></script>
+<script src='/js/tab-animation.js'></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
