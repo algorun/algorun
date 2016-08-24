@@ -1,5 +1,8 @@
 function saveTextAsFile()
 {
+	id = $('#output_list').children('.active').children('a').attr('href')
+	editor_name = $(id).children('pre').attr('id')
+	o_editor = ace.edit(editor_name)
 	var textToWrite = o_editor.getValue();
     if(textToWrite.trim() == ""){
         sweetAlert("Oops...", "It seems like you have not run the computation", "error");

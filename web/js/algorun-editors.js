@@ -1,33 +1,4 @@
 
-var input_string = ""
-var output_string = ""
-
-$.get( "/algorun_info/manifest.json", function( data ) {
-		alert()
-        data = JSON.parse(stripJsonComments(data));
-        if(data["algo_input"]){
-        	for(i in data['algo_input']){
-        		name = data['algo_input'][i].name
-        		input_string += name + "&"
-        	}
-        	input_string = input_string.slice(0, input_string.length - 1)
-        	alert(input_string)
-        }
-        if(data['algo_output']){
-        	for(i in data['algo_output']){
-        		name = data['algo_output'][i].name
-        		output_string += name + "&"
-        	}
-        	output_string = output_string.slice(0, output_string.length - 1);
-        	alert(output_string)
-        }
-    });
-
-// input_string = "in1&in2"
-// output_string = "out1&out2"
-
-input_arr = input_string.split("&")
-output_arr = output_string.split("&")
 
 function addElement(element, options) {
 	newElement = document.createElement(element)
@@ -63,9 +34,11 @@ function add_editor(id, type) {
 	if(type == 'input'){
 		tabs = 'input_tabs'
 		list = 'input_list'
+		classname = 'i_editor'
 	} else {
 		tabs = 'output_tabs'
 		list = 'output_list'
+		classname = 'o_editor'
 	}
 	editor = document.getElementById(tabs)
 	ul = document.getElementById(list)
@@ -87,34 +60,83 @@ function add_editor(id, type) {
 	formatEditor(id + "_editor", type)
 }
 
-for(i in input_arr){	
-	input_name = input_arr[i]
-	if(i == 0){
-		a = document.getElementById('input_a')
-		a.innerHTML = input_name
-		a.setAttribute('href', '#' + input_name)
+formatEditor('input_e', 'input')
+formatEditor('output_e', 'output')
 
-		div = document.getElementById('input')
-		div.setAttribute('id', input_name)
-		formatEditor('input_e', 'input')
-	}
-	else{
-		add_editor(input_name, 'input')
-	}
-}
+$.get( "../algorun_info/manifest.json", function( data ) {
+	var input_string = ""
+	var output_string = ""
 
-for(i in output_arr){	
-	output_name = output_arr[i]
-	if(i == 0){
-		a = document.getElementById('output_a')
-		a.innerHTML = output_name
-		a.setAttribute('href', '#' + output_name)
+	try {
+        data = JSON.parse(stripJsonComments(data));
+    } catch(err) {
+        alert(err)
+    }
+    if(data["algo_input"]){
+        for(i in data['algo_input']){
+        	name = data['algo_input'][i].name
+        	input_string += name + "&"
+        }
+        input_string = input_string.slice(0, input_string.length - 1)
+    }
+    if(data['algo_output']){
+        for(i in data['algo_output']){
+        	name = data['algo_output'][i].name
+        	filename = data['algo_output'][i].src
+        	output_string += name + '=' + filename + "&"
+        }
+        output_string = output_string.slice(0, output_string.length - 1);
+    }
 
-		div = document.getElementById('output')
-		div.setAttribute('id', output_name)
-		formatEditor('output_e', 'output')
+    output_arr = output_string.split("&")
+    input_arr = input_string.split("&")
+
+	for(i in input_arr){	
+		input_name = input_arr[i]
+		if(i == 0){
+			a = document.getElementById('input_a')
+			a.innerHTML = input_name
+			a.setAttribute('href', '#' + input_name)
+
+			div = document.getElementById('input')
+			div.setAttribute('id', input_name)
+
+			pre = document.getElementById('input_e')
+			id = input_name + '_editor'
+			pre.setAttribute('id', id)
+
+			formatEditor(id, 'input')
+		}
+		else{
+			add_editor(input_name, 'input')
+		}
 	}
-	else{
-		add_editor(output_name, 'output')
+
+
+	for(i in output_arr){	
+		output = output_arr[i]
+		arr = output.split("=")
+		output_name = arr[0]
+		output_src = arr[1]
+		if(i == 0){
+			a = document.getElementById('output_a')
+			a.innerHTML = output_name
+			a.setAttribute('href', '#' + output_name)
+
+			div = document.getElementById('output')
+			div.setAttribute('id', output_name)
+
+			pre = document.getElementById('output_e')
+			id = output_name + '_editor'
+			pre.setAttribute('id', id)
+
+			formatEditor(id, 'output')
+		}
+		else{
+			add_editor(output, 'output')
+		}
 	}
-}
+}, 'text');
+
+
+//FIX PROBLEM WITH TAB NAMES!!!!!!!!!!!!!!
