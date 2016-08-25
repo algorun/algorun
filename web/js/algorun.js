@@ -48,17 +48,30 @@ $("#run_button").click(function() {
 	.done(function(data,textStatus,jqXHR) {
     try {
       json = $.parseJSON(data);
-      alert('worked')
-      for(key in json){
-        alert(key + ": " + json[key])
+      for(key in json) {
+        editor = $(key).attr('href')
+        editor_name = $(editor).href('id')
+        o_editor = ace.edit(editor_name)
+        o_editor.getSession().setMode("ace/mode/json");
+        o_editor.setValue(json);
       }
-      o_editor.getSession().setMode("ace/mode/json");
-      o_editor.setValue(json);
     } catch (e) {
-      for(key in data){
-        alert(data)
-        o_editor = ace.edit(key + "_editor")
+      id = "#"
+      if(typeof data === 'string'){
         o_editor.setValue(data)
+      } else {
+        for(key in data){
+          if(key.includes(".")){
+            id += key.slice(0, key.indexOf('.'))
+          } else {
+            id += key
+          }
+          editor_loc = $(id).attr('href')
+          editor = $(editor_loc)
+          editor_name = editor.attr('id') + "_editor"
+          o_editor = ace.edit(editor_name)
+          o_editor.setValue(data[key])
+        }
       }
       o_list = $('#output_list')
       o_list.children().removeClass('active')

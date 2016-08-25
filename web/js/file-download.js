@@ -1,6 +1,8 @@
 function saveTextAsFile()
 {
-	id = $('#output_list').children('.active').children('a').attr('href')
+	link = $('#output_list').children('.active').children('a')
+	id = link.attr('href')
+	filename = link.attr('id')
 	editor_name = $(id).children('pre').attr('id')
 	o_editor = ace.edit(editor_name)
 	var textToWrite = o_editor.getValue();
@@ -9,7 +11,7 @@ function saveTextAsFile()
         return;
     }
 	var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
-	var fileNameToSaveAs = "computation result";
+	var fileNameToSaveAs = filename;
 
 	var downloadLink = document.createElement("a");
 	downloadLink.download = fileNameToSaveAs;
