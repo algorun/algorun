@@ -136,6 +136,7 @@ app.post('/v1/run', function (req, res) {
                 if(req.files[input.name] !== undefined) {
                     var result = fs.readFileSync(req.files[input.name].path, 'ascii')
                     var path = process.env.CODE_HOME + '/src/' + input.name;
+                    path = '/home/nickjm6/Documents/algotest/' + input.name
                     fs.writeFileSync(path, result);
                 } else {
                     data_input[input.name] = req.body[input.name];

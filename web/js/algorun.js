@@ -56,11 +56,11 @@ $("#run_button").click(function() {
         o_editor.setValue(json);
       }
     } catch (e) {
-      id = "#"
       if(typeof data === 'string'){
         o_editor.setValue(data)
       } else {
         for(key in data){
+          id = "#"
           if(key.includes(".")){
             id += key.slice(0, key.indexOf('.'))
           } else {
@@ -100,7 +100,28 @@ $("#run_button").click(function() {
 });
 
 $("#populate_input").click(function() {
-    $.get("/algorun_info/input_example.txt", function(data){
+    v1_4 = true
+    if(v1_4) {
+      input_list = $('#input_list')
+      input_list.children().removeClass('active')
+      input_list.children().each(function (){
+        $(this).addClass('active')
+        editor = $(this).children().attr('href')
+        id = $(editor).attr('id')
+        var editor_name = id + "_editor"
+        path = "/algorun_info/input_example/" + id + ".txt"
+        $.get(path, function(data){
+          i_editor = ace.edit(editor_name)
+          i_editor.setValue(data);
+          i_editor.gotoLine(1);
+        });
+        $(this).removeClass('active')
+      });
+      input_list.children(':first').addClass('active')
+      input_list.children(':first').removeClass('active')
+      input_list.children(':first').addClass('active')
+    } else {
+      $.get("/algorun_info/input_example.txt", function(data){
         current_tab = $('#input_list').children('.active')
         id = current_tab.children('a').attr('href')
         editor_name = $(id).attr('id') + '_editor'
@@ -108,6 +129,7 @@ $("#populate_input").click(function() {
         i_editor.setValue(data);
         i_editor.gotoLine(1);
     });
+    }
 });
 function launchFullScreen(element) {
   if(element.requestFullScreen) {
@@ -131,7 +153,6 @@ $("#reset_computation").click(function() {
     $(this).children(":first").removeClass("active")
     $(this).children(":first").addClass("active")
   });
- //window.location.href = "/"
 
 
     
