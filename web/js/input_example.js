@@ -1,37 +1,44 @@
 
-div = $('.work')
+div = $('.files')
 p = $('<p>File(s):</p>')
 div.append(p)
 
-$.get('/algorun_info/manifest.json')
-	.success(function(result) {
-		alert("working")
-	})
-	.error(function(jqXHR, textStatus, errorThrown){
-		alert(errorThrown)
-	})
+function addLink(filepath, input){
+	$.get(filepath)
+		.success(function(result) {
+			filename = input + ".txt";
+			a = $("<a href=" + filepath + ">" + filename + "</a>")
+			li = $("#" + input)
+			li.append(a)
+		})
+		.error(function(jqXHR, textStatus, errorThrown){
+			filename = input + ".txt"
+			a = $("<a href=/html/no_input.html>" + filename + '</a>')
+			li = $("#" + input)
+			li.append(a)
+		});
+}
 
 $.get("/algorun_info/manifest.json", function(data) {
-	alert('working')
-	if(data['algo_input']){
-		ul = $('ul')
+	data = JSON.parse(stripJsonComments(data));
+	if(data['manifest_version'] == '1.4'){
+		var ul = $('ul')
 		for(i in data['algo_input']){
-			input = data['algo_input'][i].name
-
-			li = $("<li></li>")
+			var input = data['algo_input'][i].name
+			li = $("<li id=" + input + "></li>")
 			filename = input + ".txt"
 			filepath = '/algorun_info/input_example/' + filename
-			a = $("<a href=" + filepath + ">" + filename + "</a>")
-			li.append(a)
+			addLink(filepath, input)
 			ul.append(li)
 		}
 
 	} else {
-		ul = $('ul')
-		li = $("<li></li>")
-		filename = "/algorun_info/input_example.txt"
-		a = $("<a href=" + filename + ">" + filename + "</a>")
-		li.append(a)
-		ul.append(a)
+		$.get("/algorun_info/input_example.txt")
+			.success(function(result){
+				window.location = '/algorun_info/input_example.txt'
+			})
+			.error(function(jqXHR, textStatus, errorThrown) {
+				window.location = '/html/no_input.html'
+			})
 	}
-});
+}, 'text');

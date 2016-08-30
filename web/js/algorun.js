@@ -100,7 +100,6 @@ $("#run_button").click(function() {
 });
 
 $("#populate_input").click(function() {
-    v1_4 = true
     if(v1_4) {
       input_list = $('#input_list')
       input_list.children().removeClass('active')
@@ -110,11 +109,17 @@ $("#populate_input").click(function() {
         id = $(editor).attr('id')
         var editor_name = id + "_editor"
         path = "/algorun_info/input_example/" + id + ".txt"
-        $.get(path, function(data){
-          i_editor = ace.edit(editor_name)
-          i_editor.setValue(data);
-          i_editor.gotoLine(1);
-        });
+        $.get(path)
+          .success(function(result) {
+            i_editor = ace.edit(editor_name)
+            i_editor.setValue(result);
+            i_editor.gotoLine(1);
+          })
+          .error(function(jqXHR, textStatus, errorThrown) {
+            i_editor = ace.edit(editor_name)
+            i_editor.setValue("No input example provided!!")
+            i_editor.gotoLine(1);
+          });
         $(this).removeClass('active')
       });
       input_list.children(':first').addClass('active')

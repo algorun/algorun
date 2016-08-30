@@ -1,17 +1,4 @@
-
-
-function addElement(element, options) {
-	newElement = document.createElement(element)
-	options_arr = options.split('&')
-	for(i in options_arr){
-		option = options_arr[i]
-		arr = option.split("=")
-		attr = arr[0].trim()
-		value = arr[1].trim()
-		newElement.setAttribute(attr, value)
-	}
-	return newElement;
-}
+var first;
 
 function formatEditor(id, type){
 	if(type == 'input'){
@@ -23,8 +10,8 @@ function formatEditor(id, type){
 	editor.setTheme(theme);
 	editor.getSession().setTabSize(4);
 	editor.getSession().setUseSoftTabs(true);
+	editor.gotoLine(1)
 	document.getElementById(id).style.fontSize='15px';
-	// //editor.getSession().setMode("ace/mode/json");
 	if(type == 'output'){
 		editor.setReadOnly(true)
 	}
@@ -34,40 +21,48 @@ function add_editor(id, type) {
 	if(type == 'input'){
 		tabs = 'input_tabs'
 		list = 'input_list'
-		classname = 'i_editor'
 	} else {
 		tabs = 'output_tabs'
 		list = 'output_list'
 		arr = id.split("=")
 		id = arr[0]
 		src = arr[1]
-		classname = 'o_editor'
 	}
-	editor = document.getElementById(tabs)
-	ul = document.getElementById(list)
+	tab_list = $("#" + tabs)
+	ul = $("#" + list)
 
-	li = document.createElement('li')
+	if(first){
+		li = $('.active')
+		a = li.children('a')
+		a.attr('href', "#" + id)
+		a.text(id)
+		first = false
 
-	a = addElement('a', 'data-toggle=tab&href=#' + id)
-	try{
-		a.setAttribute('id', src)
-	} catch(err) {
+		try{
+			a.attr('id', src)
+		} catch(err) {
+		}
+	} else{
+		li = $("<li></li>")
+		a = $("<a data-toggle=tab href=#" + id + ">" + id + "</a>")
+
+		try{
+			a.attr('id', src)
+		} catch(err) {
+		}
+		li.append(a)
+		ul.append(li)
 	}
-	a.innerHTML = id
 
-	li.appendChild(a)
-	ul.appendChild(li)
-
-	div_class = 'class=tab-pane fade'
-	div = addElement('div', 'id=' + id + "&class=tab-pane fade")
-	pre = addElement('pre', 'id=' + id + "_editor&style=position: relative; top: 0; right: 0; bottom: 0; left: 100; height: 400px; align: left;")
-	div.appendChild(pre)
-	editor.appendChild(div)
+	div = $("<div id=" + id + " class=tab-pane fade></div>")
+	pre = $("<pre id=" + id + "_editor></pre>")
+	pre.attr('style', 'position: relative; top: 0; right: 0; bottom: 0; left: 100; height: 400px; align: left;')
+	div.append(pre)
+	tab_list.append(div)
 
 	formatEditor(id + "_editor", type)
 }
 
-formatEditor('input_editor', 'input')
 formatEditor('output_editor', 'output')
 
 $.get( "../algorun_info/manifest.json", function( data ) {
@@ -109,26 +104,14 @@ $.get( "../algorun_info/manifest.json", function( data ) {
     	output_arr = output_string.split("&")
     }
 
+    first = true;
+
 	for(i in input_arr){	
 		input_name = input_arr[i]
-		if(i == 0){
-			a = document.getElementById('input_a')
-			a.innerHTML = input_name
-			a.setAttribute('href', '#' + input_name)
-
-			div = document.getElementById('input')
-			div.setAttribute('id', input_name)
-
-			pre = document.getElementById('input_editor')
-			id = input_name + '_editor'
-			pre.setAttribute('id', id)
-
-			formatEditor(id, 'input')
-		}
-		else{
-			add_editor(input_name, 'input')
-		}
+		add_editor(input_name, 'input')
 	}
+
+	first = true;
 
 
 	for(i in output_arr){	
