@@ -39,6 +39,7 @@ function add_image(output){
 		a = $("<a data-toggle=tab href=#" + id + ">" + id + "</a>")
 		a.attr('id', 'image')
 		div = $("<div id=" + id + " class=tab-pane fade></div>")
+		div.attr("style", "width: ")
 		img = $("<img src=/images/imageOutput.png>")
 		div.append(img)
 		tab_list.append(div)
@@ -111,12 +112,10 @@ $.get( "../algorun_info/manifest.json", function( data ) {
         for(i in data['algo_output']){
         	name = data['algo_output'][i].name
         	filename = data['algo_output'][i].src
-        	if(filename.includes('.')){
-        		filename = filename.slice(0, filename.indexOf('.'))
-        	}
         	output_string += name + '=' + filename + "&"
         }
         output_string = output_string.slice(0, output_string.length - 1);
+        alert(output_string)
     }
 
     if(input_string == ""){
@@ -141,8 +140,12 @@ $.get( "../algorun_info/manifest.json", function( data ) {
 		output_name = output_arr[i]
 		output_src = output_name.split("=")[1]
 		png = false
-		if(output_src == 'image'){
-			png = true
+		if(output_src.includes(".")){
+			output_arr = output_name.split(".")
+			output_name = output_arr[0]
+			if(output_arr[1] == "png" or output_arr[1] == 'jpg'){
+				png = true
+			}
 		}
 		if(png){
 			add_image(output_name)
