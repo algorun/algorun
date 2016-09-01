@@ -62,15 +62,22 @@ $("#run_button").click(function() {
         for(key in data){
           id = "#"
           if(key.includes(".")){
-            id += key.slice(0, key.indexOf('.'))
+          	arr = key.split(".")
+            id = key[0]
+            ext = key[1]
           } else {
             id += key
           }
-          editor_loc = $(id).attr('href')
-          editor = $(editor_loc)
-          editor_name = editor.attr('id') + "_editor"
-          o_editor = ace.edit(editor_name)
-          o_editor.setValue(data[key])
+          output_loc = $(id).attr('href')
+          output_area = $(output_loc)
+          if(ext == "png"){
+          	image = output_area.children()
+          	image.attr('src', data[key])
+          } else {
+          	editor_name = output_area.attr('id') + "_editor"
+	        o_editor = ace.edit(editor_name)
+	        o_editor.setValue(data[key])
+	      }
         }
       }
       o_list = $('#output_list')

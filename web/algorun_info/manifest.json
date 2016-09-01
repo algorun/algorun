@@ -43,7 +43,8 @@
 		{ "name": "file", "src": "file", "type": "text/plain", "accepted_format": "algorun/undefined"} //if the algorithm reads input from a file. AlgoRun passes the file name here
 	],
 	"algo_output": [ // list all output produced by your algorithm. "result_format" is used on the AlgoPiper wesbsite for input/output types listing
-		{ "name": "standardOutput", "src": "stdout", "type": "text/plain", "format": "algorun/undefined"} //output file named "output1.txt" is text		{ "name": "fileout", "src": "output.txt", "type": "text/plain", "format": "algorun/undefined"} //output file named "output1.txt" is text
+		{ "name": "standardOutput", "src": "stdout", "type": "text/plain", "format": "algorun/undefined"}, //output file named "output1.txt" is text		{ "name": "fileout", "src": "output.txt", "type": "text/plain", "format": "algorun/undefined"} //output file named "output1.txt" is text
+		{ "name": "imageOutput", "src": "image", "type": "image", "format": "algorun/undefined"} //output file named "output1.txt" is text		{ "name": "fileout", "src": "output.txt", "type": "text/plain", "format": "algorun/undefined"} //output file named "output1.txt" is text
 	],
 	"algo_parameters": [ // list all the parameters available for your algorithm. These parameters will be available for use in your algorithm as environment variables.
 		{ "name": "PARAM1", "type": "text", "default": "default_value" }, // types are "text", "integer" or "float"

@@ -2676,3 +2676,8 @@ span.color-red {
 #authors {
   margin-top: 80px;
 }
+
+.output_image {
+  max-width: 100%;
+  max-height: 100%;
+}
