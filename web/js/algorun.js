@@ -60,21 +60,12 @@ $("#run_button").click(function() {
         o_editor.setValue(data)
       } else {
         for(key in data){
-          id = "#"
-          if(key.includes(".")){
-          	arr = key.split(".")
-            id = key[0]
-            ext = key[1]
+          id = "#" + key
+          output_field = $(id).children()
+          if(output_field.nodeName == "img") {
+          	output_field.attr('src', data[key])
           } else {
-            id += key
-          }
-          output_loc = $(id).attr('href')
-          output_area = $(output_loc)
-          if(ext == "png"){
-          	image = output_area.children()
-          	image.attr('src', data[key])
-          } else {
-          	editor_name = output_area.attr('id') + "_editor"
+          	editor_name = output_field.attr('id')
 	        o_editor = ace.edit(editor_name)
 	        o_editor.setValue(data[key])
 	      }

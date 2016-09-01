@@ -17,18 +17,14 @@ function formatEditor(id, type){
 	}
 }
 
-function add_image(output){
+function add_image(id){
 	tab_list = $("#output_tabs")
 	ul = $("#output_list")
-	arr = output.split("=")
-	id = arr[0]
-	src = arr[1]
 	if(first){
 		li =  $("#output_list").children(".active")
 		a = li.children()
 		a.attr("href", "#" + id)
 		a.text(id)
-		a.attr('id', 'image')
 		first = false
 		div = $("#output")
 		div.attr("id", id)
@@ -37,9 +33,7 @@ function add_image(output){
 	} else {
 		li = $("<li></li>")
 		a = $("<a data-toggle=tab href=#" + id + ">" + id + "</a>")
-		a.attr('id', 'image')
 		div = $("<div id=" + id + " class=tab-pane fade></div>")
-		div.attr("style", "width: ")
 		img = $("<img src=/images/imageOutput.png>")
 		div.append(img)
 		tab_list.append(div)
@@ -55,9 +49,6 @@ function add_editor(id, type) {
 	} else {
 		tab_list = $("#output_tabs")
 		ul = $('#output_list')
-		arr = id.split("=")
-		id = arr[0]
-		src = arr[1]
 	}
 
 	if(first){
@@ -78,11 +69,6 @@ function add_editor(id, type) {
 		pre.attr('style', 'position: relative; top: 0; right: 0; bottom: 0; left: 100; height: 400px; align: left;')
 		div.append(pre)
 		tab_list.append(div)
-	}
-
-	try{
-		a.attr('id', src)
-	} catch(err) {
 	}
 
 	formatEditor(id + "_editor", type)
@@ -111,11 +97,10 @@ $.get( "../algorun_info/manifest.json", function( data ) {
     if(data['algo_output']){
         for(i in data['algo_output']){
         	name = data['algo_output'][i].name
-        	filename = data['algo_output'][i].src
-        	output_string += name + '=' + filename + "&"
+        	type = data['algo_output'][i].type
+        	output_string += name + ':' + type + "&"
         }
         output_string = output_string.slice(0, output_string.length - 1);
-        alert(output_string)
     }
 
     if(input_string == ""){
@@ -138,47 +123,14 @@ $.get( "../algorun_info/manifest.json", function( data ) {
 	first = true;
 	for(i in output_arr){	
 		output_name = output_arr[i]
-		output_src = output_name.split("=")[1]
-		png = false
-		if(output_src.includes(".")){
-			output_arr = output_name.split(".")
-			output_name = output_arr[0]
-			if(output_arr[1] == "png" or output_arr[1] == 'jpg'){
-				png = true
-			}
-		}
-		if(png){
-			add_image(output_name)
+		if(output_name.includes("image")){
+			add_image(output_name.split(":")[0])
 		} else{
 			if(first){
 				formatEditor("output_editor", "output")
 			}
-			add_editor(output_name, 'output')
+			add_editor(output_name.split(":")[0], 'output')
 		}
 	}
-	// for(i in output_arr){	
-	// 	output = output_arr[i]
-	// 	arr = output.split("=")
-	// 	output_name = arr[0]
-	// 	output_src = arr[1]
-	// 	if(i == 0){
-	// 		a = document.getElementById('output_a')
-	// 		a.innerHTML = output_name
-	// 		a.setAttribute('id', output_src)
-	// 		a.setAttribute('href', '#' + output_name)
-
-	// 		div = document.getElementById('output')
-	// 		div.setAttribute('id', output_name)
-
-	// 		pre = document.getElementById('output_editor')
-	// 		id = output_name + '_editor'
-	// 		pre.setAttribute('id', id)
-
-	// 		formatEditor(id, 'output')
-	// 	}
-	// 	else{
-	// 		add_editor(output, 'output')
-	// 	}
-	// }
 }, 'text');
 

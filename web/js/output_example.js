@@ -1,0 +1,44 @@
+
+div = $('.files')
+p = $('<p>File(s):</p>')
+div.append(p)
+
+function addLink(filepath, output){
+	$.get(filepath)
+		.success(function(result) {
+			filename = output + ".txt";
+			a = $("<a href=" + filepath + ">" + filename + "</a>")
+			li = $("#" + output)
+			li.append(a)
+		})
+		.error(function(jqXHR, textStatus, errorThrown){
+			filename = output + ".txt"
+			a = $("<a href=/html/no_output.html>" + filename + '</a>')
+			li = $("#" + output)
+			li.append(a)
+		});
+}
+
+$.get("/algorun_info/manifest.json", function(data) {
+	data = JSON.parse(stripJsonComments(data));
+	if(data['manifest_version'] == '1.4'){
+		var ul = $('ul')
+		for(i in data['algo_output']){
+			var output = data['algo_output'][i].name
+			li = $("<li id=" + output + "></li>")
+			filename = output + ".txt"
+			filepath = '/algorun_info/output_example/' + filename
+			addLink(filepath, output)
+			ul.append(li)
+		}
+
+	} else {
+		$.get("/algorun_info/output_example.txt")
+			.success(function(result){
+				window.location = '/algorun_info/output_example.txt'
+			})
+			.error(function(jqXHR, textStatus, errorThrown) {
+				window.location = '/html/no_output.html'
+			})
+	}
+}, 'text');
