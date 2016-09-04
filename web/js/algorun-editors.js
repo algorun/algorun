@@ -34,7 +34,7 @@ function add_image(id){
 		li = $("<li></li>")
 		a = $("<a data-toggle=tab href=#" + id + ">" + id + "</a>")
 		div = $("<div id=" + id + " class=tab-pane fade></div>")
-		img = $("<img src=/images/imageOutput.png>")
+		img = $("<img class=output_image src=/images/imageOutput.png>")
 		div.append(img)
 		tab_list.append(div)
 		li.append(a)

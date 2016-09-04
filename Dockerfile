@@ -32,6 +32,7 @@ ADD ./web/css /home/algorithm/web/css/
 ADD ./web/images /home/algorithm/web/images/
 ADD ./web/algorun_info /home/algorithm/web/algorun_info/
 ADD ./lib/*.js /home/algorithm/lib/
+ADD ./web/html /home/algorithm/web/html/
 ENV CODE_HOME /home/algorithm
 RUN chmod +x /bin/algorun
 EXPOSE 8765

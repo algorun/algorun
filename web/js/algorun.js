@@ -61,13 +61,15 @@ $("#run_button").click(function() {
       } else {
         for(key in data){
           id = "#" + key
+          var output_val = data[key]
           output_field = $(id).children()
-          if(output_field.nodeName == "img") {
-          	output_field.attr('src', data[key])
+          if(output_field.attr('class') == "output_image") {
+          	alert(output_val)
+          	output_field.attr('src', output_val)
           } else {
           	editor_name = output_field.attr('id')
 	        o_editor = ace.edit(editor_name)
-	        o_editor.setValue(data[key])
+	        o_editor.setValue(output_val)
 	      }
         }
       }
