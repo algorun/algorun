@@ -13,8 +13,6 @@ function addLink(filepath, output){
 		})
 		.error(function(jqXHR, textStatus, errorThrown){
 			filename = output
-			alert(filepath)
-			alert(errorThrown)
 			a = $("<a href=/html/no_output.html>" + filename + '</a>')
 			li = $("#" + output)
 			li.append(a)

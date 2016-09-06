@@ -42,18 +42,31 @@ $("#run_button").click(function() {
     }
   }
   timer.play();
-  o_editor.setValue('please wait while computation is running...');
+  $.notify({message: "please wait while computation is running..."},
+    {
+    	delay: 2500,
+        placement: {
+		from: "bottom",
+		align: "center"
+        },
+        type: "success"
+    });
   $('#run_button').prop('disabled', true);
 	var jqxhr = $.post( "/v1/run", input_data)
 	.done(function(data,textStatus,jqXHR) {
     try {
       json = $.parseJSON(data);
       for(key in json) {
-        editor = $(key).attr('href')
-        editor_name = $(editor).href('id')
-        o_editor = ace.edit(editor_name)
-        o_editor.getSession().setMode("ace/mode/json");
-        o_editor.setValue(json);
+      	id = "#" + key
+      	var output_val = json[key]
+      	output_field = $(id).children()
+      	if(output_field.attr('class') == "output_image") {
+      		output_field.attr('src', output_val)
+      	} else {
+      		editor_name = output_field.attr('id')
+      		o_editor = ace.edit(editor_name)
+      		o_editor.setValue(output_val)
+      	}
       }
     } catch (e) {
       if(typeof data === 'string'){
@@ -64,7 +77,6 @@ $("#run_button").click(function() {
           var output_val = data[key]
           output_field = $(id).children()
           if(output_field.attr('class') == "output_image") {
-          	alert(output_val)
           	output_field.attr('src', output_val)
           } else {
           	editor_name = output_field.attr('id')
