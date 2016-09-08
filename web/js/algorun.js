@@ -16,13 +16,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 $("#run_button").click(function() {
-  id = $('#output_list').children('.active').children('a').attr('href')
-  editor_name = $(id).children('pre').attr('id')
-  o_editor = ace.edit(editor_name)
-  var timer = $.timer(function () {
-    o_editor.setValue(o_editor.getValue() + '.');
-  });
-  timer.set({time: 1000});
   input_data = {}
   name_list = []
   $('#input_list').children().each(function() {
@@ -41,10 +34,9 @@ $("#run_button").click(function() {
       return
     }
   }
-  timer.play();
   $.notify({message: "please wait while computation is running..."},
     {
-    	delay: 2500,
+        delay: 10000,
         placement: {
 		from: "bottom",
 		align: "center"
@@ -92,6 +84,7 @@ $("#run_button").click(function() {
       o_editor.gotoLine(1);
       $('#run_button').prop('disabled', false);
       var run_time = "<div align='center'>" + jqXHR.getResponseHeader('Run-Time') + "</div>";
+      $('.alert').remove()
       $.notify({message: run_time},
         {
           delay: 3000,
@@ -101,7 +94,6 @@ $("#run_button").click(function() {
           },
           type: "success"
         });
-      timer.stop();
     }
   })
 	.fail(function() {
