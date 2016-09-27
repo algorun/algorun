@@ -23,13 +23,15 @@ RUN apt-get update && \
 apt-get install -y npm
 RUN npm install express &&\
 npm install body-parser &&\
-npm install multer@0.1.8
+npm install multer@0.1.8 &&\
+npm install uuid
 ADD Server.js /home/algorithm/
 ADD algorun /bin/
 ADD ./web/index.html /home/algorithm/web/
 ADD ./web/js /home/algorithm/web/js/
 ADD ./web/css /home/algorithm/web/css/
 ADD ./web/images /home/algorithm/web/images/
+ADD ./web/output_images /home/algorithm/web/output_images/
 ADD ./web/algorun_info /home/algorithm/web/algorun_info/
 ADD ./lib/*.js /home/algorithm/lib/
 ADD ./web/html /home/algorithm/web/html/

@@ -62,24 +62,33 @@ $("#run_button").click(function() {
       }
     } catch (e) {
       if(typeof data === 'string'){
-        o_editor.setValue(data)
+        alert(data)
       } else {
+        currentTab = $("#output_list").children('.active')
+        currentTab.removeClass('active')
         for(key in data){
           id = "#" + key
+          tab = ""
+          $('#output_list').children().each(function() {
+            if($(this).children().attr('href') == id){
+              tab = $(this)
+            }
+          })
+          tab.addClass('active')
           var output_val = data[key]
           output_field = $(id).children()
           if(output_field.attr('class') == "output_image") {
+            output_field.attr('src', "")
           	output_field.attr('src', output_val)
           } else {
           	editor_name = output_field.attr('id')
-	        o_editor = ace.edit(editor_name)
-	        o_editor.setValue(output_val)
-	      }
+	          o_editor = ace.edit(editor_name)
+	          o_editor.setValue(output_val)
+	        }
+          tab.removeClass('active')
         }
+        currentTab.addClass('active')
       }
-      o_list = $('#output_list')
-      o_list.children().removeClass('active')
-      o_list.children(':first').addClass('active')
     } finally {
       o_editor.gotoLine(1);
       $('#run_button').prop('disabled', false);
@@ -106,7 +115,8 @@ $("#run_button").click(function() {
 $("#populate_input").click(function() {
     if(v1_4) {
       input_list = $('#input_list')
-      input_list.children().removeClass('active')
+      currentTab = input_list.children(".active")
+      currentTab.removeClass('active')
       input_list.children().each(function (){
         $(this).addClass('active')
         editor = $(this).children().attr('href')
@@ -126,9 +136,7 @@ $("#populate_input").click(function() {
           });
         $(this).removeClass('active')
       });
-      input_list.children(':first').addClass('active')
-      input_list.children(':first').removeClass('active')
-      input_list.children(':first').addClass('active')
+      currentTab.addClass('active')
     } else {
       $.get("/algorun_info/input_example.txt", function(data){
         current_tab = $('#input_list').children('.active')
@@ -150,20 +158,21 @@ function launchFullScreen(element) {
   }
 }
 $("#reset_computation").click(function() {
-	$('.nav-tabs').each(function() {
-    $(this).children().removeClass('active')
-    $(this).children().each(function () {
-      id = $(this).children().attr('href')
-      editor_name = $(id).attr('id') + "_editor"
-      editor = ace.edit(editor_name)
-      editor.setValue("")
-    });
-    $(this).children(":first").addClass("active")
-    $(this).children(":first").removeClass("active")
-    $(this).children(":first").addClass("active")
+  currentTabs = $(".nav-tabs").children(".active")
+  currentTabs.removeClass('active')
+	$('.nav-tabs').children().each(function() {
+      $(this).addClass('active')
+      field_loc = $(this).children().attr("href")
+      field = $(field_loc).children()
+      if(field.attr('class') == "output_image") {
+        field.attr('src', "")
+      } else {
+        editor_name = field.attr('id')
+        editor = ace.edit(editor_name)
+        editor.setValue("")
+      }
+      $(this).removeClass('active')
   });
-
-
-    
+  currentTabs.addClass('active')
     //launchFullScreen(document.getElementById("fullscreen"));
 });
