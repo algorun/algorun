@@ -8,10 +8,11 @@ var algo_run = require(path.join(__dirname, "/lib/Algo"));
 var strip_json = require(path.join(__dirname, "/lib/strip-json-comments"));
 var app = express();
 var manifest_exec = {};
-var v1_4 = false;
+var v2_0 = false;
 
 function setVersionEnvironment(manifest){
     process.env.manifest_version = manifest['manifest_version'];
+    manifest_exec['caching'] = manifest['caching']
     if(manifest.hasOwnProperty('algo_exec')){
         process.env.algo_exec = manifest['algo_exec'];
         manifest_exec["algo_exec"] = manifest['algo_exec'];
@@ -51,8 +52,8 @@ function setVersionEnvironment(manifest){
                 process.env.algo_output_stream = manifest['algo_output_stream'];
             }
             break;
-        case "1.4":
-        	v1_4 = true;
+        case "2.0":
+        	v2_0 = true;
         	if(manifest.hasOwnProperty("algo_input")){
         		manifest_exec["algo_input"] = manifest["algo_input"]
         	}
@@ -110,7 +111,7 @@ app.post('/v1/run', function (req, res) {
     res.status = 500;
     req.socket.setTimeout(0);
     res.socket.setTimeout(0); 
-    if(v1_4) {
+    if(v2_0) {
   		var data_input = {}
   		algo_input = manifest_exec['algo_input']
   		for(i in algo_input){
@@ -130,7 +131,7 @@ app.post('/v1/run', function (req, res) {
 
 		var hrstart = process.hrtime();
 	    if (data_input){
-	        algo_run.runv1_4(data_input, manifest_exec, function (result_type, result_stream){
+	        algo_run.runv2_0(data_input, manifest_exec, function (result_type, result_stream){
 	            res.status = 200;
 	            if(result_type === 'text'){
 	                var hrend = process.hrtime(hrstart);

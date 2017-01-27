@@ -1,5 +1,5 @@
 {
-   	"manifest_version": "1.4",
+   	"manifest_version": "2.0",
 	"algo_name": "Algorithm", // the name of your algorithm
 	"algo_version": "1.0.0", // the versuib of your algorithm
 	"algo_summary": "N/A", // a 1-line summary of your algorithm
@@ -36,6 +36,7 @@
             "organization": "John Doe University", 
             "org_website": "http://johndoe.edu" 
 	},
+	"caching": "on", // the default caching scheme of your algorithms (on/off).
 	// all "type" keys listed below expect a value to be one of MIME types: https://www.sitepoint.com/web-foundations/mime-types-complete-list/
 	"algo_exec": "python test.py $input1 $input2", // the command to start algorithm execution. Use "$" to mark an input to be passed to the command.
 	"algo_input": [ // list all input parameters and their types. Names must match the names in the command above.
