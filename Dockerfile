@@ -13,17 +13,18 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-FROM ubuntu:15.10
+FROM ubuntu:16.04
 MAINTAINER Abdelrahman H. Ibrahim <abdelrahman.hosny@hotmail.com>
 RUN apt-get update && \
-apt-get install -y nodejs && \
+apt-get install curl -y
+RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
+RUN apt-get install -y nodejs && \
 apt-get clean && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-RUN apt-get update && \
-apt-get install -y npm
 RUN npm install express &&\
 npm install body-parser &&\
 npm install multer@0.1.8 &&\
+npm install sha256 &&\
 npm install uuid
 ADD Server.js /home/algorithm/
 ADD algorun /bin/
