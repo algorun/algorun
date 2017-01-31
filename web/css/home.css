@@ -1,8 +1,8 @@
-body {
+/*body {
 	padding-top: 50px;
-}
+}*/
 .starter-template {
-	padding: 40px 15px;
+	padding: 0px 15px;
 	text-align: justify;
 }
 #param_settings {
@@ -49,4 +49,26 @@ body {
     cursor: pointer;
 }
 
+#algo_name{
+    padding-top: 25px;
+}
 
+#run{
+    padding-top: 25px;
+}
+
+#about_label{
+    padding-top: 25px;
+}
+
+#web_api{
+    padding-top: 25px;
+}
+
+#help{
+    padding-top: 25px;
+}
+
+#authors{
+    padding-top: 25px;
+}

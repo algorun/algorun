@@ -21,7 +21,7 @@ function addLink(filepath, input){
 
 $.get("/algorun_info/manifest.json", function(data) {
 	data = JSON.parse(stripJsonComments(data));
-	if(data['manifest_version'] == '1.4'){
+	if(data['manifest_version'] == '2.0'){
 		var ul = $('ul')
 		for(i in data['algo_input']){
 			var input = data['algo_input'][i].name

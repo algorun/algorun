@@ -113,7 +113,7 @@ $("#run_button").click(function() {
 });
 
 $("#populate_input").click(function() {
-    if(v1_4) {
+    if(v2_0) {
       input_list = $('#input_list')
       currentTab = input_list.children(".active")
       currentTab.removeClass('active')

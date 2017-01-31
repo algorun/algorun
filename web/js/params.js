@@ -1,5 +1,5 @@
 var params;
-var v1_4 = false;
+var v2_0 = false;
 function md5(str) {
   //  discuss at: http://phpjs.org/functions/md5/
   // original by: Webtoolkit.info (http://www.webtoolkit.info/)
@@ -377,8 +377,8 @@ function update_ui(){
     $.get( "/algorun_info/manifest.json", function( data ) {
         data = JSON.parse(stripJsonComments(data));
         version = data['manifest_version']
-        if(version == "1.4"){
-            v1_4 = true;
+        if(version == "2.0"){
+            v2_0 = true;
         }
         if(data["algo_name"]){
             $( "#algo_name" ).html( data["algo_name"] );
