@@ -456,7 +456,7 @@ function update_ui(){
             $("#download_nav").remove();
         }
         
-        if("algo_parameters"){
+        if(data["algo_parameters"]){
             params = data["algo_parameters"];
             configure_params(params);
         }

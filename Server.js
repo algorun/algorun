@@ -12,7 +12,6 @@ var v2_0 = false;
 
 function setVersionEnvironment(manifest){
     process.env.manifest_version = manifest['manifest_version'];
-    manifest_exec['caching'] = manifest['caching']
     if(manifest.hasOwnProperty('algo_exec')){
         process.env.algo_exec = manifest['algo_exec'];
         manifest_exec["algo_exec"] = manifest['algo_exec'];
