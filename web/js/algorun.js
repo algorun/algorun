@@ -29,8 +29,8 @@ $("#run_button").click(function() {
   for(i in name_list){
     input_name = name_list[i]
     if(input_data[input_name].trim() == "") {
-      alert("Please pass input")
-      //sweetAlert("Oops...", "Should you pass input to the computation?", "error");
+      sweetAlert("Oops...", "Should you pass input to the computation?", "error");
+      $('reset_computation').click()
       return
     }
   }
@@ -62,7 +62,7 @@ $("#run_button").click(function() {
       }
     } catch (e) {
       if(typeof data === 'string'){
-        alert(data)
+        sweetAlert("Error!", data, "error")
         $('#run_button').prop('disabled', false);
         $("#reset_computation").click()
       } else {
