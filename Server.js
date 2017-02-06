@@ -15,6 +15,7 @@ function setVersionEnvironment(manifest){
     if(manifest.hasOwnProperty('algo_exec')){
         process.env.algo_exec = manifest['algo_exec'];
         manifest_exec["algo_exec"] = manifest['algo_exec'];
+        manifest_exec["algo_parameters"] = manifest["algo_parameters"]
     }
     switch(manifest["manifest_version"]){
         case "1.0":        

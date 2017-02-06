@@ -64,6 +64,7 @@ $("#run_button").click(function() {
       if(typeof data === 'string'){
         alert(data)
         $('#run_button').prop('disabled', false);
+        $("#reset_computation").click()
       } else {
         currentTab = $("#output_list").children('.active')
         currentTab.removeClass('active')
