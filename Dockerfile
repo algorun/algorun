@@ -14,7 +14,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 FROM ubuntu:16.04
-MAINTAINER Abdelrahman H. Ibrahim <abdelrahman.hosny@hotmail.com>
+label maintainer "abdelrahman.hosny@hotmail.com"
 RUN apt-get update && \
 apt-get install curl -y
 RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
