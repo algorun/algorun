@@ -45,6 +45,8 @@ $("#run_button").click(function() {
     });
   $('#run_button').prop('disabled', true);
   var postMethod = "/v2/run"
+  if(!v2_0)
+    postMethod = "/v2/run"
 	var jqxhr = $.post( postMethod, input_data)
 	.done(function(data,textStatus,jqXHR) {
     try {
