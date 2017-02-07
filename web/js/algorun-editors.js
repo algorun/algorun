@@ -134,6 +134,8 @@ $.get( "../algorun_info/manifest.json", function( data ) {
 	}
 
 	first = true;
+	if(!v2_0)
+		formatEditor("output_editor", "output")
 	for(i in output_arr){	
 		output_element = output_arr[i]
 		output_name = output_element.split(":")[0]
