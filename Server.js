@@ -104,7 +104,59 @@ app.get('/version', function (req, res) {
     res.status = 200;
     res.send({"api_version": process.env.manifest_version});
 });
-app.post('/v1/run', function (req, res) {
+
+app.post("/v1/run", function(req, res){
+	last_used = new Date();
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.status = 500;
+    req.socket.setTimeout(0);
+    res.socket.setTimeout(0); 
+    if(!v2_0){
+    	var data_input = req.body.input;
+		var file_input = req.files.input;
+		var hrstart = process.hrtime();
+	    if (data_input){
+	        algo_run.run(data_input, function (result_type, result_stream){
+	            res.status = 200;
+	            if(result_type === 'text'){
+	                var hrend = process.hrtime(hrstart);
+	                res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
+	                res.send(result_stream);
+	            } else {
+	                var hrend = process.hrtime(hrstart);
+	                res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
+	                result_stream.pipe(res);   
+	            }
+	        });
+	    } else if(file_input){
+	        fs.readFile(req.files.input.path, function (err, data) {
+	            var newPath = process.env.CODE_HOME + '/src/input.txt';
+	            fs.writeFile(newPath, data, function (err) {
+	                algo_run.run(false, function (result_type, result_stream){
+	                    res.status = 200;
+	                    if(result_type === 'text'){
+	                        var hrend = process.hrtime(hrstart);
+	                        res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
+	                        res.send(result_stream);
+	                    } else {
+	                        var hrend = process.hrtime(hrstart);
+	                        res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
+	                        result_stream.pipe(res);   
+	                    }
+	                });
+	            });
+	        });
+	    } else {
+	        res.status = 200;
+	        res.send('No input provided!');
+	    }
+    } else{
+    	res.send("Oops, you requested the wrong URL! Try posting to /v2/run instead of /v1/run.")
+    }
+})
+
+app.post('/v2/run', function (req, res) {
     last_used = new Date();
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -150,46 +202,10 @@ app.post('/v1/run', function (req, res) {
 
     }
     else {
-    	var data_input = req.body.input;
-		var file_input = req.files.input;
-		var hrstart = process.hrtime();
-	    if (data_input){
-	        algo_run.run(data_input, function (result_type, result_stream){
-	            res.status = 200;
-	            if(result_type === 'text'){
-	                var hrend = process.hrtime(hrstart);
-	                res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
-	                res.send(result_stream);
-	            } else {
-	                var hrend = process.hrtime(hrstart);
-	                res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
-	                result_stream.pipe(res);   
-	            }
-	        });
-	    } else if(file_input){
-	        fs.readFile(req.files.input.path, function (err, data) {
-	            var newPath = process.env.CODE_HOME + '/src/input.txt';
-	            fs.writeFile(newPath, data, function (err) {
-	                algo_run.run(false, function (result_type, result_stream){
-	                    res.status = 200;
-	                    if(result_type === 'text'){
-	                        var hrend = process.hrtime(hrstart);
-	                        res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
-	                        res.send(result_stream);
-	                    } else {
-	                        var hrend = process.hrtime(hrstart);
-	                        res.header("Run-Time", util.format("Computation Execution Time: %ss %sms", hrend[0], hrend[1]/1000000));
-	                        result_stream.pipe(res);   
-	                    }
-	                });
-	            });
-	        });
-	    } else {
-	        res.status = 200;
-	        res.send('No input provided!');
-	    }
+    	res.send("Oops, you requested the wrong URL! Try posting to /v1/run instead of /v2/run.")
     }
 });
+
 app.post('/v1/config', function (req, res) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -213,6 +229,31 @@ app.post('/v1/config', function (req, res) {
         res.send('No input provided!');
     }
 });
+
+app.post('/v2/config', function (req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    var env_var = req.body;
+    if (env_var) {
+        output = '';
+        for (var key in env_var) {
+            if (env_var.hasOwnProperty(key)) {
+                if (process.env[key]) {
+                    process.env[key] = env_var[key];
+                    output += "Parameter " + key + " changed to " + env_var[key];
+                } else {
+                    output += "Cannot find " + key + " in environment variables";
+                }
+            }
+        }
+        res.status = 200;
+        res.send(output);
+    } else {
+        res.status = 200;
+        res.send('No input provided!');
+    }
+});
+
 app.get('/v1/manifest', function (req, res) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -221,6 +262,21 @@ app.get('/v1/manifest', function (req, res) {
     res.sendFile(manifestFilePath);
 });
 app.get('/v1/status', function (req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Content-Type", "application/json; charset=utf-8");
+    res.status = 200;
+    res.send({'last_used': last_used});
+});
+
+app.get('/v2/manifest', function (req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Content-Type", "application/json; charset=utf-8");
+    res.status = 200;
+    res.sendFile(manifestFilePath);
+});
+app.get('/v2/status', function (req, res) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     res.header("Content-Type", "application/json; charset=utf-8");

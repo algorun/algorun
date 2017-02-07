@@ -44,7 +44,8 @@ $("#run_button").click(function() {
         type: "success"
     });
   $('#run_button').prop('disabled', true);
-	var jqxhr = $.post( "/v1/run", input_data)
+  var postMethod = "/v2/run"
+	var jqxhr = $.post( postMethod, input_data)
 	.done(function(data,textStatus,jqXHR) {
     try {
       json = $.parseJSON(data);

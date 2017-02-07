@@ -150,7 +150,7 @@ easy way to use and publish their algorithms.</p>
         <p>More Information:&nbsp;<a href="http://algorun.org" target="_blank">http://algorun.org</a></p>
         <h1 id="web_api" style="color:#58ACFA;">Web API</h1>
         <p>This algorithm can be run via the web interface above or via the following web API</p>
-        <h2>HTTP POST /v1/run</h2>
+        <h2 id="postRun">HTTP POST /v1/run</h2>
         <h3>&nbsp;&nbsp;&nbsp;&nbsp;Parameters</h3>
         <ul id="inputParams">
             <li id="input1"><b>input:</b> the input for the algorithm in its accepted format. See: <a href="/algorun_info/input_example.txt" target="_blank">sample-input-format</a></li>
@@ -159,7 +159,7 @@ easy way to use and publish their algorithms.</p>
         <ul id="outputParams">
             <li id="output1"><b>output:</b> the result of the computation in the following format. See: <a href="/algorun_info/output_example.txt" target="_blank">sample-output-format</a></li>
         </ul>
-        <h2>HTTP POST /v1/config</h2>
+        <h2 id="postConfig">HTTP POST /v1/config</h2>
         <h3>&nbsp;&nbsp;&nbsp;&nbsp;Parameters</h3>
         <ul>
             <li><b>JSON Object</b><br> <i>key:</i> parameter name<br> <i>value:</i> the new value of parameter<br>You can change more than one parameter per API call</li>

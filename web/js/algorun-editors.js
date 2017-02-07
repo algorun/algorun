@@ -121,12 +121,14 @@ $.get( "../algorun_info/manifest.json", function( data ) {
 		input_element = input_arr[i]
 		input_name = input_element.split(":")[0]
 		input_type = input_element.split(":")[1]
-		if (first){
-        	$("#input1").html("<b>" + input_name + ":</b> " + input_type)
-		}
-		else{
-			listElement = $("<li><b>" + input_name + ":</b> " + input_type + "</li>")
-        	$("#inputParams").append(listElement)
+		if(v2_0){
+			if (first){
+	        	$("#input1").html("<b>" + input_name + ":</b> " + input_type)
+			}
+			else{
+				listElement = $("<li><b>" + input_name + ":</b> " + input_type + "</li>")
+	        	$("#inputParams").append(listElement)
+			}
 		}
 		add_editor(input_name, 'input')
 	}
@@ -136,12 +138,14 @@ $.get( "../algorun_info/manifest.json", function( data ) {
 		output_element = output_arr[i]
 		output_name = output_element.split(":")[0]
 		output_type = output_element.split(":")[1]
-		if (first){
-			$("#output1").html("<b>" + output_name + ":</b> " + output_type)
-		}
-		else{
-			listElement = $("<li><b>" + output_name + ":</b> " + output_type + "</li>")
-        	$("#outputParams").append(listElement)
+		if(v2_0){
+			if (first){
+				$("#output1").html("<b>" + output_name + ":</b> " + output_type)
+			}
+			else{
+				listElement = $("<li><b>" + output_name + ":</b> " + output_type + "</li>")
+	        	$("#outputParams").append(listElement)
+			}
 		}
 		if(output_type.includes("image")){
 			add_image(output_name)

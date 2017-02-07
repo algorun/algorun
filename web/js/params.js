@@ -379,6 +379,8 @@ function update_ui(){
         version = data['manifest_version']
         if(version == "2.0"){
             v2_0 = true;
+            $("#postRun").text("HTTP POST /v2/run")
+            $("#postConfig").text("HTTP POST /v2/config")
         }
         if(data["algo_name"]){
             $( "#algo_name" ).html( data["algo_name"] );
