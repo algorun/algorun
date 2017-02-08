@@ -29,12 +29,21 @@ $("#run_button").click(function() {
   for(i in name_list){
     input_name = name_list[i]
     if(input_data[input_name].trim() == "") {
-      sweetAlert("Oops...", "Should you pass input to the computation?", "error");
+    $.notify({message: "<div align='center'>Should you pass input to the computation?</div>"},
+        {
+          delay: 3000,
+          placement: {
+		        from: "bottom",
+		        align: "center"
+          },
+          type: "danger"
+        });
+      // sweetAlert("Oops...", "Should you pass input to the computation?", "error");
       $('reset_computation').click()
       return
     }
   }
-  $.notify({message: "please wait while computation is running..."},
+  $.notify({message: "<div align='center'>Please wait! The computation is running ...</div>"},
     {
         delay: 10000,
         placement: {
@@ -65,7 +74,16 @@ $("#run_button").click(function() {
       }
     } catch (e) {
       if(typeof data === 'string'){
-        sweetAlert("Error!", data, "error")
+        $.notify({message: data},
+        {
+          delay: 3000,
+          placement: {
+		        from: "bottom",
+		        align: "center"
+          },
+          type: "danger"
+        });
+        //sweetAlert("Error!", data, "error")
         $('#run_button').prop('disabled', false);
         $("#reset_computation").click()
       } else {
