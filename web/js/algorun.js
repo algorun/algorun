@@ -76,7 +76,7 @@ $("#run_button").click(function() {
       if(typeof data === 'string'){
         $.notify({message: data},
         {
-          delay: 3000,
+          delay: 20000,
           placement: {
 		        from: "bottom",
 		        align: "center"
