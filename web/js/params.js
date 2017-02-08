@@ -379,6 +379,8 @@ function update_ui(){
         version = data['manifest_version']
         if(version == "2.0"){
             v2_0 = true
+            $("#sampleInput").attr("href", "/html/input_example.html")
+            $("#sampleOutput").attr("href","/html/output_example.html")
             $("#postRun").text("HTTP POST /v2/run")
             $("#postConfig").text("HTTP POST /v2/config")
         }

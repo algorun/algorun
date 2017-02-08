@@ -51,6 +51,7 @@ $("#run_button").click(function() {
 	.done(function(data,textStatus,jqXHR) {
     try {
       json = $.parseJSON(data);
+      alert("jsonData")
       for(key in json) {
       	id = "#" + key
       	var output_val = json[key]
