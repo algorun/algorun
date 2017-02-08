@@ -8,4 +8,4 @@ ADD ./src /home/algorithm/src/
 ENV PATH /home/algorithm/src/cufflinks:$PATH
 
 # [Optional] Sign your image
-MAINTAINER Abdelrahman Hosny <abdelrahman.hosny@hotmail.com>
+LABEL "maintainer" <abdelrahman.hosny@hotmail.com>

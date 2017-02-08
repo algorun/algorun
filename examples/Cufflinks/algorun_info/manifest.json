@@ -1,15 +1,16 @@
 {
-  "manifest_version": "1.3",
+   	"manifest_version": "2.0",
 	"algo_name": "Cufflinks",
+	"algo_version": "2.1.1",
 	"algo_summary": "Transcriptome assembly and differential expression analysis for RNA-Seq.",
 	"algo_description": "Cufflinks assembles transcripts, estimates their abundances, and tests for differential expression and regulation in RNA-Seq samples. It accepts aligned RNA-Seq reads and assembles the alignments into a parsimonious set of transcripts. Cufflinks then estimates the relative abundances of these transcripts based on how many reads support each one, taking into account biases in library preparation protocols.",
 	"algo_website": "http://cole-trapnell-lab.github.io/cufflinks/",
 	"algo_keywords": ["cufflinks", "transcriptome assembly", "RNA sequence"],
-  "published_paper": {
+    "published_paper": {
             "title": "Transcript assembly and quantification by RNA-Seq reveals unannotated transcripts and isoform switching during cell differentiation",
             "url": "http://www.nature.com/nbt/journal/v28/n5/abs/nbt.1621.html"
     	},
-      "algo_authors": [
+    "algo_authors": [
         {
           "name": "Cole Trapnell",
           "email": "coletrap@uw.edu",
@@ -19,25 +20,28 @@
           "org_website": "http://www.washington.edu/"
         }
       ],
-      "algo_packager": {
+    "algo_packager": {
         "name": "Abdelrahman Hosny",
         "email": "abdelrahman.hosny@hotmail.com",
         "personal_website": "http://www.abdelrahmanhosny.me",
         "profile_picture": "",
         "organization": "University of Connecticut",
         "org_website": "http://cse.uconn.edu"
-      },
-      "algo_exec": "sh cufflinks.sh",
-      "algo_input_stream": "file",
-      "algo_output_stream": "transcripts.gtf",
-      "algo_parameters": {
+    },
+	"algo_exec": "sh cufflinks.sh $input",
+	"algo_input": [
+		{ "name": "input", "src": "file", "type": "text/plain", "accepted_format": "SAM" }
+	],
+	"algo_output": [
+		{ "name": "output", "src": "transcripts.gtf", "type": "text/plain", "format": "GTF" }
+	],
+	"algo_parameters": {
+		"caching": "on",
         "Threads": "1",
         "Seed": "0",
         "Rescue": "FALSE",
         "FragLen_Mean": "200",
         "FragLen_Std": "80"
-      },
-      "input_type": "sam",
-      "output_type": "gtf",
-      "algo_image": "algorun/cufflinks"
+	},
+	"algo_image": "algorun/cufflinks"
 }
