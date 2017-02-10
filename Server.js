@@ -5,6 +5,7 @@ var fs = require('fs');
 var path = require('path');
 var util = require("util");
 var algo_run = require(path.join(__dirname, "/lib/Algo"));
+var algo_runV2 = require(path.join(__dirname,"/lib/AlgoV2"))
 var strip_json = require(path.join(__dirname, "/lib/strip-json-comments"));
 var app = express();
 var manifest_exec = {};
@@ -183,7 +184,7 @@ app.post('/v2/run', function (req, res) {
 
 		var hrstart = process.hrtime();
 	    if (data_input){
-	        algo_run.runv2_0(data_input, manifest_exec, function (result_type, result_stream){
+	        algo_runV2.run(data_input, manifest_exec, function (result_type, result_stream){
 	            res.status = 200;
 	            if(result_type === 'text'){
 	                var hrend = process.hrtime(hrstart);
