@@ -15,11 +15,7 @@ Contents
    input-output-types
    license
    help
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   
+Need Help?
+----------
+Please contact Abdelrahman Hosny at abdelrahman.hosny@hotmail.com
