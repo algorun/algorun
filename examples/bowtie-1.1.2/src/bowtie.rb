@@ -24,7 +24,6 @@ options += " --all" if ENV["ReportAll"] == "on"
 options += " -m " + ENV["ReportM"].strip unless ENV["ReportM"] == "no-limit"
 options += " --best" if ENV["ReportBest"] == "on"
 options += " --strata" if ENV["ReportStrata"] == "on"
-options += " --suppress " + ENV["suppress"].delete(' ') unless ENV["suppress"] == "0"
 options.strip!
 
 # run the algorithm with the options injected

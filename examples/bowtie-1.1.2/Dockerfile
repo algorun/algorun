@@ -6,8 +6,8 @@ ADD ./algorun_info /home/algorithm/web/algorun_info/
 ADD ./src /home/algorithm/src/
 
 # Install any algorithm dependencies here
-RUN apt-get update && apt-get install -y ruby build-essential
+RUN apt-get update && apt-get install -y ruby build-essential python
 RUN cd /home/algorithm/src && make
 
 # [Optional] Sign your image
-MAINTAINER Abdelrahman Hosny <abdelrahman.hosny@hotmail.com>
+LABEL maintainer "abdelrahman.hosny@hotmail.com"

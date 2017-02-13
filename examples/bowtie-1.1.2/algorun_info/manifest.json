@@ -1,6 +1,7 @@
 {
-	"manifest_version": "1.3",
+   	"manifest_version": "2.0",
 	"algo_name": "Bowtie 1.1.2",
+	"algo_version": "1.1.2",
 	"algo_summary": "Bowtie is an ultrafast, memory-efficient alignment program for aligning short DNA sequence reads to large genomes.",
 	"algo_description": "Bowtie is an ultrafast, memory-efficient short read aligner geared toward quickly aligning large sets of short DNA sequences (reads) to large genomes. Check <a href='http://bowtie-bio.sf.net/' target='_blank'>our website</a> for detailed explanation. This interface is meant to provide a quick and easy access to the computation without having to install Bowtie packages. Command line options are exposed as parameters, which you can configure from the above window.",
 	"algo_website": "http://bowtie-bio.sf.net/",
@@ -34,11 +35,16 @@
 			"organization": "University of Connecticut", 
 			"org_website": "http://uconn.edu" 
     },
-	"algo_exec": "ruby bowtie.rb",
-	"algo_input_stream": "direct",
-    	"algo_output_stream": "stdout",
+	"algo_exec": "ruby bowtie.rb $input",
+	"algo_input": [
+		{ "name": "input", "src": "direct", "type": "text/plain", "accepted_format": "algorun:dna-sequence" }
+	],
+	"algo_output": [
+		{ "name": "output", "src": "stdout", "type": "text/plain", "format": "algorun:aligned-dna-sequence" }
+	],
 	"algo_parameters": {
-		"Skip": "0",
+		"caching": "on",
+        "Skip": "0",
 		"OnlyAlign": "all",
 		"TrimLeft": "0",
 		"TrimRight": "0",
@@ -54,10 +60,7 @@
 		"ReportAll": "off",
 		"ReportM": "no-limit",
 		"ReportBest": "off",
-		"ReportStrata": "off",
-		"suppress": "0"
+		"ReportStrata": "off"
 	},
-	"input_type": "algorun:dna-sequence",
-	"output_type": "algorun:aligned-dna-sequence",
 	"algo_image": "algorun/bowtie"
 }
