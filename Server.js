@@ -63,11 +63,15 @@ function setVersionEnvironment(manifest){
         	}
         	break;
         default:
-            // let the default be version 1.0
-            process.env.algo_input_stream = "file";
-            if(manifest.hasOwnProperty('algo_output_filename')){
-                process.env.algo_output_stream = manifest['algo_output_filename'];
-            }
+            // let the default be the latest version
+            v2_0 = true;
+        	if(manifest.hasOwnProperty("algo_input")){
+        		manifest_exec["algo_input"] = manifest["algo_input"]
+        	}
+
+        	if(manifest.hasOwnProperty("algo_output")){
+        		manifest_exec["algo_output"] = manifest["algo_output"]
+        	}
     }
     for (var key in manifest["algo_parameters"]) {
         if (manifest["algo_parameters"].hasOwnProperty(key)) {
@@ -291,6 +295,11 @@ var server = app.listen(8765, function () {
   var host = server.address().address;
   var port = server.address().port;
 
-  console.log('Algorun server listening at http://%s:%s locally. Check port mapping for the visible port number ..', host, port);
+  console.log('AlgoRun server is listening on port: %s. Check port mapping for the visible port number ..', port);
 
+});
+
+process.on('SIGINT', function() {
+    console.log("Stopping AlgoRun server ..");
+    process.exit();
 });
