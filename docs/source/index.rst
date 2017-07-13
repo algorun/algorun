@@ -23,3 +23,7 @@ Contents
 Need Help?
 ----------
 Please contact Abdelrahman Hosny at abdelrahman.hosny@ieee.org
+
+Authors
+-------
+Abdelrahman Hosny, Paola Vera-Licona, Reinhard Laubenbacher & Thibauld Favre
