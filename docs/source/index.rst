@@ -1,5 +1,5 @@
-AlgoRun v2.0 documentation
-========================
+AlgoRun v2.0 Documentation
+===========================
 
 AlgoRun is a docker-based software container template designed to package computational algorithms.
 These pages show steps of how to create an AlgoRun container of an implemented algorithm.
