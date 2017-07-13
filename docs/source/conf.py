@@ -49,7 +49,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'AlgoRun'
-copyright = u'2017, Abdelrahman Hosny'
+copyright = u'2017, AlgoRun'
 author = u'Abdelrahman Hosny'
 
 # The version info for the project you're documenting, acts as replacement for

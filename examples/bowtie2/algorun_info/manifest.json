@@ -46,4 +46,3 @@
     "output_type": "algorun:custom", // if your algorithm is compatible with other algorithms on AlgoRun, mention the output type it produces here. Example: "algorun:superadam". leave the default value otherwise.
 	"algo_image": "" // Example: "ahosny/react". leave "" if you did not upload your algorithm to docker hub or if you do not know what docker hub is :).
 }
-
