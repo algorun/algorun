@@ -12,15 +12,14 @@ var VHDLHighlightRules = function() {
                    "begin|block|buffer|bus|case|component|configuration|"+
                    "disconnect|downto|else|elsif|end|entity|file|for|function|"+
                    "generate|generic|guarded|if|impure|in|inertial|inout|is|"+
-                   "label|linkage|literal|loop|mapnew|next|of|on|open|"+
-                   "others|out|port|process|pure|range|record|reject|"+
-                   "report|return|select|shared|subtype|then|to|transport|"+
+                   "label|linkage|literal|loop|mapnew|next|of|on|open|others|"+
+                   "out|port|process|pure|range|record|reject|report|return|"+
+                   "select|severity|shared|signal|subtype|then|to|transport|"+
                    "type|unaffected|united|until|wait|when|while|with";
     
     var storageType = "bit|bit_vector|boolean|character|integer|line|natural|"+
-                      "positive|real|register|severity|signal|signed|"+
-                      "std_logic|std_logic_vector|string||text|time|unsigned|"+
-                      "variable";
+                      "positive|real|register|signed|std_logic|"+
+                      "std_logic_vector|string||text|time|unsigned|variable";
     
     var storageModifiers = "array|constant";
     
@@ -55,7 +54,7 @@ var VHDLHighlightRules = function() {
             regex : "[+-]?\\d+(?:(?:\\.\\d*)?(?:[eE][+-]?\\d+)?)?\\b"
         }, {
             token : "keyword", // pre-compiler directives
-            regex : "\\s*(?:library|package|use)\\b",
+            regex : "\\s*(?:library|package|use)\\b"
         }, {
             token : keywordMapper,
             regex : "[a-zA-Z_$][a-zA-Z0-9_$]*\\b"
@@ -74,7 +73,7 @@ var VHDLHighlightRules = function() {
         }, {
             token : "text",
             regex : "\\s+"
-        } ],
+        } ]
 
        
     };
@@ -85,16 +84,16 @@ oop.inherits(VHDLHighlightRules, TextHighlightRules);
 exports.VHDLHighlightRules = VHDLHighlightRules;
 });
 
-ace.define("ace/mode/vhdl",["require","exports","module","ace/lib/oop","ace/mode/text","ace/mode/vhdl_highlight_rules","ace/range"], function(require, exports, module) {
+ace.define("ace/mode/vhdl",["require","exports","module","ace/lib/oop","ace/mode/text","ace/mode/vhdl_highlight_rules"], function(require, exports, module) {
 "use strict";
 
 var oop = require("../lib/oop");
 var TextMode = require("./text").Mode;
 var VHDLHighlightRules = require("./vhdl_highlight_rules").VHDLHighlightRules;
-var Range = require("../range").Range;
 
 var Mode = function() {
     this.HighlightRules = VHDLHighlightRules;
+    this.$behaviour = this.$defaultBehaviour;
 };
 oop.inherits(Mode, TextMode);
 
@@ -107,4 +106,11 @@ oop.inherits(Mode, TextMode);
 
 exports.Mode = Mode;
 
-});
+});                (function() {
+                    ace.require(["ace/mode/vhdl"], function(m) {
+                        if (typeof module == "object" && typeof exports == "object" && module) {
+                            module.exports = m;
+                        }
+                    });
+                })();
+            

@@ -66,7 +66,6 @@ background: rgb(181, 213, 255);\
 }\
 .ace-github.ace_multiselect .ace_selection.ace_start {\
 box-shadow: 0 0 3px 0px white;\
-border-radius: 2px;\
 }\
 .ace-github.ace_nobold .ace_line > span {\
 font-weight: normal !important;\
@@ -101,4 +100,11 @@ background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZ
 
     var dom = require("../lib/dom");
     dom.importCssString(exports.cssText, exports.cssClass);
-});
+});                (function() {
+                    ace.require(["ace/theme/github"], function(m) {
+                        if (typeof module == "object" && typeof exports == "object" && module) {
+                            module.exports = m;
+                        }
+                    });
+                })();
+            
