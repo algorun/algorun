@@ -1,4 +1,5 @@
 var express = require('express');
+var nocache = require('nocache');
 var bodyParser = require('body-parser');
 var multer = require('multer');
 var fs = require('fs');
@@ -6,9 +7,12 @@ var path = require('path');
 var util = require("util");
 var algo_run = require(path.join(__dirname, "/lib/Algo"));
 var strip_json = require(path.join(__dirname, "/lib/strip-json-comments"));
+
 var app = express();
 var manifest_exec = {};
 var v2_0 = false;
+
+app.use(nocache());
 
 function setVersionEnvironment(manifest){
     process.env.manifest_version = manifest['manifest_version'];

@@ -13,19 +13,20 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 label maintainer "abdelrahman.hosny@hotmail.com"
 RUN apt-get update && \
-apt-get install curl -y
-RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
+    apt-get install curl -y
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt-get install -y nodejs && \
-apt-get clean && \
-rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN npm install express &&\
-npm install body-parser &&\
-npm install multer@0.1.8 &&\
-npm install sha256 &&\
-npm install uuid
+    npm install body-parser &&\
+    npm install multer@0.1.8 &&\
+    npm install sha256 &&\
+    npm install uuid &&\
+    npm install nocache
 ADD Server.js /home/algorithm/
 ADD algorun /bin/
 ADD ./web/index.html /home/algorithm/web/
@@ -39,4 +40,4 @@ ADD ./web/html /home/algorithm/web/html/
 ENV CODE_HOME /home/algorithm
 RUN chmod +x /bin/algorun
 EXPOSE 8765
-ENTRYPOINT ["/usr/bin/nodejs","/home/algorithm/Server.js"]
+ENTRYPOINT ["/usr/bin/node","/home/algorithm/Server.js"]
